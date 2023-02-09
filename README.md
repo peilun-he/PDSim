@@ -1,5 +1,5 @@
 # Polynomial diffusion model simulation and estimation
-Web application for the polynomial diffusion model. 
+Web application for the polynomial diffusion model. This app generates a futures price data by providing all parameters. Also, it gives state variables and contracts estimations through Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). The Schwartz and Smith's two-factor model is also provided as a benchmark. 
 
 Version 2.0 (current version): 
 - Add navigation bar: welcome page, app, user guide, team members
