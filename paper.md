@@ -82,7 +82,7 @@ Under this framework, $c, E, \Sigma_w$ and $\Sigma_v$ are deterministic but $d_t
 
 ## Polynomial Diffusion Model
 
-In this section, we present a general framework of the polynomial diffusion model first, then we give the application in the two-factor model. The mathematical foundations and applications of polynomial diffusion model in finance are provided in \cite{filipovic2016polynomial}.
+In this section, we present a general framework of the polynomial diffusion model first, then we give the application in the two-factor model. The mathematical foundations and applications of polynomial diffusion model in finance are provided in [@filipovic:2016].
 
 Consider the stochastic differential equation
 \begin{equation}
@@ -132,7 +132,7 @@ F_{t,T} = \mathbb{E}^*(S_T | \mathcal{F}_t) = H(x_t)^\top e^{(T-t)G} \vec{p}.
 \label{eq:qua_ftt}
 \end{equation}
 Therefore, we have the non-linear state-space model 
-begin{equation}
+\begin{equation}
 x_t = c + E x_{t-1} + w_t, w_t \sim N(\textbf{0}, W), 
 \label{eq:qua_xt}
 \end{equation}
