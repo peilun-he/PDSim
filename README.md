@@ -1,9 +1,7 @@
-# Polynomial diffusion model simulation
+# Polynomial diffusion model simulation and estimation
 Web application for the polynomial diffusion model. 
 
-Version 1: basic functions and UI
-
-Version 2: 
+Version 2.0 (current version): 
 - Add navigation bar: welcome page, app, user guide, team members
 - Descriptions of models and some hints are added to the user guide page
 - Allow users to download simulated data as csv files
@@ -15,3 +13,6 @@ Version 2:
 Future plan: 
 - Add decomposition of data through "seasonal" package 
 - Add forecasting and smoothing 
+
+## Version history 
+Version 1.0: basic functions and UI
