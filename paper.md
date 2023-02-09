@@ -11,7 +11,7 @@ authors:
     equal-contrib: true
     affiliation: 1
   - name: Nino Kordzakhia
-    orcid: 0000−0002−7853−4550
+    orcid: 0000-0002-7853-4550
     equal-contrib: true
     affiliation: 2 
   - name: Gareth W. Peters
