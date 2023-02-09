@@ -153,7 +153,7 @@ a_{t|t-1} &:= \mathbb{E}(x_t | \mathcal{F}_{t-1}),& P_{t|t-1} &:= Cov(x_t | \mat
 a_t &:= \mathbb{E}(x_t | \mathcal{F}_t),& P_t &:= Cov(x_t | \mathcal{F}_t). \nonumber
 \end{align} 
 
-![Flowcharts of EKF\label{fig:EKF}](paper-figures/EKF.jpg){ width=80% }
+![Flowcharts of EKF\label{fig:EKF}](paper-figures/EKF.jpg){ width=70% }
 
 ![Flowcharts of UKF\label{fig:UKF}](paper-figures/UKF.jpg){ width=60% }
 
