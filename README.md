@@ -1,4 +1,4 @@
-# polynomial_diffusion_in_R
+# Polynomial diffusion model simulation
 Web application for the polynomial diffusion model. 
 
 Version 1: basic functions and UI
