@@ -6,7 +6,7 @@ library(shinythemes)
 library(tidyr)
 library(scales)
 
-source("./Functions/MatrixExponential/decomposition_eigen.R")
+source("./Functions/decomposition_eigen.R")
 source("./Functions/G_matrix.R")
 source("./Functions/AofT.R")
 source("./Functions/measurement_polynomial.R")
