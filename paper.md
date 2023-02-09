@@ -34,8 +34,6 @@ bibliography: paper.bib
 
 ---
 
-\newtheorem{theorem}{Theorem}
-
 # Summary
 
 The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of crude oil futures and some other futures in the last two decades. In 2016, [@filipovic:2016] introduced a new polynomial diffusion framework which allows a more complicated structure of spot price. This framework has been applied to electricity forwards in [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. This application aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. The application is available at [https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation](https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation). 
@@ -110,13 +108,12 @@ and $\vec{p}$ is the coordinate representation of $p(x)$. Moreover, there exists
 \label{eq:G}
 \end{equation}
 
-\begin{theorem}
-	Let $p(x) \in Pol_n$ be a polynomial with coordinate representation $\vec{p} \in \mathbb{R}^N$ satisfying \eqref{eq:vec_p}, $G \in \mathbb{R}^{N \times N}$ be a matrix representation of generator $\mathcal{G}$ satisfying \eqref{eq:G}, and $X_t \in \mathbb{R}^d$ satisfies \eqref{eq:sde}. Then for $0 \le t \le T$, we have
+Theorem 1: Let $p(x) \in Pol_n$ be a polynomial with coordinate representation $\vec{p} \in \mathbb{R}^N$ satisfying \eqref{eq:vec_p}, $G \in \mathbb{R}^{N \times N}$ be a matrix representation of generator $\mathcal{G}$ satisfying \eqref{eq:G}, and $X_t \in \mathbb{R}^d$ satisfies \eqref{eq:sde}. Then for $0 \le t \le T$, we have
 	$$\mathbb{E} \left(p(X_T)|\mathcal{F}_t \right) = H(X_t)^\top e^{(T-t)G} \vec{p}, $$
 	where $\mathcal{F}_t$ is a $\sigma$-algebra generated up tp time $t$. 
 	\label{th:pd}
-\end{theorem}
-The proof of Theorem \ref{th:pd} is given in \cite{filipovic2016polynomial}. 
+
+The proof of Theorem 1 is given in [@filipovic:2016]. 
 
 Next, we apply this theorem to the two-factor model. Assume the spot price $S_t$ is modelled as
 \begin{equation}
