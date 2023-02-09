@@ -36,7 +36,7 @@ bibliography: paper.bib
 
 # Summary
 
-The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of crude oil futures and some other futures in the last two decades. In 2016, [@filipovic:2016] introduced a new polynomial diffusion framework which allows a more complicated structure of spot price. This framework has been applied to electricity forwards in [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. PDSim aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. This application is available at [https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation](https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation). 
+The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of crude oil futures and some other futures in the last two decades. In 2016, [@filipovic:2016] introduced a new polynomial diffusion framework which allows a more complicated structure of spot price. This framework has been applied to electricity forwards [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. PDSim aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. This application is available at [https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation](https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation). 
 
 ## Schwartz-Smith two-factor model
 
@@ -56,7 +56,7 @@ d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi})dt + \sigma_{\xi} dW_t^{\xi},
 \end{equation}
 where $\kappa, \gamma \in \mathbb{R}^+$ are the speed of mean-reversion parameters, $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor, $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are the volatilities, and $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums. The processes $(W_t^{\chi})_{t \ge 0}$ and $(W_t^{\xi})_{t \ge 0}$ are correlated standard Brownian Motions with 
 $$\mathbb{E} \left(dW_t^{\chi} dW_t^{\xi}\right) = \rho dt. $$ 
-We set $\lambda_{\chi} = \lambda_{\xi} = 0$ in \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi} to get the real processes. We use the risk-neutral processes for futures pricing, and real processes for modelling of state variables. 
+We set $\lambda_{\chi} = \lambda_{\xi} = 0$ in \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi} to get the real processes. We use the risk-neutral processes for futures pricing, and real processes for modelling state variables. 
 
 In discrete time, $\chi_t$ and $\xi_t$ are jointly normally distributed. Therefore, the spot price, which is equal to the sum of $\chi_t$ and $\xi_t$, is log-normally distributed. Moreover, under the arbitrage-free assumption, the futures price ($F_{t,T}$) at current time $t$ must be equal to the expected value of spot price at maturity time $T$, 
 $$\log{(F_{t,T})} = \log{\left(\mathbb{E}^*(S_T | \mathcal{F}_t)\right)}, $$
@@ -82,7 +82,7 @@ Under this framework, $c, E, \Sigma_w$ and $\Sigma_v$ are deterministic but $d_t
 
 ## Polynomial diffusion model
 
-In this section, we present a general framework of the polynomial diffusion model first, then we give the application in the two-factor model. The mathematical foundations and applications of polynomial diffusion model in finance are provided in [@filipovic:2016].
+In this section, we present a general framework of the polynomial diffusion model first, and then we give the application in the two-factor model. The mathematical foundations and applications of polynomial diffusion model in finance are provided in [@filipovic:2016].
 
 Consider the stochastic differential equation
 \begin{equation}
@@ -176,7 +176,7 @@ This application is aimed at researchers who are pricing commodity futures by Sc
 
 # Comparison with existing libraries
 
-The R package "NFCP" [@aspinall:2022] was developed for multi-factor pricing of commodity futures, which is a generalisation of the Schwartz-Smith model. However, this package doesn't accommodate the polynomial diffusion model. There is no R packages available for PD models currently. 
+The R package "NFCP" [@aspinall:2022] was developed for multi-factor pricing of commodity futures, which is a generalisation of the Schwartz-Smith model. However, this package doesn't accommodate the polynomial diffusion model. There are no R packages available for PD models currently. 
 
 There are many packages in R for KF, for example, "dse", "FKF", "sspir", "dlm", "KFAS". However, all of these packages are limited. "dse" can only take time-invariant state and measurement transition matrices. "FKF" emphasizes computation speed but cannot run smoother. "sspir", "dlm" and "KFAS" have no deterministic inputs in state and measurement equations. For the non-linear state-space model, the functions "ukf" and "ekf" in package "bssm" run the EKF and UKF respectively. However, this package was designed for Bayesian inference where a prior distribution of unknown parameters is required. To achieve the best collaboration of filters and models, we use our functions of KF, EKF and UKF. 
 
