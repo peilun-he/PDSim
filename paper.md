@@ -19,7 +19,7 @@ authors:
     equal-contrib: true
     affiliation: 3
   - name: Pavel V. Shevchenko
-    orcid: 0000−0001−8104−8716
+    orcid: 0000-0001-8104-8716
     equal-contrib: true
     affiliation: 1
 affiliations:
@@ -153,9 +153,9 @@ a_{t|t-1} &:= \mathbb{E}(x_t | \mathcal{F}_{t-1}),& P_{t|t-1} &:= Cov(x_t | \mat
 a_t &:= \mathbb{E}(x_t | \mathcal{F}_t),& P_t &:= Cov(x_t | \mathcal{F}_t). \nonumber
 \end{align} 
 
-![Flowcharts of EKF\label{fig:EKF}](paper-figures/EKF.jpg)
+![Flowcharts of EKF\label{fig:EKF}](paper-figures/EKF.jpg){ width=80% }
 
-![Flowcharts of UKF\label{fig:UKF}](paper-figures/UKF.jpg){ width=80% }
+![Flowcharts of UKF\label{fig:UKF}](paper-figures/UKF.jpg){ width=60% }
 
 The Kalman Filter (KF) [@harvey:1990] is a commonly used filtering method in estimating hidden state variables. However, KF can only deal with the linear Gaussian state model. To capture the non-linear dynamics in the PD model, we use Extended Kalman Filter (EKF) [@julier:1997] and Unscented Kalman Filter (UKF) [@julier:2004; @wan:2000]. Suppose we have a non-linear state-space model 
 $$x_t = f(x_{t-1}) + w_t, w_t \sim N(\textbf{0}, \Sigma_w), $$
