@@ -29,7 +29,7 @@ affiliations:
    index: 2
  - name: Department of Statistics and Applied Probability, University of California Santa Barbara, USA
    index: 3
-date: 9 February 2023
+date: 09 February 2023
 bibliography: paper.bib
 
 ---
