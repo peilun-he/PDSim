@@ -36,7 +36,7 @@ bibliography: paper.bib
 
 # Summary
 
-The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of crude oil futures and some other futures in the last two decades. In 2016, [@filipovic:2016] introduced a new polynomial diffusion framework which allows a more complicated structure of spot price. This framework has been applied to electricity forwards in [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. This application aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. The application is available at [https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation](https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation). 
+The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of crude oil futures and some other futures in the last two decades. In 2016, [@filipovic:2016] introduced a new polynomial diffusion framework which allows a more complicated structure of spot price. This framework has been applied to electricity forwards in [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. PDSim aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. This application is available at [https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation](https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation). 
 
 ## Schwartz-Smith two-factor model
 
@@ -133,12 +133,12 @@ F_{t,T} = \mathbb{E}^*(S_T | \mathcal{F}_t) = H(x_t)^\top e^{(T-t)G} \vec{p}.
 \end{equation}
 Therefore, we have the non-linear state-space model 
 \begin{equation}
-x_t = c + E x_{t-1} + w_t, w_t \sim N(\textbf{0}, W), 
+x_t = c + E x_{t-1} + w_t, w_t \sim N(\textbf{0}, \Sigma_w), 
 \label{eq:qua_xt}
 \end{equation}
 and 
 \begin{equation}
-y_t = H_n(x_t)^\top e^{(T-t)G} \vec{p} + v_t, v_t \sim N(\textbf{0}, V). 
+y_t = H_n(x_t)^\top e^{(T-t)G} \vec{p} + v_t, v_t \sim N(\textbf{0}, \Sigma_v). 
 \label{eq:qua_yt}
 \end{equation}
 
@@ -157,10 +157,10 @@ a_t &:= \mathbb{E}(x_t | \mathcal{F}_t),& P_t &:= Cov(x_t | \mathcal{F}_t). \non
 
 ![Flowcharts of UKF\label{fig:UKF}](paper-figures/UKF.jpg){ width=80% }
 
-The Kalman Filter (KF) [@harvey:1990] is a commonly used filtering method in estimating hidden state variables. However, KF can only deal with the linear Gaussian state model. To capture the non-linear dynamics in the PD model, we use Extended Kalman Filter (EKF) [@julier:1997] and Unscented Kalman Filter (UKF) [@julier:2004unscented; @wan:2000]. Suppose we have a non-linear state-space model 
+The Kalman Filter (KF) [@harvey:1990] is a commonly used filtering method in estimating hidden state variables. However, KF can only deal with the linear Gaussian state model. To capture the non-linear dynamics in the PD model, we use Extended Kalman Filter (EKF) [@julier:1997] and Unscented Kalman Filter (UKF) [@julier:2004; @wan:2000]. Suppose we have a non-linear state-space model 
 $$x_t = f(x_{t-1}) + w_t, w_t \sim N(\textbf{0}, \Sigma_w), $$
 $$y_t = h(x_t) + v_t, v_t \sim N(\textbf{0}, \Sigma_v). $$
-The EKF linearises the state and measurement equations through the first-order Taylor series. To run KF, we just replace $J_f$ with $E$ and replace $J_h$ with $F_t$, where $J_f$ and $J_h$ are the Jacobian of $f(\cdot)$ and $h(\cdot)$ respectively. In contrast, the UKF uses a set of carefully chosen points, called sigma points, to represent the true distributions of state variables. Then, these sigma points are propagated through the state equation. The flowchats of EKF and UKF are given in Figure \autoref{fig:EKF} and Figure \autoref{fig:UKF}. In this application, we use KF for the Schwartz-Smith model, and EKF/UKF for the polynomial diffusion model. 
+The EKF linearises the state and measurement equations through the first-order Taylor series. To run KF, we just replace $J_f$ with $E$ and replace $J_h$ with $F_t$, where $J_f$ and $J_h$ are the Jacobian of $f(\cdot)$ and $h(\cdot)$ respectively. In contrast, the UKF uses a set of carefully chosen points, called sigma points, to represent the true distributions of state variables. Then, these sigma points are propagated through the state equation. The flowchats of EKF and UKF are given in \autoref{fig:EKF} and \autoref{fig:UKF}. In this application, we use KF for the Schwartz-Smith model, and EKF/UKF for the polynomial diffusion model. 
 
 # Statement of need
 
@@ -176,75 +176,8 @@ This application is aimed at researchers who are pricing commodity futures by Sc
 
 # Comparison with existing libraries
 
-The R package ``NFCP" [@aspinall:2022] was developed for multi-factor pricing of commodity futures, which is a generalisation of the Schwartz-Smith model. However, this package doesn't accommodate the polynomial diffusion model. There is no R packages available for PD models currently. 
+The R package "NFCP" [@aspinall:2022] was developed for multi-factor pricing of commodity futures, which is a generalisation of the Schwartz-Smith model. However, this package doesn't accommodate the polynomial diffusion model. There is no R packages available for PD models currently. 
 
-There are many packages in R for KF, for example, ``dse", ``FKF", ``sspir", ``dlm", ``KFAS". However, all of these packages are limited. ``dse" can only take time-invariant state and measurement transition matrices. ``FKF" emphasizes computation speed but cannot run smoother. ``sspir", ``dlm" and ``KFAS" have no deterministic inputs in state and measurement equations. For the non-linear state-space model, the functions ``ukf" and ``ekf" in package "bssm" run the EKF and UKF respectively. However, this package was designed for Bayesian inference where a prior distribution of unknown parameters is required. To achieve the best collaboration of filters and models, we use our functions of KF, EKF and UKF. 
-
-# Statement of need
-
-`Gala` is an Astropy-affiliated Python package for galactic dynamics. Python
-enables wrapping low-level languages (e.g., C) for speed without losing
-flexibility or ease-of-use in the user-interface. The API for `Gala` was
-designed to provide a class-based and user-friendly interface to fast (C or
-Cython-optimized) implementations of common operations such as gravitational
-potential and force evaluation, orbit integration, dynamical transformations,
-and chaos indicators for nonlinear dynamics. `Gala` also relies heavily on and
-interfaces well with the implementations of physical units and astronomical
-coordinate systems in the `Astropy` package [@astropy] (`astropy.units` and
-`astropy.coordinates`).
-
-`Gala` was designed to be used by both astronomical researchers and by
-students in courses on gravitational dynamics or astronomy. It has already been
-used in a number of scientific publications [@Pearson:2017] and has also been
-used in graduate courses on Galactic dynamics to, e.g., provide interactive
-visualizations of textbook material [@Binney:2008]. The combination of speed,
-design, and support for Astropy functionality in `Gala` will enable exciting
-scientific explorations of forthcoming data releases from the *Gaia* mission
-[@gaia] by students and experts alike.
-
-# Mathematics
-
-Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
-
-Double dollars make self-standing equations:
-
-$$\Theta(x) = \left\{\begin{array}{l}
-0\textrm{ if } x < 0\cr
-1\textrm{ else}
-\end{array}\right.$$
-
-You can also use plain \LaTeX for equations
-\begin{equation}\label{eq:fourier}
-\hat f(\omega) = \int_{-\infty}^{\infty} f(x) e^{i\omega x} dx
-\end{equation}
-and refer to \autoref{eq:fourier} from text.
-
-# Citations
-
-Citations to entries in paper.bib should be in
-[rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
-format.
-
-If you want to cite a software repository URL (e.g. something on GitHub without a preferred
-citation) then you can do it with the example BibTeX entry below for @fidgit.
-
-For a quick reference, the following citation commands can be used:
-- `@author:2001`  ->  "Author et al. (2001)"
-- `[@author:2001]` -> "(Author et al., 2001)"
-- `[@author1:2001; @author2:2001]` -> "(Author1 et al., 2001; Author2 et al., 2002)"
-
-# Figures
-
-Figures can be included like this:
-![Caption for example figure.\label{fig:example}](paper-figures/EKF.jpg)
-and referenced from text using \autoref{fig:example}.
-
-Figure sizes can be customized by adding an optional second parameter:
-![Caption for example figure.](figure.png){ width=20% }
-
-# Acknowledgements
-
-We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.
+There are many packages in R for KF, for example, "dse", "FKF", "sspir", "dlm", "KFAS". However, all of these packages are limited. "dse" can only take time-invariant state and measurement transition matrices. "FKF" emphasizes computation speed but cannot run smoother. "sspir", "dlm" and "KFAS" have no deterministic inputs in state and measurement equations. For the non-linear state-space model, the functions "ukf" and "ekf" in package "bssm" run the EKF and UKF respectively. However, this package was designed for Bayesian inference where a prior distribution of unknown parameters is required. To achieve the best collaboration of filters and models, we use our functions of KF, EKF and UKF. 
 
 # References
