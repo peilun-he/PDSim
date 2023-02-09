@@ -34,6 +34,8 @@ bibliography: paper.bib
 
 ---
 
+\newtheorem{theorem}{Theorem}
+
 # Summary
 
 The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of crude oil futures and some other futures in the last two decades. In 2016, [@filipovic:2016] introduced a new polynomial diffusion framework which allows a more complicated structure of spot price. This framework has been applied to electricity forwards in [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. This application aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. The application is available at [https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation](https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation). 
