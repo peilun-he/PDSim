@@ -76,7 +76,7 @@ $w_t$ and $v_t$ are multivariate Gaussian noises with mean $\textbf{0}$ and cova
 $\Sigma_w = \left[\begin{matrix}
 \frac{1 - e^{-2\kappa \Delta t}}{2\kappa}\sigma_{\chi}^2 & \frac{1 - e^{-(\kappa + \gamma) \Delta t}}{\kappa + \gamma}\sigma_{\chi}\sigma_{\xi}\rho \\
 \frac{1 - e^{-(\kappa + \gamma) \Delta t}}{\kappa + \gamma}\sigma_{\chi}\sigma_{\xi}\rho & \frac{1 - e^{-2\gamma \Delta t}}{2\gamma}\sigma_{\xi}^2
-\end{matrix}\right], $ and we assume $\Sigma_v$ is diagonal, $\Sigma_v = diag(\sigma_1^2, \sigma_2^2, \dots, \sigma_m^2)$. 
+\end{matrix}\right],$ and we assume $\Sigma_v$ is diagonal, $\Sigma_v = diag(\sigma_1^2, \sigma_2^2, \dots, \sigma_m^2)$. 
 Under this framework, $c, E, \Sigma_w$ and $\Sigma_v$ are deterministic but $d_t$ and $F_t$ are time-variant. 
 
 ## Polynomial Diffusion Model
