@@ -1,36 +1,37 @@
 ---
-title: 'Gala: A Python package for galactic dynamics'
+title: 'PDSim: A Shiny App for Polynomial Diffusion Model Simulation and Estimation'
 tags:
-  - Python
-  - astronomy
+  - Shiny
+  - finance
   - dynamics
-  - galactic dynamics
-  - milky way
+  - futures pricing
 authors:
-  - name: Adrian M. Price-Whelan
-    orcid: 0000-0000-0000-0000
+  - name: Peilun He
+    orcid: 0000-0002-2740-3390
     equal-contrib: true
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
-  - name: Author Without ORCID
-    equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
-    affiliation: 2
-  - name: Author with no affiliation
-    corresponding: true # (This is how to denote the corresponding author)
+    affiliation: 1
+  - name: Nino Kordzakhia
+    orcid: 0000−0002−7853−4550
+    equal-contrib: true
+    affiliation: 2 
+  - name: Gareth W. Peters
+    orcid: 0000-0003-2768-8979
+    equal-contrib: true
     affiliation: 3
+  - name: Pavel V. Shevchenko
+    orcid: 0000−0001−8104−8716
+    equal-contrib: true
+    affiliation: 1
 affiliations:
- - name: Lyman Spitzer, Jr. Fellow, Princeton University, USA
+ - name: Department of Actuarial Studies and Business Analytics, Macquarie University, Australia
    index: 1
- - name: Institution Name, Country
+ - name: Department of Mathematics and Statistics, Macquarie University, Australia
    index: 2
- - name: Independent Researcher, Country
+ - name: Department of Statistics and Applied Probability, University of California Santa Barbara, USA
    index: 3
-date: 13 August 2017
+date: 9 February 2023
 bibliography: paper.bib
 
-# Optional fields if submitting to a AAS journal too, see this blog post:
-# https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
-aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
-aas-journal: Astrophysical Journal <- The name of the AAS journal.
 ---
 
 # Summary
