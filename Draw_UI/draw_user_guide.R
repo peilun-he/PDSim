@@ -18,8 +18,8 @@ draw_user_guide <- function() {
              the estimated futures price on the first day is extremely large. All plots
              of contracts estimation start from the second day. ", style = style),
            p("6. This is version 2 of PDSim. The newest version is available at: ", 
-             a("https://github.com/peilun-he/polynomial_diffusion_in_R", 
-               href = "https://github.com/peilun-he/polynomial_diffusion_in_R", 
+             a("https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation", 
+               href = "https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation", 
                target = "_blank"), style = style), 
            hr(),
            titlePanel(h3("Schwartz-Smith model")), 
