@@ -17,7 +17,7 @@ draw_user_guide <- function() {
            p("5. Because of the limitation of filtering methods, the standard error of 
              the estimated futures price on the first day is extremely large. All plots
              of contracts estimation start from the second day. ", style = style),
-           p("6. This is version 2 of PDSim. The newest version is available at: ", 
+           p("6. This is version 2.0 of PDSim. The newest version is available at: ", 
              a("https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation", 
                href = "https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation", 
                target = "_blank"), style = style), 
