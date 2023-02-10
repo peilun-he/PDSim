@@ -7,7 +7,7 @@ Future plan:
 - Allow users to upload data
 
 ## Version history 
-Version 2.0 (current version): 
+**Version 2.0** (current version): 
 - Add navigation bar: welcome page, app, user guide, team members
 - Descriptions of models and some hints are added to the user guide page
 - Allow users to download simulated data as csv files
@@ -16,4 +16,4 @@ Version 2.0 (current version):
 - Allow users to generate new realisations of data using same set of parameters
 - Bugs fixed 
 
-Version 1.0: basic functions and UI
+**Version 1.0**: basic functions and UI
