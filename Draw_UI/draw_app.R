@@ -16,7 +16,6 @@ draw_app <- function() {
                ), 
                selectInput("model", "Select a model", selected = "PD", 
                            choices = c("Schwartz-Smith two-factor model" = "SS2000", "Polynomial diffusion model" = "PD")),
-               #textOutput("selected_model"), 
                conditionalPanel(condition = "input.model == 'PD'", 
                                 selectInput("filter", "Select a filtering method", selected = "Extended Kalman Filter", 
                                             choices = c("Extended Kalman Filter", "Unscented Kalman Filter")), 
