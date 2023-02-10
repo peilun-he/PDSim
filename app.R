@@ -5,6 +5,7 @@ library(plotly)
 library(shinythemes)
 library(tidyr)
 library(scales)
+library(lubridate)
 
 source("./Functions/MatrixExponential/decomposition_eigen.R")
 source("./Functions/G_matrix.R")
