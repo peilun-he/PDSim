@@ -4,6 +4,7 @@ Web application for the polynomial diffusion model. This app generates a futures
 Future plan: 
 - Add decomposition of data through "seasonal" package 
 - Add forecasting and smoothing 
+- Allow users to upload data
 
 ## Version history 
 Version 2.0 (current version): 
