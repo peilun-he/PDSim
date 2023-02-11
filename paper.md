@@ -59,7 +59,7 @@ $$\mathbb{E} \left(dW_t^{\chi} dW_t^{\xi}\right) = \rho dt. $$
 We set $\lambda_{\chi} = \lambda_{\xi} = 0$ in \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi} to get the real processes. We use the risk-neutral processes for futures pricing, and real processes for modelling state variables. 
 
 In discrete time, $\chi_t$ and $\xi_t$ are jointly normally distributed. Therefore, the spot price is log-normally distributed. Moreover, under the arbitrage-free assumption, the futures price ($F_{t,T}$) at current time $t$ must be equal to the expected value of spot price at maturity time $T$, 
-$$F_{t,T} = \left(\mathbb{E}^*(S_T | \mathcal{F}_t)\right), $$
+$$F_{t,T} = \mathbb{E}^*(S_T | \mathcal{F}_t), $$
 where $\mathcal{F}_t$ is a natural filtration and $\mathbb{E}^*(\cdot)$ is the expectation under the risk-neutral processes from \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi}. Then we can get the linear Gaussian state space model: 
 \begin{equation}
 x_t = c + Ex_{t-1} + w_t, 
@@ -97,7 +97,7 @@ Moreover, we define the generator $\mathcal{G}$ associated to the polynomial dif
 \mathcal{G}f(x) = \frac{1}{2} Tr\left( a(x) \nabla^2 f(x)\right) + b(x)^\top \nabla f(x)
 \label{eq:generator}
 \end{equation}
-for $x \in \mathbb{R}^d$ and any $f \in C^2$ twice continuous differentiable function. Let $N$ be the dimension of $Pol_n$, and $H: \mathbb{R}^d \to \mathbb{R}^N$ be a function whose components form a basis of $Pol_n$. Then for any $p \in Pol_n$, there exists a unique vector $\vec{p} \in \mathbb{R}^N$ such that 
+for $x \in \mathbb{R}^d$ and any $f \in C^2$ twice continuous differentiable functions. Let $N$ be the dimension of $Pol_n$, and $H: \mathbb{R}^d \to \mathbb{R}^N$ be a function whose components form a basis of $Pol_n$. Then for any $p \in Pol_n$, there exists a unique vector $\vec{p} \in \mathbb{R}^N$ such that 
 \begin{equation}
 p(x) = H(x)^\top \vec{p}
 \label{eq:vec_p}
