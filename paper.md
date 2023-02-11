@@ -97,7 +97,7 @@ Moreover, we define the generator $\mathcal{G}$ associated to the polynomial dif
 \mathcal{G}f(x) = \frac{1}{2} Tr\left( a(x) \nabla^2 f(x)\right) + b(x)^\top \nabla f(x)
 \label{eq:generator}
 \end{equation}
-for $x \in \mathbb{R}^d$ and any $f \in C^2$ twice continuously differentiable functions. Let $N$ be the dimension of $Pol_n$, and $H: \mathbb{R}^d \to \mathbb{R}^N$ be a function whose components form a basis of $Pol_n$. Then for any $p \in Pol_n$, there exists a unique vector $\vec{p} \in \mathbb{R}^N$ such that 
+for $x \in \mathbb{R}^d$ and any $f \in C^2$, twice continuously differentiable functions. Let $N$ be the dimension of $Pol_n$, and $H: \mathbb{R}^d \to \mathbb{R}^N$ be a function whose components form a basis of $Pol_n$. Then for any $p \in Pol_n$, there exists a unique vector $\vec{p} \in \mathbb{R}^N$ such that 
 \begin{equation}
 p(x) = H(x)^\top \vec{p}
 \label{eq:vec_p}
