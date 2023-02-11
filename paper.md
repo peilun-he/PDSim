@@ -25,7 +25,7 @@ authors:
 affiliations:
  - name: Department of Actuarial Studies and Business Analytics, Macquarie University, Australia
    index: 1
- - name: Department of Mathematics and Statistics, Macquarie University, Australia
+ - name: School of Mathematical and Physical Sciences, Macquarie University, Australia
    index: 2
  - name: Department of Statistics and Applied Probability, University of California Santa Barbara, USA
    index: 3
@@ -36,11 +36,11 @@ bibliography: paper.bib
 
 # Summary
 
-The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of crude oil futures and some other futures in the last two decades. In 2016, [@filipovic:2016] introduced a new polynomial diffusion framework which allows a more complicated structure of spot price. This framework has been applied to electricity forwards [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. PDSim aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. This application is available at [https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation](https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation). 
+The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of commodity futures in the last two decades. In 2016, [@filipovic:2016] introduced a polynomial diffusion framework which allows a more complex structure of spot price. This framework has been applied to electricity forwards [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. PDSim aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. This application is available at [https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation](https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation). 
 
 ## Schwartz-Smith two-factor model
 
-Under the Schwartz-Smith framework, the spot price $S_t$ is modelled as the sum of two factors $\chi_t$ and $\xi_t$, 
+Under the Schwartz-Smith framework, the logarithm of spot price $S_t$ is modelled as the sum of two factors $\chi_t$ and $\xi_t$, 
 \begin{equation}\label{eq:st}
 \log{(S_t)} = \chi_t + \xi_t,
 \end{equation}
@@ -54,13 +54,13 @@ and
 d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi})dt + \sigma_{\xi} dW_t^{\xi},
 \label{eq:SS_rn_xi}
 \end{equation}
-where $\kappa, \gamma \in \mathbb{R}^+$ are the speed of mean-reversion parameters, $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor, $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are the volatilities, and $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums. The processes $(W_t^{\chi})_{t \ge 0}$ and $(W_t^{\xi})_{t \ge 0}$ are correlated standard Brownian Motions with 
+where $\kappa, \gamma \in \mathbb{R}^+$ are the speed of mean-reversion parameters, $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor, $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are the volatility parameters, and $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums. The processes $(W_t^{\chi})_{t \ge 0}$ and $(W_t^{\xi})_{t \ge 0}$ are correlated standard Brownian Motions with 
 $$\mathbb{E} \left(dW_t^{\chi} dW_t^{\xi}\right) = \rho dt. $$ 
 We set $\lambda_{\chi} = \lambda_{\xi} = 0$ in \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi} to get the real processes. We use the risk-neutral processes for futures pricing, and real processes for modelling state variables. 
 
-In discrete time, $\chi_t$ and $\xi_t$ are jointly normally distributed. Therefore, the spot price, which is equal to the sum of $\chi_t$ and $\xi_t$, is log-normally distributed. Moreover, under the arbitrage-free assumption, the futures price ($F_{t,T}$) at current time $t$ must be equal to the expected value of spot price at maturity time $T$, 
-$$\log{(F_{t,T})} = \log{\left(\mathbb{E}^*(S_T | \mathcal{F}_t)\right)}, $$
-where $\mathcal{F}_t$ is the filtration and $\mathbb{E}^*(\cdot)$ is the expectation under the risk-neutral processes \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi}. Then we can get the linear Gaussian state space model: 
+In discrete time, $\chi_t$ and $\xi_t$ are jointly normally distributed. Therefore, the spot price is log-normally distributed. Moreover, under the arbitrage-free assumption, the futures price ($F_{t,T}$) at current time $t$ must be equal to the expected value of spot price at maturity time $T$, 
+$$F_{t,T} = \left(\mathbb{E}^*(S_T | \mathcal{F}_t)\right), $$
+where $\mathcal{F}_t$ is a natural filtration and $\mathbb{E}^*(\cdot)$ is the expectation under the risk-neutral processes from \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi}. Then we can get the linear Gaussian state space model: 
 \begin{equation}
 x_t = c + Ex_{t-1} + w_t, 
 \end{equation}
@@ -97,7 +97,7 @@ Moreover, we define the generator $\mathcal{G}$ associated to the polynomial dif
 \mathcal{G}f(x) = \frac{1}{2} Tr\left( a(x) \nabla^2 f(x)\right) + b(x)^\top \nabla f(x)
 \label{eq:generator}
 \end{equation}
-for $x \in \mathbb{R}^d$ and any $C^2$ function $f$. Let $N$ be the dimension of $Pol_n$, and $H: \mathbb{R}^d \to \mathbb{R}^N$ be a function whose components form a basis of $Pol_n$. Then for any $p \in Pol_n$, there exists a unique vector $\vec{p} \in \mathbb{R}^N$ such that 
+for $x \in \mathbb{R}^d$ and any $f \in C^2$ twice continuous differentiable function. Let $N$ be the dimension of $Pol_n$, and $H: \mathbb{R}^d \to \mathbb{R}^N$ be a function whose components form a basis of $Pol_n$. Then for any $p \in Pol_n$, there exists a unique vector $\vec{p} \in \mathbb{R}^N$ such that 
 \begin{equation}
 p(x) = H(x)^\top \vec{p}
 \label{eq:vec_p}
@@ -110,7 +110,7 @@ and $\vec{p}$ is the coordinate representation of $p(x)$. Moreover, there exists
 
 Theorem 1: Let $p(x) \in Pol_n$ be a polynomial with coordinate representation $\vec{p} \in \mathbb{R}^N$ satisfying \autoref{eq:vec_p}, $G \in \mathbb{R}^{N \times N}$ be a matrix representation of generator $\mathcal{G}$ satisfying \autoref{eq:G}, and $X_t \in \mathbb{R}^d$ satisfies \autoref{eq:sde}. Then for $0 \le t \le T$, we have
 	$$\mathbb{E} \left(p(X_T)|\mathcal{F}_t \right) = H(X_t)^\top e^{(T-t)G} \vec{p}, $$
-	where $\mathcal{F}_t$ is a $\sigma$-algebra generated up tp time $t$. 
+	where $\mathcal{F}_t$ is a natural $\sigma$-algebra generated up tp time $t$. 
 	\label{th:pd}
 
 The proof of Theorem 1 is given in [@filipovic:2016]. 
@@ -120,13 +120,13 @@ Next, we apply this theorem to the two-factor model. Assume the spot price $S_t$
 S_t = p_n(x_t), 
 \label{eq:poly_st}
 \end{equation}
-where $x_t = (\chi_t, \xi_t)^\top$ is a vector of state variables and $p_n(\cdot)$ is a polynomial function with a degree at most $n$. $\chi_t$ and $\xi_t$ are the short-term and long-term factors defined in \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi} for risk-neutral processes. $x_t$ satisfies the stochastic differential equation \autoref{eq:sde}, with 
+where $x_t = (\chi_t, \xi_t)^\top$ is a vector of state variables and $p_n(\cdot)$ is a polynomial function with a degree at most $n$ with $\chi_t$ and $\xi_t$ are the short-term and long-term factors defined in \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi} for risk-neutral processes. Then $x_t$ satisfies the stochastic differential equation \autoref{eq:sde}, with 
 $$b(x_t) = \left[ \begin{matrix} -\kappa \chi_t - \lambda_{\chi} \\ \mu_{\xi} - \gamma \xi_t - \lambda_{\xi} \end{matrix} \right], \sigma(x_t) = \left[ \begin{matrix} \sigma_{\chi} & 0 \\ 0 & \sigma_{\xi} \end{matrix} \right], a(x_t) = \sigma(x_t) \sigma(x_t)^\top = \left[ \begin{matrix} \sigma_{\chi}^2 & 0 \\ 0 & \sigma_{\xi}^2 \end{matrix} \right]. $$
 For any basis $H_n(x_t)$, the polynomial $p_n(x_t)$ can be uniquely represented as
 $$p_n(x_t) = H_n(x_t)^\top \vec{p}. $$
 The generator $\mathcal{G}$ is given by 
 $$\mathcal{G}f(x) = \frac{1}{2} Tr \left( \left[ \begin{matrix} \sigma_{\chi}^2 & 0 \\ 0 & \sigma_{\xi}^2 \end{matrix} \right] \nabla^2 f(x) \right) + \left[ \begin{matrix} -\kappa \chi_t - \lambda_{\chi} \\ \mu_{\xi} - \gamma \xi_t - \lambda_{\xi} \end{matrix} \right]^\top \nabla f(x). $$
-By applying $\mathcal{G}$ to each element of $H_n(x_t)$, we get the matrix representation $G$. Then, by Theorem 1, the futures price $F_{t,T}$ is given by
+By applying $\mathcal{G}$ to each element of $H_n(x_t)$, we obtain the matrix representation $G$. Then, by Theorem 1, the futures price $F_{t,T}$ is given by
 \begin{equation}
 F_{t,T} = \mathbb{E}^*(S_T | \mathcal{F}_t) = H(x_t)^\top e^{(T-t)G} \vec{p}. 
 \label{eq:qua_ftt}
@@ -143,7 +143,7 @@ y_t = H_n(x_t)^\top e^{(T-t)G} \vec{p} + v_t, v_t \sim N(\textbf{0}, \Sigma_v).
 \end{equation}
 
 In this application, we assume the spot price is a polynomial of state variables with degree $n = 2$, 
-$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2$, and the dimension of $Pol_2$ is $N = 6$. The coordinate representation $\vec{p} = (\alpha_1, \alpha_2, \alpha_3, \alpha_4, \alpha_5, \alpha_6)^\top$. $\alpha_i, i = 1, \dots, 6$ are parameters which can be chosen by users. 
+$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2$, and the dimension of $Pol_2$ is $N = 6$. The coordinate representation $\vec{p} = (\alpha_1, \alpha_2, \alpha_3, \alpha_4, \alpha_5, \alpha_6)^\top$. 
 
 ## Filtering methods
 
@@ -160,7 +160,7 @@ a_t &:= \mathbb{E}(x_t | \mathcal{F}_t),& P_t &:= Cov(x_t | \mathcal{F}_t). \non
 The Kalman Filter (KF) [@harvey:1990] is a commonly used filtering method in estimating hidden state variables. However, KF can only deal with the linear Gaussian state model. To capture the non-linear dynamics in the PD model, we use Extended Kalman Filter (EKF) [@julier:1997] and Unscented Kalman Filter (UKF) [@julier:2004; @wan:2000]. Suppose we have a non-linear state-space model 
 $$x_t = f(x_{t-1}) + w_t, w_t \sim N(\textbf{0}, \Sigma_w), $$
 $$y_t = h(x_t) + v_t, v_t \sim N(\textbf{0}, \Sigma_v). $$
-The EKF linearises the state and measurement equations through the first-order Taylor series. To run KF, we just replace $J_f$ with $E$ and replace $J_h$ with $F_t$, where $J_f$ and $J_h$ are the Jacobian of $f(\cdot)$ and $h(\cdot)$ respectively. In contrast, the UKF uses a set of carefully chosen points, called sigma points, to represent the true distributions of state variables. Then, these sigma points are propagated through the state equation. The flowchats of EKF and UKF are given in \autoref{fig:EKF} and \autoref{fig:UKF}. In this application, we use KF for the Schwartz-Smith model, and EKF/UKF for the polynomial diffusion model. 
+The EKF linearises the state and measurement equations through the first-order Taylor series. To run KF, we replace $J_f$ and $J_h$ with $E$ and $F_t$ respectively, where $J_f$ and $J_h$ are the Jacobians of $f(\cdot)$ and $h(\cdot)$. In contrast, the UKF uses a set of carefully chosen points, called sigma points, to represent the true distributions of state variables. Then, these sigma points are propagated through the state equation. The flowchats of EKF and UKF are given in \autoref{fig:EKF} and \autoref{fig:UKF}. In this application, we use KF for the Schwartz-Smith model, and EKF/UKF for the polynomial diffusion model. 
 
 # Statement of need
 
@@ -170,7 +170,7 @@ This application is aimed at researchers who are pricing commodity futures by Sc
 \item[1. ] To provide a simulation tool for the polynomial diffusion model. Users can declare all model specifications and parameters. The generated data is downloadable. 
 \item[2. ] To provide two filtering methods, EKF and UKF, to estimate the futures prices and hidden state variables. Currently, there is no filtering toolbox for the polynomial diffusion model. 
 \item[3. ] To provide well-designed visualisations. That includes the futures prices, the state variables, the estimates of futures prices and state variables, and some downloadable tables. Moreover, all these plots are interactive. Users can zoom in/out, highlight a specific curve, download these plots, and so on. 
-\item[4. ] To provide the estimation errors including root mean squared error (RMSE), mean absolute error (MSE) and mean relative error (MRE). These errors are presented in tables and plots. 
+\item[4. ] To provide the estimation errors including root mean squared error (RMSE), mean absolute error (MSE) and mean relative error (MRE). These measures are presented in tables and plots. 
 \item[5. ] To provide all functions listed above for the Schwartz-Smith model as a comparison. 
 \end{itemize}
 
@@ -178,6 +178,6 @@ This application is aimed at researchers who are pricing commodity futures by Sc
 
 The R package "NFCP" [@aspinall:2022] was developed for multi-factor pricing of commodity futures, which is a generalisation of the Schwartz-Smith model. However, this package doesn't accommodate the polynomial diffusion model. There are no R packages available for PD models currently. 
 
-There are many packages in R for KF, for example, "dse", "FKF", "sspir", "dlm", "KFAS". However, all of these packages are limited. "dse" can only take time-invariant state and measurement transition matrices. "FKF" emphasizes computation speed but cannot run smoother. "sspir", "dlm" and "KFAS" have no deterministic inputs in state and measurement equations. For the non-linear state-space model, the functions "ukf" and "ekf" in package "bssm" run the EKF and UKF respectively. However, this package was designed for Bayesian inference where a prior distribution of unknown parameters is required. To achieve the best collaboration of filters and models, we use our functions of KF, EKF and UKF. 
+There are many packages in R for KF, for example, "dse", "FKF", "sspir", "dlm", "KFAS": "dse" can only take time-invariant state and measurement transition matrices; "FKF" emphasizes computation speed but cannot run smoother; "sspir", "dlm" and "KFAS" have no deterministic inputs in state and measurement equations. For the non-linear state-space model, the functions "ukf" and "ekf" in package "bssm" run the EKF and UKF respectively. However, this package was designed for Bayesian inference where a prior distribution of unknown parameters is required. To achieve the best collaboration of filters and models, we developed functions of KF, EKF and UKF within this code. 
 
 # References
