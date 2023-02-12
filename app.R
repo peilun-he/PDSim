@@ -1,3 +1,9 @@
+packages <- c("lubridate", "shiny", "ggplot2", "DT", "plotly", "shinythemes", "tidyr", "scales")
+not_installed <- packages[!(packages %in% installed.packages()[ , "Package"])]  
+if(length(not_installed)) {
+  install.packages(not_installed) # install missing packages
+}
+
 library(shiny)
 library(ggplot2)
 library(DT)
