@@ -117,16 +117,24 @@ The proof of Theorem 1 is given in [@filipovic:2016].
 
 Next, we apply this theorem to the two-factor model. Assume the spot price $S_t$ is modelled as
 \begin{equation}
-S_t = p_n(x_t), 
+S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2, 
 \label{eq:poly_st}
 \end{equation}
-where $x_t = (\chi_t, \xi_t)^\top$ is a vector of state variables and $p_n(\cdot)$ is a polynomial function with a degree at most $n$ with $\chi_t$ and $\xi_t$ are the short-term and long-term factors defined in \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi} for risk-neutral processes. Then $x_t$ satisfies the stochastic differential equation \autoref{eq:sde}, with 
+where $S_t$ is a polynomial function with a degree $n = 2$ and $x_t = (\chi_t, \xi_t)^\top$ is a vector of state variables with $\chi_t$ and $\xi_t$ are the short-term and long-term factors defined in \autoref{eq:SS_rn_chi} and \autoref{eq:SS_rn_xi} for risk-neutral processes. Then $x_t$ satisfies the stochastic differential equation \autoref{eq:sde}, with 
 $$b(x_t) = \left[ \begin{matrix} -\kappa \chi_t - \lambda_{\chi} \\ \mu_{\xi} - \gamma \xi_t - \lambda_{\xi} \end{matrix} \right], \sigma(x_t) = \left[ \begin{matrix} \sigma_{\chi} & 0 \\ 0 & \sigma_{\xi} \end{matrix} \right], a(x_t) = \sigma(x_t) \sigma(x_t)^\top = \left[ \begin{matrix} \sigma_{\chi}^2 & 0 \\ 0 & \sigma_{\xi}^2 \end{matrix} \right]. $$
-For any basis $H_n(x_t)$, the polynomial $p_n(x_t)$ can be uniquely represented as
-$$p_n(x_t) = H_n(x_t)^\top \vec{p}. $$
+The basis $H(x_t) = (1, \chi_t, \xi_t, \chi_t^2, \chi_t \xi_t, \xi_t^2)^\top$ has a dimension $N = 6$. The coordinate representation $\vec{p} = (\alpha_1, \alpha_2, \alpha_3, \alpha_4, \alpha_5, \alpha_6)^\top$. 
 The generator $\mathcal{G}$ is given by 
 $$\mathcal{G}f(x) = \frac{1}{2} Tr \left( \left[ \begin{matrix} \sigma_{\chi}^2 & 0 \\ 0 & \sigma_{\xi}^2 \end{matrix} \right] \nabla^2 f(x) \right) + \left[ \begin{matrix} -\kappa \chi_t - \lambda_{\chi} \\ \mu_{\xi} - \gamma \xi_t - \lambda_{\xi} \end{matrix} \right]^\top \nabla f(x). $$
-By applying $\mathcal{G}$ to each element of $H_n(x_t)$, we obtain the matrix representation $G$. Then, by Theorem 1, the futures price $F_{t,T}$ is given by
+By applying $\mathcal{G}$ to each element of $H_n(x_t)$, we obtain the matrix representation 
+$$G = \left[ \begin{matrix} 
+             0 & -\lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} & \sigma_{\chi}^2 & 0 & \sigma_{\xi}^2 \\
+             0 & -\kappa & 0 & -2 \lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} & 0 \\
+             0 & 0 & -\gamma & 0 & -\lambda_{\chi} & 2\mu_{\xi} - 2\lambda_{\xi} \\
+             0 & 0 & 0 & -2\kappa & 0 & 0 \\ 
+             0 & 0 & 0 & 0 & -\kappa - \gamma & 0 \\ 
+             0 & 0 & 0 & 0 & 0 & -2\gamma
+             \end{matrix} \right].$$ 
+Then, by Theorem 1, the futures price $F_{t,T}$ is given by
 \begin{equation}
 F_{t,T} = \mathbb{E}^*(S_T | \mathcal{F}_t) = H(x_t)^\top e^{(T-t)G} \vec{p}. 
 \label{eq:qua_ftt}
@@ -141,9 +149,6 @@ and
 y_t = H_n(x_t)^\top e^{(T-t)G} \vec{p} + v_t, v_t \sim N(\textbf{0}, \Sigma_v). 
 \label{eq:qua_yt}
 \end{equation}
-
-In this application, we assume the spot price is a polynomial of state variables with degree $n = 2$, 
-$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2$, and the dimension of $Pol_2$ is $N = 6$. The coordinate representation $\vec{p} = (\alpha_1, \alpha_2, \alpha_3, \alpha_4, \alpha_5, \alpha_6)^\top$. 
 
 ## Filtering methods
 
