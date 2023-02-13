@@ -146,7 +146,7 @@ x_t = c + E x_{t-1} + w_t, w_t \sim N(\textbf{0}, \Sigma_w),
 \end{equation}
 and 
 \begin{equation}
-y_t = H_n(x_t)^\top e^{(T-t)G} \vec{p} + v_t, v_t \sim N(\textbf{0}, \Sigma_v). 
+y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t, v_t \sim N(\textbf{0}, \Sigma_v). 
 \label{eq:qua_yt}
 \end{equation}
 
