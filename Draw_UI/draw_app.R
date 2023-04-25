@@ -6,13 +6,17 @@ draw_app <- function() {
            sidebarLayout(
              sidebarPanel(
                titlePanel(h3("Model Specification")), 
-               fluidRow(
-                 column(5, 
-                        numericInput("n_obs", "No. of trading days", 100, step = 100, min = 100)
-                 ), 
-                 column(5, offset = 2,
-                        numericInput("n_contract", "No. of contracts", 10, step = 1, min = 1)
-                 )
+               selectInput("source", "Data source", selected = "simulate", 
+                           choices = c("Upload data" = "upload", "Simulate data" = "simulate")), 
+               conditionalPanel(condition = "input.source == 'simulate'", 
+                                fluidRow(
+                                  column(5, 
+                                        numericInput("n_obs", "No. of trading days", 100, step = 100, min = 100)
+                                  ), 
+                                  column(5, offset = 2,
+                                        numericInput("n_contract", "No. of contracts", 10, step = 1, min = 1)
+                                  )
+                                )
                ), 
                selectInput("model", "Select a model", selected = "PD", 
                            choices = c("Schwartz-Smith two-factor model" = "SS2000", "Polynomial diffusion model" = "PD")),
@@ -32,9 +36,11 @@ draw_app <- function() {
                                   )
                                 )
                ),
-               p(actionButton("new_data", "Generate new data", style = "width:10cm"), class = "text-center"), 
-               p(downloadButton("download_data", "Download prices", style = "width:5cm"), 
-                 downloadButton("download_mat", "Download maturities", style = "width:5cm"), class = "text-center"), 
+               conditionalPanel(condition = "input.source == "simulate'", 
+                                p(actionButton("new_data", "Generate new data", style = "width:10cm"), class = "text-center"), 
+                                p(downloadButton("download_data", "Download prices", style = "width:5cm"), 
+                                  downloadButton("download_mat", "Download maturities", style = "width:5cm"), class = "text-center"), 
+               ), 
                hr(),
                
                titlePanel(h3("Estimations")), 
