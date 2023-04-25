@@ -18,7 +18,7 @@ draw_app <- function() {
                                   )
                                 )
                ), 
-               conditionPanel(condition = "input.source == 'upload'"
+               conditionalPanel(condition = "input.source == 'upload'", 
                               fileInput("data", "Upload futures price data", accept = ".csv"),
                               fileInput("maturity", "Upload maturity data", accept = ".csv"), 
                ), 
