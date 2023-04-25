@@ -50,10 +50,12 @@ server <- function(input, output, session) {
   session <<- session # make session global
   seed <<- 1234 # seed for generating random number 
   
-  if (input$source == "upload") {
-    input$n_obs <- dim(input$data)[1]
-    input$n_contract <- dim(input$data)[2]
-  }
+  observe({
+    if (input$source == "upload") {
+      input$n_obs <- dim(input$data)[1]
+      input$n_contract <- dim(input$data)[2]
+    }
+  })
   
   # Generate new data button
   observeEvent(input$new_data, {
@@ -75,6 +77,7 @@ server <- function(input, output, session) {
   # Simulate data
   sim_dat <<- reactive({
     if (input$source == "upload") {
+      req(input$data, input$maturity) # check the required files
       dat <- data.frame(yt = read.csv(input$data$datapath), mats = read.csv(input$maturity$datapath))
     } else if (input$source == "simulate") {
       a <- input$new_data # This value has no meaning. Just make sure every time the button is clicked, this function will be run again  
