@@ -6,6 +6,9 @@ Future plan:
 - Add forecasting and smoothing 
 - Allow users to upload data
 
+**Updates - **
+
+
 ## Version history 
 **Version 2.0** (current version): 
 - Add navigation bar: welcome page, app, user guide, team members
