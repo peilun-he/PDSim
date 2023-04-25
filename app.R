@@ -50,6 +50,11 @@ server <- function(input, output, session) {
   session <<- session # make session global
   seed <<- 1234 # seed for generating random number 
   
+  if (input$source == "upload") {
+    input$n_obs <- dim(input$data)[1]
+    input$n_contract <- dim(input$data)[2]
+  }
+  
   # Generate new data button
   observeEvent(input$new_data, {
     seed <<- seed + 1
@@ -69,36 +74,41 @@ server <- function(input, output, session) {
   
   # Simulate data
   sim_dat <<- reactive({
-    a <- input$new_data # This value has no meaning. Just make sure every time the button is clicked, this function will be run again  
-    par_org <- c(input$kappa, input$gamma, input$mu, input$sc, input$sx, input$rho, input$lc, input$lx, 
-                 seq(from = input$s1, to = input$sn, length.out = input$n_contract)) # all required parameters
-    x0 <- c(0, input$mu / input$gamma) # initialisation 
-    noise <- "Gaussian"
-    dt <- 1/360
-    if (input$model == "SS2000") {
-      n_coe <- 0 # number of model coefficients
-      func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
-      func_g <- function(xt, par, mats) measurement_linear(xt, par, mats) # measurement equation
-    } else if (input$model == "PD") {
-      n_coe <- 6 # number of model coefficients
-      par_coe <- c(input$constant, input$chi, input$xi, input$chi2, input$chi_xi, input$xi2) 
-      par_org <- c(par_org, par_coe) 
-      func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
-      func_g <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe) # measurement equation
+    if (input$source == "upload") {
+      dat <- data.frame(yt = read.csv(input$data$datapath), mats = read.csv(input$maturity$datapath))
+    } else if (input$source == "simulate") {
+      a <- input$new_data # This value has no meaning. Just make sure every time the button is clicked, this function will be run again  
+      par_org <- c(input$kappa, input$gamma, input$mu, input$sc, input$sx, input$rho, input$lc, input$lx, 
+                   seq(from = input$s1, to = input$sn, length.out = input$n_contract)) # all required parameters
+      x0 <- c(0, input$mu / input$gamma) # initialisation 
+      noise <- "Gaussian"
+      dt <- 1/360
+      if (input$model == "SS2000") {
+        n_coe <- 0 # number of model coefficients
+        func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+        func_g <- function(xt, par, mats) measurement_linear(xt, par, mats) # measurement equation
+      } else if (input$model == "PD") {
+        n_coe <- 6 # number of model coefficients
+        par_coe <- c(input$constant, input$chi, input$xi, input$chi2, input$chi_xi, input$xi2) 
+        par_org <- c(par_org, par_coe) 
+        func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+        func_g <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe) # measurement equation
+      }
+      dat <- simulate_data(par_org, x0, input$n_obs, input$n_contract, func_f, func_g, n_coe, noise, seed)
+      if (input$model == "SS2000") {
+        dat$yt <- exp(dat$yt) # true futures prices 
+      } 
+      dat$yt <- data.frame(dat$yt)
+      dat$xt <- data.frame(dat$xt)
+      colnames(dat$xt) <- c("chi", "xi")
+      dat$xt_long <- pivot_longer(dat$xt, 1: 2)
+      dat$xt_long$observations <- rep(1: input$n_obs, each = 2)
     }
-    dat <- simulate_data(par_org, x0, input$n_obs, input$n_contract, func_f, func_g, n_coe, noise, seed)
-    if (input$model == "SS2000") {
-      dat$yt <- exp(dat$yt) # true futures prices 
-    } 
-    dat$yt <- data.frame(dat$yt)
     colnames(dat$yt) <- paste("Contract", 1: input$n_contract, sep = "")
-    colnames(dat$mats) <- paste("Contract", 1: input$n_contract, sep = "")
-    dat$xt <- data.frame(dat$xt)
-    colnames(dat$xt) <- c("chi", "xi")
+    colnames(dat$mats) <- paste("Contract", 1: input$n_contract, sep = "")   
     dat$yt_long <- pivot_longer(dat$yt, 1: input$n_contract)
     dat$yt_long$observations <- rep(1: input$n_obs, each = input$n_contract)
-    dat$xt_long <- pivot_longer(dat$xt, 1: 2)
-    dat$xt_long$observations <- rep(1: input$n_obs, each = 2)
+    
     return(dat)
   })
   
