@@ -65,13 +65,13 @@ server <- function(input, output, session) {
   # Download futures data button
   output$download_data<- downloadHandler(filename = "data.csv", content = function(file){
     dat <- sim_dat()
-    write.csv(dat$yt, file)
+    write.csv(dat$yt, file, row.names = FALSE)
   })
   
   # Download maturity data button
   output$download_mat <- downloadHandler(filename = "maturity.csv", content = function(file){
     dat <- sim_dat()
-    write.csv(dat$mats, file)
+    write.csv(dat$mats, file, row.names = FALSE)
   })
   
   # Simulate data
