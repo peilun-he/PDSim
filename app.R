@@ -78,7 +78,7 @@ server <- function(input, output, session) {
   sim_dat <<- reactive({
     if (input$source == "upload") {
       req(input$data, input$maturity) # check the required files
-      dat <- data.frame(yt = read.csv(input$data$datapath), mats = read.csv(input$maturity$datapath))
+      dat <- list(yt = read.csv(input$data$datapath), mats = read.csv(input$maturity$datapath))
     } else if (input$source == "simulate") {
       a <- input$new_data # This value has no meaning. Just make sure every time the button is clicked, this function will be run again  
       par_org <- c(input$kappa, input$gamma, input$mu, input$sc, input$sx, input$rho, input$lc, input$lx, 
