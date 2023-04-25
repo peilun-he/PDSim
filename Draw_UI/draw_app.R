@@ -18,6 +18,10 @@ draw_app <- function() {
                                   )
                                 )
                ), 
+               conditionPanel(condition = "input.source == 'upload'"
+                              fileInput("data", "Upload futures price data", accept = ".csv"),
+                              fileInput("maturity", "Upload maturity data", accept = ".csv"), 
+               ), 
                selectInput("model", "Select a model", selected = "PD", 
                            choices = c("Schwartz-Smith two-factor model" = "SS2000", "Polynomial diffusion model" = "PD")),
                conditionalPanel(condition = "input.model == 'PD'", 
@@ -36,7 +40,7 @@ draw_app <- function() {
                                   )
                                 )
                ),
-               conditionalPanel(condition = "input.source == "simulate'", 
+               conditionalPanel(condition = "input.source == 'simulate'", 
                                 p(actionButton("new_data", "Generate new data", style = "width:10cm"), class = "text-center"), 
                                 p(downloadButton("download_data", "Download prices", style = "width:5cm"), 
                                   downloadButton("download_mat", "Download maturities", style = "width:5cm"), class = "text-center"), 
