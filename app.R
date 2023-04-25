@@ -50,7 +50,7 @@ server <- function(input, output, session) {
   session <<- session # make session global
   seed <<- 1234 # seed for generating random number 
   
-  observe({
+  reactive({
     if (input$source == "upload") {
       input$n_obs <- dim(input$data)[1]
       input$n_contract <- dim(input$data)[2]
