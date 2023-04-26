@@ -73,37 +73,37 @@ draw_app <- function() {
                )
              ), 
              mainPanel(
-               tabsetPanel(
-                 conditionalPanel(condition = "input.source == 'simulate'", 
+               conditionalPanel(condition = "input.source == 'simulate'", 
+                                tabsetPanel(
                                   tabPanel("Time series of futures prices", plotlyOutput("plot_yt")), 
                                   tabPanel("3D surface of futures prices", plotlyOutput("plot_3d_yt")), 
                                   tabPanel("Simulated state variables", plotlyOutput("plot_xt")), 
                                   tabPanel("Table of futures prices", DTOutput("table_yt")), 
                                   tabPanel("Table of time to maturities (in year)", DTOutput("table_mat"))
-                 ), 
-                 
-                 conditionalPanel(condition = "inout.source == 'upload'", 
+                                ), 
+                                tabsetPanel(
+                                  tabPanel("Simulated \\( \\chi \\) vs estimated \\( \\chi \\)", plotlyOutput("plot_chi")), 
+                                  tabPanel("Simulated \\( \\xi \\) vs estimated \\( \\xi \\)", plotlyOutput("plot_xi")), 
+                                  tabPanel("Futures contract estimation", plotlyOutput("plot_yt_hat")), 
+                                  tabPanel("Prices vs maturities on the given day", plotlyOutput("plot_price_mat"))
+                                )
+               ), 
+               
+               conditionalPanel(condition = "inout.source == 'upload'", 
+                                tabsetPanel(
                                   tabPanel("Time series of futures prices", plotlyOutput("plot_yt")), 
                                   tabPanel("3D surface of futures prices", plotlyOutput("plot_3d_yt")), 
                                   tabPanel("Table of futures prices", DTOutput("table_yt")), 
                                   tabPanel("Table of time to maturities (in year)", DTOutput("table_mat"))
-                 )
-               ), 
-               tabsetPanel(
-                 conditionalPanel(condition = "input.source == 'simulate'", 
+                                ), 
+                                tabsetPanel(
                                   tabPanel("Simulated \\( \\chi \\) vs estimated \\( \\chi \\)", plotlyOutput("plot_chi")), 
                                   tabPanel("Simulated \\( \\xi \\) vs estimated \\( \\xi \\)", plotlyOutput("plot_xi")), 
                                   tabPanel("Futures contract estimation", plotlyOutput("plot_yt_hat")), 
                                   tabPanel("Prices vs maturities on the given day", plotlyOutput("plot_price_mat"))
-                 ), 
-                 
-                 conditionalPanel(condition = "input.source == 'upload'", 
-                                  tabPanel("Simulated \\( \\chi \\) vs estimated \\( \\chi \\)", plotlyOutput("plot_chi")), 
-                                  tabPanel("Simulated \\( \\xi \\) vs estimated \\( \\xi \\)", plotlyOutput("plot_xi")), 
-                                  tabPanel("Futures contract estimation", plotlyOutput("plot_yt_hat")), 
-                                  tabPanel("Prices vs maturities on the given day", plotlyOutput("plot_price_mat"))
-                 )
+                                )
                ), 
+              
                tabsetPanel(
                  tabPanel("Estimation errors for each contract", DTOutput("table_errors")), 
                  tabPanel("Mean relative errors on each trading date", plotlyOutput("plot_re")),
