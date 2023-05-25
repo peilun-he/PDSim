@@ -6,6 +6,12 @@ Future plan:
 - Add forecasting and smoothing 
 - Allow users to upload data
 
+## Recent updates
+**upload_data branch (V2.1)**
+- Allow users to upload their own data
+- When users download the simulated price and maturity, row names will not be written
+- Rename some plots
+
 ## Version history 
 **Version 2.0** (current version): 
 - Add navigation bar: welcome page, app, user guide, team members
