@@ -5,12 +5,6 @@ Future plan:
 - Add decomposition of data through "seasonal" package 
 - Add forecasting and smoothing 
 
-## Recent updates
-**upload_data branch (V2.1)**
-- Allow users to upload their own data
-- When users download the simulated price and maturity, row names will not be written
-- Rename some plots
-
 ## Version history 
 **Version 2.0** (current version): 
 - Add navigation bar: welcome page, app, user guide, team members
