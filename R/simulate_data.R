@@ -18,7 +18,7 @@ simulate_data <- function(par, x0, n_obs, n_contract, func_f, func_g, n_coe, noi
   #   mats: time to maturities
   #   xt: state variables
   
-  require(MASS)
+  #require(MASS)
   
   # Parameters
   kappa_chi  <- par[1]
