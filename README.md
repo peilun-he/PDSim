@@ -5,6 +5,15 @@ Future plan:
 - Add decomposition of data through "seasonal" package 
 - Add forecasting and smoothing 
 
+## Installation
+You can download and run PDSim locally, by running the following R code: 
+
+```r
+# install.packages("devtools") # uncomment if you do not have devtools installed
+devtools::install_github("peilun-he/PDSim")
+PDSim::run_app()
+```
+
 ## Version history 
 **Version 2.0** (current version): 
 - Add navigation bar: welcome page, app, user guide, team members
