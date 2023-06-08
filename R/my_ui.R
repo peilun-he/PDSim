@@ -1,5 +1,3 @@
-ver <<- "2.1"
-
 my_ui <- fluidPage(
   theme = shinytheme("cyborg"), 
   navbarPage(title = paste("PDSim (v", ver, ")", 
