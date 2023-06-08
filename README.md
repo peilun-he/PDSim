@@ -6,9 +6,11 @@ Future plan:
 - Add forecasting and smoothing 
 
 ## Installation
-You can access PDSim at: https://peilunhe.shinyapps.io/pdsim/. 
+PDSim can be accessed in two ways. 
 
-Additionally, you can download and run PDSim locally, by running the following R code: 
+1. You can access PDSim at: https://peilunhe.shinyapps.io/pdsim/. 
+
+2. Additionally, you can download and run PDSim locally, by running the following R code: 
 
 ```r
 # install.packages("devtools") # uncomment if you do not have devtools installed
