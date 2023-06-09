@@ -21,6 +21,7 @@ PDSim::run_app()
 
 ## User Guide
 
+### Schwartz-Smith Model
 
 ## Version History 
 **Version 2.1** (current version): 
