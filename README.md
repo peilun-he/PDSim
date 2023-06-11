@@ -43,15 +43,43 @@ x_t = \left[ \begin{matrix}
 \chi_t\\
 \xi_t 
 \end{matrix} \right],
+c = \left[ \begin{matrix} 0\\
+\frac{\mu_{\xi}}{\gamma} (1 - e^{-\gamma \Delta t}) \end{matrix} \right], 
+E = \left[ \begin{matrix} e^{-\kappa \Delta t} & 0\\
+0 & e^{-\gamma \Delta t} \end{matrix} \right], 
+F_t = \left[ \begin{matrix} e^{-\kappa (T_1 - t)}, \dots, e^{-\kappa (T_m - t)} \\
+e^{-\gamma (T_1 - t)}, \dots, e^{-\gamma (T_m - t)} \end{matrix} \right]^\top, 
 $$
 
-             \\( c = \\left[ \\begin{matrix} 0 \\\\ \\frac{\\mu_{\\xi}}{\\gamma} (1 - e^{-\\gamma \\Delta t}) \\end{matrix} \\right] \\), 
-             \\( E = \\left[ \\begin{matrix} e^{-\\kappa \\Delta t} & 0 \\\\ 0 & e^{-\\gamma \\Delta t} \\end{matrix} \\right] \\), 
-             \\( y_t = \\left( \\log{(F_{t,T_1})}, \\dots, \\log{(F_{t,T_m})} \\right)^\\top \\), 
-             \\( d_t = \\left( A(T_1 - t), \\dots, A(T_m - t) \\right)^\\top \\), 
-             \\( F_t = \\left[ \\begin{matrix} e^{-\\kappa (T_1 - t)}, \\dots, e^{-\\kappa (T_m - t)} \\\\ 
-             e^{-\\gamma (T_1 - t)}, \\dots, e^{-\\gamma (T_m - t)} \\end{matrix} \\right]^\\top \\)
-             and \\( m \\) is the number of contracts. The function \\( A(\\cdot) \\) is given by
+$$
+y_t = \left( \log{(F_{t,T_1})}, \dots, \log{(F_{t,T_m})} \right)^\top, 
+d_t = \left( A(T_1 - t), \dots, A(T_m - t) \right)^\top, 
+$$
+
+and $m$ is the number of contracts. The function $A(\cdot)$ is given by
+$$A(t) = -\frac{\lambda_{\chi}}{\kappa}(1 - e^{-\kappa t}) + \frac{\mu_{\xi} - \lambda_{\xi}}{\gamma}(1 - e^{-\gamma t}) + \frac{1}{2} \left(\frac{1 - e^{-2\kappa t}}{2\kappa}\sigma_{\chi}^2 + \frac{1 - e^{-2\gamma t}}{2\gamma}\sigma_{\xi}^2 + 2\frac{1 - e^{-(\kappa + \gamma)t}}{\kappa + \gamma}\sigma_{\chi}\sigma_{\xi}\rho \right).$$
+
+$w_t$ and $v_t$ are multivariate Gaussian noises with mean 0 and covariance matrix $\Sigma_w$ and $\Sigma_v$ respectively, where
+
+$$
+\Sigma_w = \left[ \begin{matrix} 
+\frac{1 - e^{-2\kappa \Delta t}}{2\kappa}\sigma_{\chi}^2 & \frac{1 - e^{-(\kappa + \gamma) \Delta t}}{\kappa + \gamma} \sigma_{\chi}\sigma_{\xi}\rho \\
+\frac{1 - e^{-(\kappa + \gamma) \Delta t}}{\kappa + \gamma} \sigma_{\chi}\sigma_{\xi}\rho & \frac{1 - e^{-2\gamma \Delta t}}{2\gamma}\sigma_{\xi}^2 
+\end{matrix} \right],
+$$
+
+and we assume $\Sigma_v$ is diagonal, i.e., 
+
+$$
+\Sigma_v = \left[ \begin{matrix} 
+\sigma_1^2 & 0 & \dots & 0\\ 
+0 & \sigma_2^2 & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & \sigma_m^2 
+\end{matrix} \right].
+$$
+
+Moreover, we assume $\sigma_1, \dots \sigma_m$ are evenly spaced, i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 = \dots = \sigma_{m-1} - \sigma_m$. 
 
 ### Polynomial Diffusion Model
 
