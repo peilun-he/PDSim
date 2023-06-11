@@ -82,6 +82,62 @@ $$
 Moreover, we assume $\sigma_1, \dots \sigma_m$ are evenly spaced, i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 = \dots = \sigma_{m-1} - \sigma_m$. 
 
 ### Polynomial Diffusion Model
+Consider the stochastic differential equation
+$$dX_t = b(X_t)dt + \sigma(X_t)dW_t,$$
+where $W_t$ is a $d$-dimensional standard Brownian Motion and map $\sigma: \mathbb{R}^d \to \mathbb{R}^{d \times d}$ is continuous. Define $a := \sigma \sigma^\top$. For maps $a: \mathbb{R}^d \to \mathbb{S}^{d}$ and $b: \mathbb{R}^d \to \mathbb{R}^d$, suppose we have $a_{ij} \in Pol_2$ and $b_i \in Pol_1$. $\mathbb{S}^d$ is the set of all real symmetric $d \times d$ matrices and $Pol_n$ is the set of all polynomials of degree at most $n$. Then the solution of the SDE is a polynomial diffusion. Moreover, we define the generator $\mathcal{G}$ associated to the polynomial diffusion $X_t$ as 
+$$\mathcal{G}f(x) = \frac{1}{2} Tr\left( a(x) \nabla^2 f(x)\right) + b(x)^\top \nabla f(x)$$
+for $x \in \mathbb{R}^d$ and any $C^2$ function $f$. Let $N$ be the dimension of $Pol_n$, and $H: \mathbb{R}^d \to \mathbb{R}^N$ be a function whose components form a basis of $Pol_n$. Then for any $p \in Pol_n$, there exists a unique vector $\vec{p} \in \mathbb{R}^N$ such that
+$$p(x) = H(x)^\top \vec{p}$$
+and $\vec{p}$ is the coordinate representation of $p(x)$. Moreover, there exists a unique matrix representation $G \in \mathbb{R}^{N \times N}$ of the generator $\mathcal{G}$, such that $G \vec{p}$ is the coordinate vector of $\mathcal{G} p$. So we have
+$$\mathcal{G} p(x) = H(x)^\top G \vec{p}.$$
+<br/><br/>
+**Theorem 1**: Let $p(x) \in Pol_n$ be a polynomial with coordinate representation $\vec{p} \in \mathbb{R}^N$, $G \in \mathbb{R}^{N \times N}$ be a matrix representation of generator $\mathcal{G}$, and $X_t \in \mathbb{R}^d$ satisfies the SDE. Then for $0 \le t \le T$, we have
+$$\mathbb{E} \left[ p(X_T) | \mathcal{F}_t \right] = H(X_t)^\top e^{(T-t)G} \vec{p},$$
+where $\mathcal{F}_t$ represents all information available until time $t$. 
+<br/><br/><br/>
+
+Next, we apply this theorem to the two-factor model. Assume the spot price $S_t$ is modelled as
+$$S_t = p_n(x_t) = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2,$$
+which is a polynomial with order $n = 2$. $x_t = (\chi_t, \xi_t)^\top$ is a vector of state variables. Obviously, $x_t$ satisfies the SDE with
+
+$$
+b(x_t) = \left[ \begin{matrix} 
+-\kappa \chi_t - \lambda_{\chi} \\
+\mu_{\xi} - \gamma \xi_t - \lambda_{\xi} 
+\end{matrix} \right], 
+\sigma(x_t) = \left[ \begin{matrix}
+\sigma_{\chi} & 0 \\
+0 & \sigma_{\xi} 
+\end{matrix} \right], 
+a(x_t) = \sigma(x_t) \sigma(x_t)^\top = \left[ \begin{matrix} 
+\sigma_{\chi}^2 & 0 \\
+0 & \sigma_{\xi}^2 
+\end{matrix} \right].
+$$
+
+The basis
+$$H(x_t) = (1, \chi_t, \xi_t, \chi_t^2, \chi_t \xi_t, \xi_t^2)^\top$$
+has a dimension $N = 6$. The coordinate representation is 
+$$\vec{p} = (\alpha_1, \alpha_2, \alpha_3, \alpha_4, \alpha_5, \alpha_6)^\top.$$
+By applying $\mathcal{G}$ to each element of $H(x_t)$, we get the matrix representation
+
+$$
+G = \left[ \begin{matrix} 
+0 & -\lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} & \sigma_{\chi}^2 & 0 & \sigma_{\xi}^2 \\
+0 & -\kappa & 0 & -2 \lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} & 0 \\
+0 & 0 & -\gamma & 0 & -\lambda_{\chi} & 2\mu_{\xi} - 2\lambda_{\xi} \\
+0 & 0 & 0 & -2\kappa & 0 & 0 \\
+0 & 0 & 0 & 0 & -\kappa - \gamma & 0 \\
+0 & 0 & 0 & 0 & 0 & -2\gamma
+\end{matrix} \right].
+$$
+
+Then, by Theorem 1, the futures price $F_{t,T}$ is given by
+$$F_{t,T} = \mathbb{E}^*(S_T | \mathcal{F}_t) = H(x_t)^\top e^{(T-t)G} \vec{p}.$$
+
+Therefore, we have the non-linear state-space model 
+$$x_t = c + E x_{t-1} + w_t,$$
+$$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 
 ### Some Other Hints
 1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
