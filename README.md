@@ -31,8 +31,27 @@ for real processes and
 $$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt + \sigma_{\chi} dW_t^{\chi*}$$
 $$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt + \sigma_{\xi} dW_t^{\xi*}$$
 for risk-neutral processes. $\kappa, \gamma \in \mathbb{R}^+$ are speed of mean-reversion parameters; $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor; $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities; $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums; $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions with correlation coefficient $\rho $. Under the arbitrage-free assumption, the futures price $F_{t,T}$ at current time $t$ with maturity time $T$ must be equal to the expected value of spot price at maturity time, i.e.,
-$$\log(F_{t,T}) = \log(\mathbb{E}^\*(S_T | \mathcal{F}_t)),$$
-where $F_t$ is the filtration until time t. In discrete time, we have the linear Gaussian state-space model:
+$$\log(F_{t,T}) = \log(\mathbb{E}^\*(S_T \mathcal{F}_t | \mathcal{F}_t)),$$
+
+where $F_t$ is the filtration until time $t$. In discrete time, we have the linear Gaussian state-space model:
+$$x_t = c + E x_{t-1} + w_t,$$
+$$y_t = d_t + F_t x_t + v_t,$$
+where 
+
+$$
+x_t = \left[ \begin{matrix} 
+\chi_t\\
+\xi_t 
+\end{matrix} \right],
+$$
+
+             \\( c = \\left[ \\begin{matrix} 0 \\\\ \\frac{\\mu_{\\xi}}{\\gamma} (1 - e^{-\\gamma \\Delta t}) \\end{matrix} \\right] \\), 
+             \\( E = \\left[ \\begin{matrix} e^{-\\kappa \\Delta t} & 0 \\\\ 0 & e^{-\\gamma \\Delta t} \\end{matrix} \\right] \\), 
+             \\( y_t = \\left( \\log{(F_{t,T_1})}, \\dots, \\log{(F_{t,T_m})} \\right)^\\top \\), 
+             \\( d_t = \\left( A(T_1 - t), \\dots, A(T_m - t) \\right)^\\top \\), 
+             \\( F_t = \\left[ \\begin{matrix} e^{-\\kappa (T_1 - t)}, \\dots, e^{-\\kappa (T_m - t)} \\\\ 
+             e^{-\\gamma (T_1 - t)}, \\dots, e^{-\\gamma (T_m - t)} \\end{matrix} \\right]^\\top \\)
+             and \\( m \\) is the number of contracts. The function \\( A(\\cdot) \\) is given by
 
 ### Polynomial Diffusion Model
 
