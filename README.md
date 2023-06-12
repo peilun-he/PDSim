@@ -1,10 +1,11 @@
 # Polynomial Diffusion Model Simulation and Estimation (V2.1)
 ## Introduction
-Web application for the polynomial diffusion model. This app generates a futures price data by providing all parameters. Also, it gives state variables and contracts estimations through Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). The Schwartz and Smith's two-factor model is also provided for comparison. 
+Web application for the polynomial diffusion model. This app generates futures price data by providing all parameters. Also, it gives state variables and contract estimations through Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). The Schwartz and Smith's two-factor model is also provided for comparison. 
 
-Future plan: 
-- Add decomposition of data through "seasonal" package 
+Plans: 
+- Add decomposition of data through the "seasonal" package 
 - Add forecasting and smoothing 
+- Make more functions exported
 
 ## Installation
 PDSim can be accessed in two ways: 
