@@ -1,50 +1,4 @@
-packages <- c("lubridate", "shiny", "ggplot2", "DT", "plotly", "shinythemes", "tidyr", "scales")
-not_installed <- packages[!(packages %in% installed.packages()[ , "Package"])]  
-if(length(not_installed)) {
-  install.packages(not_installed) # install missing packages
-}
-
-library(shiny)
-library(ggplot2)
-library(DT)
-library(plotly)
-library(shinythemes)
-library(tidyr)
-library(scales)
-library(lubridate)
-
-source("./Functions/decomposition_eigen.R")
-source("./Functions/G_matrix.R")
-source("./Functions/AofT.R")
-source("./Functions/measurement_polynomial.R")
-source("./Functions/measurement_linear.R")
-source("./Functions/simulate_data.R")
-source("./Functions/state_linear.R")
-source("./Functions/taylor_coe.R")
-source("./Functions/EKF.R")
-source("./Functions/UKF.R")
-source("./Functions/KF.R")
-source("./Draw_UI/draw_welcome.R")
-source("./Draw_UI/draw_app.R")
-source("./Draw_UI/draw_user_guide.R")
-source("./Draw_UI/draw_members.R")
-source("./Server/server_app.R")
-source("./Server/server_welcome.R")
-source("./Server/server_members.R")
-
-# Define UI for application
-ui <- fluidPage(
-  theme = shinytheme("cyborg"), 
-  navbarPage(title = "PDSim", 
-             draw_welcome(), # draw welcome page
-             draw_app(), # draw app page
-             draw_user_guide(), # draw user guide page
-             draw_members() # draw team members page
-          )
-)
-
-# Define server logic required 
-server <- function(input, output, session) {
+my_server <- function(input, output, session) {
   input <<- input # make input global
   output <<- output # make output global 
   session <<- session # make session global
@@ -190,6 +144,3 @@ server <- function(input, output, session) {
   server_app() # server for app page
   server_members() # server for team members page
 }
-
-# Run the application 
-shinyApp(ui = ui, server = server)

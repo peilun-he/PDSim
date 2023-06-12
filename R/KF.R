@@ -20,7 +20,7 @@ KF <- function(par, yt, mats, delivery_time, dt, smoothing, seasonality) {
   #   table_at_smoother: a nT*2 matrix gives the smoothed values of state variables. The algorithm of Kalman Smoother is given by Bierman (1973) and De Jong (1989). 
   #   ft: seasonal effect
   
-  require(lubridate)
+  #require(lubridate)
   
   x0 <- c( par[length(par)-1], par[length(par)] )
   par <- par[1: (length(par)-2)]
