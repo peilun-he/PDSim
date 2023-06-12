@@ -166,3 +166,22 @@ $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 - Bugs fixed. 
 
 **Version 1.0**: basic functions and UI
+
+## References
+Aspinall, T., Gepp, A., Harris, G., Kelly, S., Southam, C., & Vanstone, B. (2022). NFCP: N-factor commodity pricing through term structure estimation. *The Comprehensive R Archive Network*. [https://cran.rstudio.com/web/packages/NFCP/index.html](https://cran.rstudio.com/web/packages/NFCP/index.html). 
+
+Filipovic, D., & Larsson, M. (2016). Polynomial diffusions and applications in finance. *Finance and Stochastics*, 20(4), 931–972.
+
+Harvey, A. C. (1990). Forecasting, structural time series models and the kalman filter. *Cambridge University Press*.
+
+Julier, S. J., & Uhlmann, J. K. (1997). New extension of the kalman filter to nonlinear systems. *Signal Processing, Sensor Fusion, and Target Recognition VI*, 3068, 182–193.
+
+Julier, S. J., & Uhlmann, J. K. (2004). Unscented filtering and nonlinear estimation. *Proceedings of the IEEE*, 92(3), 401–422.
+
+Kleisinger-Yu, X., Komaric, V., Larsson, M., & Regez, M. (2020). A multifactor polynomial framework for long-term electricity forwards with delivery period. *SIAM Journal on Financial Mathematics*, 11(3), 928–957.
+
+Schwartz, E. S., & Smith, J. E. (2000). Short-term variations and long-term dynamics in commodity prices. *Management Science*, 46(7), 893–911.
+
+Wan, E. A., & Van Der Merwe, R. (2000). The unscented kalman filter for nonlinear estimation. *Proceedings of the IEEE 2000 Adaptive Systems for Signal Processing, Communications, and Control Symposium (Cat. No. 00EX373)*, 153–158.
+
+
