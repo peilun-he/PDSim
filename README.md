@@ -152,7 +152,10 @@ $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 5. Because of the limitation of filtering methods, the standard error of the estimated futures price on the first day is extremely large. All plots of contracts estimation start from the second day.
 
 ## Version History 
-**Version 2.1** (current version): 
+**Version 2.1.1** (current version): 
+- Add a vignette. 
+
+**Version 2.1**: 
 - PDSim is packaged into an R package. Some structures is changed to achieve this. 
 - A exported function "run_app" is added to run PDSim. 
 - Add some documentation.  
