@@ -1,0 +1,77 @@
+---
+title: "PDSim app tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PDSim}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This is a simple tutorial of PDSim. You can use the following codes to run the app: 
+
+```{r eval = FALSE}
+devtools::install_github("peilun-he/PDSim")
+PDSim::run_app()
+```
+
+## Model specification 
+PDSim allows users to select one model, the Schwartz-Smith two-factor model or polynomial diffusion model, to simulate futures data. The details of these two models are given in the user guide. If Schwartz-Smith two-factor model is selected, nothing else needs to be specified. However, if polynomial diffusion model is selected, then users have to specify a filtering method (EKF or UKF) and the polynomial coefficients $\alpha_1, \dots, \alpha_6$. The formal definitions of $\alpha_1, \dots, \alpha_6$ are available in the user guide, under the section "polynomial diffusion model". 
+
+![Model specification](model_specification.gif)
+
+## Enter parameters 
+After specifying the model, users have to enter the values of all parameters. No matter which model is selected, the set of parameters is the same. 
+
+![Enter parameters](parameters.gif)
+
+## Check simulated data
+Available figures and tables of simulated data are as follows: 
+
+* A time series plot of all futures prices.  
+* A 3-dimensional plot of the term structure of futures prices.  
+* A time series plot of simulated state variables $\chi_t$ and $\xi_t$. 
+* A table of simulated futures prices (can be downloaded as a csv file). 
+* A table of simulated time to maturities (can be downloaded as a csv file). 
+
+![Check simulated data](simulated_data.gif)
+
+## Check estimation 
+Available estimation plots are as follows: 
+
+* Estimation of state variable $\chi_t$.
+* Estimation of state variable $\xi_t$. 
+* Estimation of a particular contract (can be specified under the "Estimations"). 
+* Estimation of the term structure on a given day (can be specified under the "Estimations"). 
+
+![Check estimation](estimation.gif)
+
+## Check errors
+Available figures and tables of errors are as follows: 
+
+* A table of root mean square error (RMSE), mean absolute error (MAE) and mean relative error (MRE) of each contract. 
+* A time series of MRE. 
+* A time series of MAE. 
+* Boxplot of relative errors of each contract. 
+* Boxplot of absolute errors of each contract. 
+
+![Check errors](errors.gif)
+
+## Genetate another realisation of data
+
+Once all needed parameters and model specifications are entered, the data will generate automatically. However, if you want to generate another realisation with the same parameters, please click the "Generate new data" button. 
+
+![New realisation](new_realisation.gif)
+
+
+
+
+
+
+
