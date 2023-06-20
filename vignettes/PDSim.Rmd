@@ -2,7 +2,7 @@
 title: "PDSim app tutorial"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{PDSim}
+  %\VignetteIndexEntry{PDSim app tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -44,6 +44,7 @@ Available figures and tables of simulated data are as follows:
 -   A table of simulated time to maturities (can be downloaded as a csv file).
 
 ![Check simulated data](simulated_data.gif)
+
 ## Genetate another realisation of data
 
 Once all needed parameters and model specifications are entered, the data will generate automatically. However, if you want to generate another realisation with the same parameters, please click the "Generate new data" button.
