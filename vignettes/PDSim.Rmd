@@ -29,7 +29,7 @@ PDSim allows users to select one model, the Schwartz-Smith two-factor model or p
 
 ## Enter parameters
 
-After specifying the model, users have to enter the values of all parameters. No matter which model is selected, the set of parameters is the same.
+After specifying the model, users have to enter the values of all parameters. No matter which model is selected, the set of parameters is the same. To get the detailed definition of each parameter, please check the section "Schwartz-Smith Model" in the user guide. 
 
 ![Enter parameters](parameters.gif)
 
