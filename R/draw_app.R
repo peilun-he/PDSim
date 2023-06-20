@@ -38,7 +38,7 @@ draw_app <- function() {
                hr(),
                
                titlePanel(h3("Estimations")), 
-               numericInput("contract", "Enter the contracts contract number you want to show estimations", 
+               numericInput("contract", "Enter the contract number you want to show estimations", 
                             value = 1, min = 1, step = 1),
                numericInput("day", "Enter a day you want to show estimations", 
                             value = 2, min = 2, step = 1),
