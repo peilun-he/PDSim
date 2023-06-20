@@ -16,8 +16,13 @@ PDSim can be accessed in two ways:
 
 ```r
 # install.packages("devtools") # uncomment if you do not have devtools installed
-devtools::install_github("peilun-he/PDSim")
+devtools::install_github("peilun-he/PDSim", build_vignettes = TRUE)
 PDSim::run_app()
+```
+
+A tutorial of how to use this app is available by running the following code and select "PDSim app tutorial":
+```r
+browseVignettes("PDSim")
 ```
 
 ## User Guide
