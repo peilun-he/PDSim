@@ -1,4 +1,4 @@
-# Polynomial Diffusion Model Simulation and Estimation (V2.1)
+# Polynomial Diffusion Model Simulation and Estimation (V2.1.1)
 ## Introduction
 Web application for the polynomial diffusion model. This app generates futures price data by providing all parameters. Also, it gives state variables and contract estimations through Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). The Schwartz and Smith's two-factor model is also provided for comparison. 
 
@@ -16,8 +16,13 @@ PDSim can be accessed in two ways:
 
 ```r
 # install.packages("devtools") # uncomment if you do not have devtools installed
-devtools::install_github("peilun-he/PDSim")
+devtools::install_github("peilun-he/PDSim", build_vignettes = TRUE)
 PDSim::run_app()
+```
+
+A tutorial of how to use this app is available by running the following code and select "PDSim app tutorial":
+```r
+browseVignettes("PDSim")
 ```
 
 ## User Guide
@@ -152,7 +157,10 @@ $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 5. Because of the limitation of filtering methods, the standard error of the estimated futures price on the first day is extremely large. All plots of contracts estimation start from the second day.
 
 ## Version History 
-**Version 2.1** (current version): 
+**Version 2.1.1** (current version): 
+- Add a vignette. 
+
+**Version 2.1**: 
 - PDSim is packaged into an R package. Some structures is changed to achieve this. 
 - A exported function "run_app" is added to run PDSim. 
 - Add some documentation.  
