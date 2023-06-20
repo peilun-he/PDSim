@@ -44,6 +44,12 @@ Available figures and tables of simulated data are as follows:
 -   A table of simulated time to maturities (can be downloaded as a csv file).
 
 ![Check simulated data](simulated_data.gif)
+## Genetate another realisation of data
+
+Once all needed parameters and model specifications are entered, the data will generate automatically. However, if you want to generate another realisation with the same parameters, please click the "Generate new data" button.
+
+![New realisation](new_data.gif)
+
 
 ## Check estimation
 
@@ -54,7 +60,7 @@ Available estimation plots are as follows:
 -   Estimation of a particular contract (can be specified under the "Estimations").
 -   Estimation of the term structure on a given day (can be specified under the "Estimations").
 
-![Check estimation](estimation.gif)
+![Check estimation](estimations.gif)
 
 ## Check errors
 
@@ -68,8 +74,4 @@ Available figures and tables of errors are as follows:
 
 ![Check errors](errors.gif)
 
-## Genetate another realisation of data
 
-Once all needed parameters and model specifications are entered, the data will generate automatically. However, if you want to generate another realisation with the same parameters, please click the "Generate new data" button.
-
-![New realisation](new_realisation.gif)
