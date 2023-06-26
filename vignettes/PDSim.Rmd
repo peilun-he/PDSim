@@ -14,22 +14,26 @@ knitr::opts_chunk$set(
 )
 ```
 
-This is a simple tutorial of PDSim. You can use the following codes to run the app:
+This is a simple tutorial of PDSim. This app generates futures price data from the polynomial diffusion model. Also, it gives state variables and contract estimations through Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). The Schwartz and Smith's two-factor model is also provided for comparison. 
+
+You can use the following codes to run the app:
 
 ```{r eval = FALSE}
 devtools::install_github("peilun-he/PDSim")
 PDSim::run_app()
 ```
 
-## Model specification
+Further details of the model are provided in the user guide, which can be found in the app or at: [https://github.com/peilun-he/PDSim](https://github.com/peilun-he/PDSim). 
 
-PDSim allows users to select one model, the Schwartz-Smith two-factor model or polynomial diffusion model, to simulate futures data. The details of these two models are given in the user guide. If Schwartz-Smith two-factor model is selected, nothing else needs to be specified. However, if polynomial diffusion model is selected, then users have to specify a filtering method (EKF or UKF) and the polynomial coefficients $\alpha_1, \dots, \alpha_6$. The formal definitions of $\alpha_1, \dots, \alpha_6$ are available in the user guide, under the section "polynomial diffusion model".
+## Specify state-space model 
 
-![Model specification](model_specification.gif)
+PDSim allows users to select one model, the Schwartz-Smith two-factor model or polynomial diffusion model, to simulate futures data. If Schwartz-Smith two-factor model is selected, nothing else needs to be specified. However, if polynomial diffusion model is selected, then users have to specify a filtering method (EKF or UKF) and the polynomial coefficients $\alpha_1, \dots, \alpha_6$. The formal definitions of $\alpha_1, \dots, \alpha_6$ are available in the user guide, under the section "polynomial diffusion model".
+
+![Specify state-space model](model_specification.gif)
 
 ## Enter parameters
 
-After specifying the model, users have to enter the values of all parameters. No matter which model is selected, the set of parameters is the same. To get the detailed definition of each parameter, please check the section "Schwartz-Smith Model" in the user guide. 
+After specifying the model, users have to enter the values of all parameters. No matter which model is selected, the interpretation of parameters does not change. To get the detailed interpretation of each parameter, please check the section "Schwartz-Smith Model" in the user guide. 
 
 ![Enter parameters](parameters.gif)
 
@@ -45,14 +49,14 @@ Available figures and tables of simulated data are as follows:
 
 ![Check simulated data](simulated_data.gif)
 
-## Genetate another realisation of data
+## Generate new sample realisation
 
 Once all needed parameters and model specifications are entered, the data will generate automatically. However, if you want to generate another realisation with the same parameters, please click the "Generate new data" button.
 
 ![New realisation](new_data.gif)
 
 
-## Check estimation
+## Perform filter for state-space model 
 
 Available estimation plots are as follows:
 
@@ -63,7 +67,7 @@ Available estimation plots are as follows:
 
 ![Check estimation](estimations.gif)
 
-## Check errors
+## Perform filter estimation accuracy residual analysis 
 
 Available figures and tables of errors are as follows:
 
@@ -73,6 +77,6 @@ Available figures and tables of errors are as follows:
 -   Boxplot of relative errors of each contract.
 -   Boxplot of absolute errors of each contract.
 
-![Check errors](errors.gif)
+![Perform filter estimation accuracy residual analysis ](errors.gif)
 
 
