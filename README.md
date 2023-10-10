@@ -25,7 +25,28 @@ A tutorial of how to use this app is available by running the following code and
 browseVignettes("PDSim")
 ```
 
-## User Guide
+## How to Use PDSim (GUI)
+
+The graphical user interface (GUI) is a easy way for everyone to use PDSim package, even though you have no knowledge of programming. Just enter all necessary parameters, it will simulate data, and provide well-designed interactive visualisations. Currently, PDSim can simulate data from two models, Schwartz and Smith two-factor model, and polynomial diffusion model. In this section, we will explain how to use GUI to simulate data. A detailed description of two models are available in section [Model Description](#Model Description). 
+
+### Schwartz-Smith Model
+
+### Polynomial Diffusion Model
+
+### Some Other Hints
+1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
+
+2. The seed to generate random numbers is fixed, i.e., for the same set of parameters, users will get exactly the same data every time they use PDSim.
+
+3. Futures prices in all tables / plots are REAL prices (NOT the logarithm), no matter which model is used.
+
+4. The 95% confidence interval is shown as a grey ribbon on each plot.
+
+5. Because of the limitation of filtering methods, the standard error of the estimated futures price on the first day is extremely large. All plots of contracts estimation start from the second day.
+
+## How to Use PDSim (R Script)
+
+## Model Description
 
 ### Schwartz-Smith Model
 The spot price $S_t$ is modelled as
@@ -144,17 +165,6 @@ $$F_{t,T} = \mathbb{E}^*(S_T | \mathcal{F}_t) = H(x_t)^\top e^{(T-t)G} \vec{p}.$
 Therefore, we have the non-linear state-space model 
 $$x_t = c + E x_{t-1} + w_t,$$
 $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
-
-### Some Other Hints
-1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
-
-2. The seed to generate random numbers is fixed, i.e., for the same set of parameters, users will get exactly the same data every time they use PDSim.
-
-3. Futures prices in all tables / plots are REAL prices (NOT the logarithm), no matter which model is used.
-
-4. The 95% confidence interval is shown as a grey ribbon on each plot.
-
-5. Because of the limitation of filtering methods, the standard error of the estimated futures price on the first day is extremely large. All plots of contracts estimation start from the second day.
 
 ## Contributions and Supports
 If you find any bugs or want to make a contribution to this package, please create a GitHub issue at: https://github.com/peilun-he/PDSim/issues. 
