@@ -25,10 +25,6 @@ A tutorial of how to use this app is available by running the following code and
 browseVignettes("PDSim")
 ```
 
-[Custom foo description](#foo foo)
-
-## Foo Foo
-
 ## How to Use PDSim (GUI)
 
 The graphical user interface (GUI) is a easy way for everyone to use PDSim package, even though you have no knowledge of programming. Just enter all necessary parameters, it will simulate data, and provide well-designed interactive visualisations. Currently, PDSim can simulate data from two models, Schwartz and Smith two-factor model, and polynomial diffusion model. In this section, we will explain how to use GUI to simulate data. A detailed description of two models are available in section [Model Description](#Model Description). 
