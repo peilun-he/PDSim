@@ -25,9 +25,9 @@ A tutorial of how to use this app is available by running the following code and
 browseVignettes("PDSim")
 ```
 
-[Custom foo description](#foo)
+[Custom foo description](#foo foo)
 
-## Foo
+## Foo Foo
 
 ## How to Use PDSim (GUI)
 
