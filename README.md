@@ -90,21 +90,6 @@ Additionally, we can estimate the hidden state variables through Kalman Filter (
 est <- KF(par = c(par, x0), yt = log_price, mats = mats, delivery_time = 0, dt = dt, smoothing = FALSE, seasonality = "None") # delivery_time is unnecessary as we don't have seasonality 
 ```
 
-Finally, simulate the data: 
-```r
-dat <- simulate_data(c(par, par_coe), x0, n_obs, n_contract, func_f, func_g, n_coe, "Gaussian", 1234)
-price <- dat$yt # measurement_polynomial function returns the futures price
-mats <- dat$mats # time to maturity
-xt <- dat$xt # state variables
-```
-`measurement_polynomial` returns the actual price, rather than the logarithm. 
-
-We can also estimate the hidden state variables through Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF): 
-```r
-est_EKF <- EKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gaussian")
-est_UKF <- UKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gaussian")
-```
-
 ### Polynomial Diffusion Model
 For the polynomial diffusion model, we have to specify both parameters and model coefficients: 
 ```r
@@ -119,6 +104,21 @@ Then, we specify the measurement and state equations. Again, you can use the exp
 ```r
 func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
 func_g <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe) # measurement equation
+```
+
+Finally, simulate the data: 
+```r
+dat <- simulate_data(c(par, par_coe), x0, n_obs, n_contract, func_f, func_g, n_coe, "Gaussian", 1234)
+price <- dat$yt # measurement_polynomial function returns the futures price
+mats <- dat$mats # time to maturity
+xt <- dat$xt # state variables
+```
+`measurement_polynomial` returns the actual price, rather than the logarithm. 
+
+We can also estimate the hidden state variables through Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF): 
+```r
+est_EKF <- EKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gaussian")
+est_UKF <- UKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gaussian")
 ```
 
 ## Model Description
