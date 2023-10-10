@@ -1,12 +1,21 @@
+#' Linear state equation. 
+#' 
+#' State equation in a linear form \eqn{x_t = A + B x_{t-1}}. This function can be passed to [simulate_data], 
+#' [EKF] and [UKF] as the argument of `func_f`. 
+#' 
+#' @param x State variables \eqn{x_{t-1}} at previous time point \eqn{t-1}. 
+#' @param par A vector of parameters and model coefficients. 
+#' @param dt \eqn{\Delta t}. The interval between two consecutive time points. 
+#' 
+#' @return This function returns a list with components: 
+#' \item{y}{The state variables \eqn{x_t} at current time point \eqn{t}. }
+#' \item{y_jacobian}{The jacobian of \eqn{x_t}. }
+#' 
+#' @export
+#' @seealso [measurement_linear], [measurement_polynomial] for other forms of state and 
+#' measurement equations. 
+
 state_linear <- function(x, par, dt) {
-  # Linear state equation, x_t = f(x_{t-1}) = A + B x_{t-1}
-  # Inputs: 
-  #   x: x_{t-1}
-  #   par: a vector of parameters
-  #   dt: delta t
-  # Outputs: 
-  #   y: x_t
-  #   y_jacobian: Jacobian of y
   
   kappa_chi  <- par[1]
   kappa_xi   <- par[2]

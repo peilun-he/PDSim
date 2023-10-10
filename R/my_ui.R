@@ -1,4 +1,4 @@
-ver <<- "2.1.1"
+ver <<- "2.1.2"
 
 my_ui <- fluidPage(
   theme = shinytheme("cyborg"), 

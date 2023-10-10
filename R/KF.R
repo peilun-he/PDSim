@@ -1,26 +1,49 @@
+#' Standard Kalman Filter and Smoother
+#' 
+#' An algorithm for estimating the hidden state variables of a linear dynamic system. 
+#' 
+#' Details. 
+#' 
+#' @param par A vector of parameters. 
+#' @param yt The logarihm of futures prices. 
+#' @param T Time to maturity. 
+#' @param delivery_time A vector of date, which is necessary if `seasonality` is `Constant`.
+#' @param dt \eqn{\Delta t}. The interval between two consecutive time points.  
+#' @param smoothing Boolean. Indicate if Kalman Smoothing is required. 
+#' @param seasonality `Constant` or `None`. 
+#' 
+#' @return This function returns a list with components: 
+#' \item{nll}{The negative log likelihood. }
+#' \item{ll_table}{A vector to store cumulative log-likelihood at each time point. 
+#' Used to calculate Sandwich variance. }
+#' \item{table_at_filter}{A matrix gives the filtered values of state variables. }
+#' \item{table_at_prediction}{A matrix gives the predicted values of state variables. }
+#' \item{table_at_smoother}{A matrix gives the smoothed values of state variables. 
+#' The algorithm of Kalman Smoother is given by Bierman (1973) and De Jong (1989). }
+#' \item{ft}{Seasonal effect. }
+#' 
+#' @import lubridate
+#' @export
+#' @seealso [EKF], [UKF] for other filtering methods. 
+#' @examples
+#' ###############################################
+#' ##### Schwartz and Smith two-factor model #####
+#' ###############################################
+#' n_obs <- 100
+#' n_contract <- 10
+#' par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract))
+#' x0 <- c(0, 1/0.3)
+#' dt <- 1/360 # daily data
+#' n_coe <- 0
+#' func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+#' dat <- simulate_data(par, x0, n_obs, n_contract, func_f, measurement_linear, n_coe, "Gaussian", 1234)
+#' log_price <- dat$yt # measurement_linear function returns the logarithm of futures price
+#' mats <- dat$mats
+#' est <- KF(par = c(par, x0), yt = log_price, mats = mats, delivery_time = 0, # delivery_time is unnecessary 
+#'           dt = dt, smoothing = FALSE, seasonality = "None")
+
+
 KF <- function(par, yt, mats, delivery_time, dt, smoothing, seasonality) {
-  # Standard Kalman Filter & Smoother
-  # Model: 
-  #   y_t = d_t + F_t' x_t + f_t + v_t, v_t ~ N(0, V), observation equation
-  #   x_t = c + G x_{t-1} + w_t, w_t ~ N(0, W), state equation
-  #   f_t = b*t + beta*cos(2*pi*t*dt) + eta*sin(2*pi*t*dt), seasonal effect
-  # Inputs: 
-  #   par: a vector of parameters
-  #   yt: the logarihm of futures prices
-  #   T: maturities
-  #   delivery_time: a vector of date, which is necessary if seasonality is "Constant"
-  #   dt: delta t
-  #   smoothing: a boolean variable indicate if Kalman Smoothing is required
-  #   seasonality: "Constant" or "None"
-  # Outputs: 
-  #   nll: the negative log likelihood 
-  #   ll_table: a vector to store cumulative log-likelihood at each time point - used to calculate Sandwich variance
-  #   table_at_filter: a nT*2 matrix gives the filtered values of state variables. 
-  #   table_at_prediction: a (nT+1)*2 matrix gives the predicted values of state variables. 
-  #   table_at_smoother: a nT*2 matrix gives the smoothed values of state variables. The algorithm of Kalman Smoother is given by Bierman (1973) and De Jong (1989). 
-  #   ft: seasonal effect
-  
-  #require(lubridate)
   
   x0 <- c( par[length(par)-1], par[length(par)] )
   par <- par[1: (length(par)-2)]
