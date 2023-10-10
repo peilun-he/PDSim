@@ -31,7 +31,19 @@ The graphical user interface (GUI) is a easy way for everyone to use PDSim packa
 
 ### Schwartz-Smith Model
 
+![SS1](figures/SS1.png)
+
+![SS1](figures/SS2.png)
+
+![SS1](figures/SS3.png)
+
 ### Polynomial Diffusion Model
+
+![PD1](figures/PD1.png)
+
+![PD2](figures/SS2.png)
+
+![PD3](figures/SS3.png)
 
 ### Some Other Hints
 1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
