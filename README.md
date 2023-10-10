@@ -27,7 +27,7 @@ browseVignettes("PDSim")
 
 [Custom foo description](#foo)
 
-# Foo
+## Foo
 
 ## How to Use PDSim (GUI)
 
