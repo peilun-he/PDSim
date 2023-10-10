@@ -27,7 +27,7 @@ browseVignettes("PDSim")
 
 ## How to Use PDSim (GUI)
 
-The graphical user interface (GUI) is a easy way for everyone to use PDSim package, even though you have no knowledge of programming. Just enter all necessary parameters, it will simulate data, and provide well-designed interactive visualisations. Currently, PDSim can simulate data from two models, Schwartz and Smith two-factor model, and polynomial diffusion model. In this section, we will explain how to use GUI to simulate data. A detailed description of two models are available in section [Model Description](#model-description). 
+The graphical user interface (GUI) is a easy way for everyone to use PDSim package, even though you have no knowledge of programming. Just enter all necessary parameters, it will simulate data, and provide well-designed interactive visualisations. Currently, PDSim can simulate data from two models, Schwartz and Smith two-factor model, and polynomial diffusion model. In this section, we will explain how to use GUI to simulate data. A detailed description of two models are available in [Model Description](#model-description). 
 
 ### Schwartz-Smith Model
 
@@ -45,6 +45,35 @@ The graphical user interface (GUI) is a easy way for everyone to use PDSim packa
 5. Because of the limitation of filtering methods, the standard error of the estimated futures price on the first day is extremely large. All plots of contracts estimation start from the second day.
 
 ## How to Use PDSim (R Script)
+
+The GUI should be suffice. However, if you want to have more control of the data simulated, you can use R script. In this section, we will discuss how to use exported functions from this package to simulate data, as well as how to use Kalman Filter (KF), Extended Kalman Filter (EKF) and Unscented Kalman Filter (UKF) to estimate the hidden state variables. 
+
+Firstly, load the package: 
+```r
+library(PDSim)
+```
+If you don't have PDSim installed, please refer [Installation](#installation). 
+
+Next, we specify the necessary global setups: 
+```r
+n_obs <- 100 # number of observations
+n_contract <- 10 # number of contracts
+dt <- 1/360 # interval between two consecutive time points, 1/360 represents daily data
+```
+
+### Schwartz-Smith Model
+Next, we specify parameters. For the Schwartz-Smith model, there is no model coefficients. 
+```r
+par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters 
+x0 <- c(0, 1/0.3) # initial values of state variables
+n_coe <- 0 # number of model coefficient
+```
+The set of parameters are in the order of: $\kappa, \gamma, \mu_{\xi}, \sigma_{\chi}, \sigma_{\xi}, \rho, \lambda_{\chi}, \lambda_{\xi}$. The long sequence is the standard errors of measurement equation. We assume all futures curves are uncorrelated and standard errors are evenly decreasing. You can have your own assumptions on standard errors, but the independence of curves must be hold. 
+
+Then, we specify the measurement and state equations. You can use the exported functions `measurement_linear` and `state_linear`, or
+
+### Polynomial Diffusion Model
+
 
 ## Model Description
 
