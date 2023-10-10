@@ -70,7 +70,25 @@ n_coe <- 0 # number of model coefficient
 ```
 The set of parameters are in the order of: $\kappa, \gamma, \mu_{\xi}, \sigma_{\chi}, \sigma_{\xi}, \rho, \lambda_{\chi}, \lambda_{\xi}$. The long sequence is the standard errors of measurement equation. We assume all futures curves are uncorrelated and standard errors are evenly decreasing. You can have your own assumptions on standard errors, but the independence of curves must be hold. 
 
-Then, we specify the measurement and state equations. You can use the exported functions `measurement_linear` and `state_linear`, or
+Then, we specify the measurement and state equations. You can use the exported functions `measurement_linear` and `state_linear` directly, or write you own functions. 
+```r
+func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+func_g <- function(xt, par, mats) measurement_linear(xt, par, mats) # measurement equation
+```
+
+Finally, we can simulate the futures price, time to maturity, and hidden state variables: 
+```r
+dat <- simulate_data(par, x0, n_obs, n_contract, func_f, measurement_linear, n_coe, "Gaussian", 1234)
+log_price <- dat$yt # measurement_linear function returns the logarithm of futures price
+mats <- dat$mats # time to maturity
+xt <- dat$xt # state variables
+```
+Please note, `measurement_linear` returns the logarithm of futures price (which is required by the Schwartz and Smith model), so the data simulated is also the logarithm. 
+
+Additionally, we can estimate the hidden state variables through Kalman Filter: 
+```r
+est <- KF(par = c(par, x0), yt = log_price, mats = mats, delivery_time = 0, dt = dt, smoothing = FALSE, seasonality = "None") # delivery_time is unnecessary as we don't have seasonality 
+```
 
 ### Polynomial Diffusion Model
 
