@@ -33,7 +33,7 @@ The graphical user interface (GUI) is a easy way for everyone to use PDSim packa
 
 Firstly, we specify some global setups, e.g., the number of observations, the number of contracts. Also, we choose 
 
-![SS1](figures/SS1.png)<img src="SS1.png" alt="drawing" width="200"/>
+![SS1](figures/SS1.png)<img src="figures/SS1.png" alt="drawing" width="200"/>
 
 For Schwartz-Smith model, we assume the logarithm of spot price $S_t$, is the sum of two hidden factors: 
 $$\log{(S_t)} = \chi_t + \xi_t, $$
