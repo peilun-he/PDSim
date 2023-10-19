@@ -33,23 +33,23 @@ The graphical user interface (GUI) is a easy way for everyone to use PDSim packa
 
 Firstly, we specify some global setups, e.g., the number of observations, the number of contracts. Also, we choose 
 
-![SS1](figures/SS1.png)<img src="figures/SS1.png" alt="drawing" width="200"/>
+<img src="figures/SS1.png" alt="drawing" width="400"/>
 
 For Schwartz-Smith model, we assume the logarithm of spot price $S_t$, is the sum of two hidden factors: 
 $$\log{(S_t)} = \chi_t + \xi_t, $$
 where $\chi_t$ represent the short term fluctuation and $\xi_t$ is the long term equilibrium price level. 
 
-![SS1](figures/SS2.png)
+<img src="figures/SS2.png" alt="drawing" width="400"/>
 
-![SS1](figures/SS3.png)
+<img src="figures/SS3.png" alt="drawing" width="400"/>
 
 ### Polynomial Diffusion Model
 
-![PD1](figures/PD1.png)
+<img src="figures/PD1.png" alt="drawing" width="400"/>
 
-![PD2](figures/SS2.png)
+<img src="figures/SS2.png" alt="drawing" width="400"/>
 
-![PD3](figures/SS3.png)
+<img src="figures/SS3.png" alt="drawing" width="400"/>
 
 ### Some Other Hints
 1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
