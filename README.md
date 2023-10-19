@@ -31,7 +31,13 @@ The graphical user interface (GUI) is a easy way for everyone to use PDSim packa
 
 ### Schwartz-Smith Model
 
+Firstly, we specify some global setups, e.g., the number of observations, the number of contracts. Also, we choose 
+
 ![SS1](figures/SS1.png)
+
+For Schwartz-Smith model, we assume the logarithm of spot price $S_t$, is the sum of two hidden factors: 
+$$\log{(S_t)} = \chi_t + \xi_t, $$
+where $\chi_t$ represent the short term fluctuation and $\xi_t$ is the long term equilibrium price level. 
 
 ![SS1](figures/SS2.png)
 
@@ -259,6 +265,9 @@ If you find any bugs or want to make a contribution to this package, please crea
 Additionally, you are very welcome to provide any kind of feedback and comments. Please send me an email at: peilun.he93\@gmail.com. 
 
 If you have questions about how to use this package, please also send me an email. I will get back to you as soon as possible. 
+
+## Acknowledgements
+We would like to thank Sam Forbes, Blake Rayfield and Mark Van de Vyver for testing PDSim and providing valuable feedback and suggestions. 
 
 ## Version History 
 **Version 2.1.2** (current version): 
