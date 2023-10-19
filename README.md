@@ -57,6 +57,8 @@ $\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion mod
 
 <img src="figures/PD1.png" alt="drawing" width="400"/>
 
+All other procedures are the same as the Schwartz and Smith model. 
+
 ### Some Other Hints
 1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
 
