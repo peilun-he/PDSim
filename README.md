@@ -49,12 +49,13 @@ Finally, all the simulated data are downloadable. Please click `Download prices`
 <img src="figures/SS3.png" alt="drawing" width="400"/>
 
 ### Polynomial Diffusion Model
+The procedure for simulating data from the polynomial diffusion model closely resembles that of the Schwartz and Smith model. Nevertheless, it involves the specification of additional parmaeters. 
+
+Firstly, let's look at the difference between these two models. Both the polynomial diffusion model and the Schwartz and Smith model assume that the spot price $S_t$ is influenced by two latent factors, $\chi_t$ and $\xi_t$. However, the Schwartz and Smith model assumes that the logarithm of $S_t$ is the sum of two factors, whereas the polynomial diffusion model posits that $S_t$ takes on a polynomial form. Currently, PDSim GUI can only deal with polynomials with degree 2, i.e., 
+$$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2. $$
+$\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion model. If users want to specify a polynomial with degree 1, just set $\alpha_4 = \alpha_5 = \alpha_6 = 0$. Additionally, users are required to specify one non-linear filtering methods, Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). 
 
 <img src="figures/PD1.png" alt="drawing" width="400"/>
-
-<img src="figures/SS2.png" alt="drawing" width="400"/>
-
-<img src="figures/SS3.png" alt="drawing" width="400"/>
 
 ### Some Other Hints
 1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
