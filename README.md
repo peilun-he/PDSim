@@ -31,15 +31,20 @@ The graphical user interface (GUI) is a easy way for everyone to use PDSim packa
 
 ### Schwartz-Smith Model
 
-Firstly, we specify some global setups, e.g., the number of observations, the number of contracts. Also, we choose 
+Firstly, we establish certain global configurations, such as defining the number of observations (trading days) and contracts. Furthermore, we make a selection regarding the model from which the simulated data is generated.
 
 <img src="figures/SS1.png" alt="drawing" width="400"/>
 
 For Schwartz-Smith model, we assume the logarithm of spot price $S_t$, is the sum of two hidden factors: 
 $$\log{(S_t)} = \chi_t + \xi_t, $$
-where $\chi_t$ represent the short term fluctuation and $\xi_t$ is the long term equilibrium price level. 
+where $\chi_t$ represent the short term fluctuation and $\xi_t$ is the long term equilibrium price level. We assume both $\chi_t$ and $\xi_t$ follow a risk-neutral mean-reverting process: 
+$$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt + \sigma_{\chi} dW_t^{\chi*}, $$
+$$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt + \sigma_{\xi} dW_t^{\xi*}. $$
+$\kappa, \gamma \in \mathbb{R}^+$ are speed of mean-reversion parameters; $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor; $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities; $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums; $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions with correlation coefficient $\rho $. All of them are parameters need to be specified. Additionally, for simplicity, we assume the standard errors $\sigma_i, i = 1, \dots, m$ for futures contracts are evenly spaced, i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 = \dots = \sigma_{m-1} - \sigma_m$. If users have special needs for the standard errors, please use R script. 
 
 <img src="figures/SS2.png" alt="drawing" width="400"/>
+
+Finally, all the simulated data are downloadable. Please click `Download prices` and `Download maturities` buttons to download futures price and maturities data. Please note, even though Schwartz and Smith models the logarithm of spot price, **all data downloaded or plotted are real price, they have been exponentiated**. The other button `Generate new data` is designed for users who want to simulate multiple realisations from the same set of parameters. Once clicking it, PDSim will get another set of random noises, so the futures price will change as well. This button is not compulsory if users only need one realisations. The data will updated automatically when you change any parameters. 
 
 <img src="figures/SS3.png" alt="drawing" width="400"/>
 
