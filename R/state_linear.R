@@ -1,4 +1,4 @@
-#' Linear state equation. 
+#' Linear state equation
 #' 
 #' State equation in a linear form \eqn{x_t = A + B x_{t-1}}. This function can be passed to [simulate_data], 
 #' [EKF] and [UKF] as the argument of `func_f`. 
