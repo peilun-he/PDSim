@@ -49,7 +49,7 @@ Finally, all the simulated data are downloadable. Please click `Download prices`
 <img src="figures/SS3.png" alt="drawing" width="400"/>
 
 ### Polynomial Diffusion Model
-The procedure for simulating data from the polynomial diffusion model closely resembles that of the Schwartz and Smith model. Nevertheless, it involves the specification of additional parmaeters. 
+The procedure for simulating data from the polynomial diffusion model closely resembles that of the Schwartz and Smith model. Nevertheless, it involves the specification of additional parameters. 
 
 Firstly, let's look at the difference between these two models. Both the polynomial diffusion model and the Schwartz and Smith model assume that the spot price $S_t$ is influenced by two latent factors, $\chi_t$ and $\xi_t$. However, the Schwartz and Smith model assumes that the logarithm of $S_t$ is the sum of two factors, whereas the polynomial diffusion model posits that $S_t$ takes on a polynomial form. Currently, PDSim GUI can only deal with polynomials with degree 2, i.e., 
 $$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2. $$
