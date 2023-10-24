@@ -1,4 +1,4 @@
-# Polynomial Diffusion Model Simulation and Estimation (V2.1.1)
+# Polynomial Diffusion Model Simulation and Estimation (V2.1.2)
 ## Introduction
 Web application for the polynomial diffusion model. This app generates futures price data by providing all parameters. Also, it gives state variables and contract estimations through Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). The Schwartz and Smith's two-factor model is also provided for comparison. 
 
@@ -25,7 +25,129 @@ A tutorial of how to use this app is available by running the following code and
 browseVignettes("PDSim")
 ```
 
-## User Guide
+## How to Use PDSim (GUI)
+
+The graphical user interface (GUI) is a easy way for everyone to use PDSim package, even though you have no knowledge of programming. Just enter all necessary parameters, it will simulate data, and provide well-designed interactive visualisations. Currently, PDSim can simulate data from two models, Schwartz and Smith two-factor model, and polynomial diffusion model. In this section, we will explain how to use GUI to simulate data. A detailed description of two models are available in [Model Description](#model-description). 
+
+### Schwartz-Smith Model
+
+Firstly, we establish certain global configurations, such as defining the number of observations (trading days) and contracts. Furthermore, we make a selection regarding the model from which the simulated data is generated.
+
+<img src="figures/SS1.png" alt="drawing" width="400"/>
+
+For Schwartz-Smith model, we assume the logarithm of spot price $S_t$, is the sum of two hidden factors: 
+$$\log{(S_t)} = \chi_t + \xi_t, $$
+where $\chi_t$ represent the short term fluctuation and $\xi_t$ is the long term equilibrium price level. We assume both $\chi_t$ and $\xi_t$ follow a risk-neutral mean-reverting process: 
+$$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt + \sigma_{\chi} dW_t^{\chi*}, $$
+$$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt + \sigma_{\xi} dW_t^{\xi*}. $$
+$\kappa, \gamma \in \mathbb{R}^+$ are speed of mean-reversion parameters; $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor; $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities; $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums; $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions with correlation coefficient $\rho $. All of them are parameters need to be specified. Additionally, for simplicity, we assume the standard errors $\sigma_i, i = 1, \dots, m$ for futures contracts are evenly spaced, i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 = \dots = \sigma_{m-1} - \sigma_m$. If users have special needs for the standard errors, please use R script. 
+
+<img src="figures/SS2.png" alt="drawing" width="400"/>
+
+Finally, all the simulated data are downloadable. Please click `Download prices` and `Download maturities` buttons to download futures price and maturities data. Please note, even though Schwartz and Smith models the logarithm of spot price, **all data downloaded or plotted are real price, they have been exponentiated**. The other button `Generate new data` is designed for users who want to simulate multiple realisations from the same set of parameters. Once clicking it, PDSim will get another set of random noises, so the futures price will change as well. This button is not compulsory if users only need one realisations. The data will updated automatically when you change any parameters. 
+
+<img src="figures/SS3.png" alt="drawing" width="400"/>
+
+### Polynomial Diffusion Model
+The procedure for simulating data from the polynomial diffusion model closely resembles that of the Schwartz and Smith model. Nevertheless, it involves the specification of additional parameters. 
+
+Firstly, let's look at the difference between these two models. Both the polynomial diffusion model and the Schwartz and Smith model assume that the spot price $S_t$ is influenced by two latent factors, $\chi_t$ and $\xi_t$. However, the Schwartz and Smith model assumes that the logarithm of $S_t$ is the sum of two factors, whereas the polynomial diffusion model posits that $S_t$ takes on a polynomial form. Currently, PDSim GUI can only deal with polynomials with degree 2, i.e., 
+$$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2. $$
+$\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion model. If users want to specify a polynomial with degree 1, just set $\alpha_4 = \alpha_5 = \alpha_6 = 0$. Additionally, users are required to specify one non-linear filtering methods, Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). 
+
+<img src="figures/PD1.png" alt="drawing" width="400"/>
+
+All other procedures are the same as the Schwartz and Smith model. 
+
+### Some Other Hints
+1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
+
+2. The seed to generate random numbers is fixed, i.e., for the same set of parameters, users will get exactly the same data every time they use PDSim.
+
+3. Futures prices in all tables / plots are REAL prices (NOT the logarithm), no matter which model is used.
+
+4. The 95% confidence interval is shown as a grey ribbon on each plot.
+
+5. Because of the limitation of filtering methods, the standard error of the estimated futures price on the first day is extremely large. All plots of contracts estimation start from the second day.
+
+## How to Use PDSim (R Script)
+
+The GUI should be suffice. However, if you want to have more control of the data simulated, you can use R script. In this section, we will discuss how to use exported functions from this package to simulate data, as well as how to use Kalman Filter (KF), Extended Kalman Filter (EKF) and Unscented Kalman Filter (UKF) to estimate the hidden state variables. 
+
+Firstly, load the package: 
+```r
+library(PDSim)
+```
+If you don't have PDSim installed, please refer [Installation](#installation). 
+
+Next, we specify the necessary global setups: 
+```r
+n_obs <- 100 # number of observations
+n_contract <- 10 # number of contracts
+dt <- 1/360 # interval between two consecutive time points, 1/360 represents daily data
+```
+
+### Schwartz-Smith Model
+Next, we specify parameters. For the Schwartz-Smith model, there is no model coefficients. 
+```r
+par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters 
+x0 <- c(0, 1/0.3) # initial values of state variables
+n_coe <- 0 # number of model coefficient
+```
+The set of parameters are in the order of: $\kappa, \gamma, \mu_{\xi}, \sigma_{\chi}, \sigma_{\xi}, \rho, \lambda_{\chi}, \lambda_{\xi}$. The long sequence is the standard errors of measurement equation. We assume all futures curves are uncorrelated and standard errors are evenly decreasing. You can have your own assumptions on standard errors, but the independence of curves must be hold. 
+
+Then, we specify the measurement and state equations. You can use the exported functions `measurement_linear` and `state_linear` directly, or write you own functions. 
+```r
+func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+func_g <- function(xt, par, mats) measurement_linear(xt, par, mats) # measurement equation
+```
+
+Finally, we can simulate the futures price, time to maturity, and hidden state variables: 
+```r
+dat <- simulate_data(par, x0, n_obs, n_contract, func_f, measurement_linear, n_coe, "Gaussian", 1234)
+log_price <- dat$yt # measurement_linear function returns the logarithm of futures price
+mats <- dat$mats # time to maturity
+xt <- dat$xt # state variables
+```
+Please note, `measurement_linear` returns the logarithm of futures price (which is required by the Schwartz and Smith model), so the data simulated is also the logarithm. 
+
+Additionally, we can estimate the hidden state variables through Kalman Filter (KF): 
+```r
+est <- KF(par = c(par, x0), yt = log_price, mats = mats, delivery_time = 0, dt = dt, smoothing = FALSE, seasonality = "None") # delivery_time is unnecessary as we don't have seasonality 
+```
+
+### Polynomial Diffusion Model
+For the polynomial diffusion model, we have to specify both parameters and model coefficients: 
+```r
+par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters 
+x0 <- c(0, 1/0.3) # initial values of state variables
+n_coe <- 6 # number of model coefficient
+par_coe <- c(1, 1, 1, 1, 1, 1) # model coefficients
+```
+Currently, PDSim can deal with a polynomial with order 2, i.e., 6 model coefficients. 
+
+Then, we specify the measurement and state equations. Again, you can use the exported functions `state_linear` and `measurement_polynomial`. 
+```r
+func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+func_g <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe) # measurement equation
+```
+
+Finally, simulate the data: 
+```r
+dat <- simulate_data(c(par, par_coe), x0, n_obs, n_contract, func_f, func_g, n_coe, "Gaussian", 1234)
+price <- dat$yt # measurement_polynomial function returns the futures price
+mats <- dat$mats # time to maturity
+xt <- dat$xt # state variables
+```
+`measurement_polynomial` returns the actual price, rather than the logarithm. 
+
+We can also estimate the hidden state variables through Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF): 
+```r
+est_EKF <- EKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gaussian")
+est_UKF <- UKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gaussian")
+```
+
+## Model Description
 
 ### Schwartz-Smith Model
 The spot price $S_t$ is modelled as
@@ -145,19 +267,22 @@ Therefore, we have the non-linear state-space model
 $$x_t = c + E x_{t-1} + w_t,$$
 $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 
-### Some Other Hints
-1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
+## Contributions and Supports
+If you find any bugs or want to make a contribution to this package, please create a GitHub issue at: https://github.com/peilun-he/PDSim/issues. 
 
-2. The seed to generate random numbers is fixed, i.e., for the same set of parameters, users will get exactly the same data every time they use PDSim.
+Additionally, you are very welcome to provide any kind of feedback and comments. Please send me an email at: peilun.he93\@gmail.com. 
 
-3. Futures prices in all tables / plots are REAL prices (NOT the logarithm), no matter which model is used.
+If you have questions about how to use this package, please also send me an email. I will get back to you as soon as possible. 
 
-4. The 95% confidence interval is shown as a grey ribbon on each plot.
-
-5. Because of the limitation of filtering methods, the standard error of the estimated futures price on the first day is extremely large. All plots of contracts estimation start from the second day.
+## Acknowledgements
+We would like to thank Sam Forbes, Blake Rayfield and Mark Van de Vyver for testing PDSim and providing valuable feedback and suggestions. 
 
 ## Version History 
-**Version 2.1.1** (current version): 
+**Version 2.1.2** (current version): 
+- Main functions are exported, with short executable examples. 
+- Add Contributions and Supports section. 
+
+**Version 2.1.1**: 
 - Add a vignette. 
 
 **Version 2.1**: 

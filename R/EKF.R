@@ -1,25 +1,51 @@
+#' Extended Kalman Filter
+#' 
+#' The Extended Kalman Filter (EKF) is a widely used recursive algorithm for estimating
+#' the hidden state variables of a non-linear dynamic system. 
+#' 
+#' Details, Ref: Eric Wan & Rudolph van der Merwe (2000). Non-linear state-space model: 
+#' X_t = f(X_{t-1}) + epsilon_t, epsilon_t ~ N(0, W)
+#' Y_t = g(X_t) + eta_t, eta_t ~ N(0, V)
+#' 
+#' @param par A vector of parameters. 
+#' @param yt Futures price. 
+#' @param mats Time to maturity. 
+#' @param func_f Function `f`, which should take two arguments, xt and a vector of parameters, 
+#' and return two values, the function value f(x) and the gredient f'(x). 
+#' @param func_g Function `g`, which should take three arguments, xt, a vector of parameters 
+#' and maturities, and return two values, g(x) and g'(x). 
+#' @param dt \eqn{\Delta t}. The interval between two consecutive time points. 
+#' @param n_coe The number of model coefficient to be estimated. 
+#' @param noise The distribution of noise, `currently only "Gaussian" works.`Gaussian` or `Gamma`.  
+#' 
+#' @return This function returns a list with components: 
+#' \item{nll}{Negative log-likelihood. }
+#' \item{ll_table}{A vector to store cumulative log-likelihood at each time point. 
+#' Used to calculate Sandwich variance. }
+#' \item{table_xt_filter}{Filtered state variable. }
+#' \item{table_xt_prediction}{Predicted state variable. }
+#' 
+#' @export
+#' @seealso [KF], [UKF] for other filtering methods. 
+#' @examples
+#' ######################################
+#' ##### Polynomial diffusion model #####
+#' ######################################
+#' n_obs <- 100
+#' n_contract <- 10
+#' par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract))
+#' x0 <- c(0, 1/0.3)
+#' dt <- 1/360 # daily data
+#' n_coe <- 6 # polynomial with order 2`
+#' par_coe <- c(1, 1, 1, 1, 1, 1)
+#' func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+#' func_g <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe) # measurement equation 
+#' dat <- simulate_data(c(par, par_coe), x0, n_obs, n_contract, func_f, func_g, n_coe, "Gaussian", 1234)
+#' price <- dat$yt # measurement_polynomial function returns the futures price
+#' mats <- dat$mats
+#' est <- EKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gaussian")
+
 EKF <- function(par, yt, mats, func_f, func_g, dt, n_coe, noise) {
-  # Extended Kalman Filter, for polynomial diffusion model. 
-  # Ref: Eric Wan & Rudolph van der Merwe (2000)
-  # Non-linear state-space model: 
-  #   X_t = f(X_{t-1}) + epsilon_t, epsilon_t ~ N(0, W)
-  #   Y_t = g(X_t) + eta_t, eta_t ~ N(0, V)
-    
-  # Inputs: 
-  #   par: a vector of parameters
-  #   yt: futures prices
-  #   mats: time to maturities
-  #   func_f: function f(x), which should take two arguments, xt and a vector of parameters, and return two values, f(x) and f'(x)
-  #   func_g: function g(x), which should take three arguments, xt, a vector of parameters and maturities, and return two values, g(x) and g'(x)
-  #   dt: delta t
-  #   n_coe: the number of model coefficient to be estimated 
-  #   noise: Gaussian -> Gaussian noise for both process and measurement noise
-  #          Gamma -> Gaussian process noise and Gamma measurement noise
-  # Outputs:
-  #   nll: negative log-likelihood
-  #   ll_table: a vector to store cumulative log-likelihood at each time point - used to calculate Sandwich variance
-  #   table_xt_filter: filtered state variable
-  #   table_xt_prediction: predicted state variable
   
   x0 <- c( par[length(par)-1], par[length(par)] )
   par <- par[1: (length(par)-2)]

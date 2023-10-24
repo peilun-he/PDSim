@@ -1,14 +1,23 @@
+#' Polynomial measurement equation
+#' 
+#' Measurement equation in a polynomial form. This function can be passed to [simulate_data], 
+#' [EKF] and [UKF] as the argument of `func_g`. 
+#' 
+#' @param x State variables \eqn{x_t}. 
+#' @param par A vector of parameters and model coefficients. 
+#' @param mats Time to maturity. 
+#' @param degree Degree of polynomial. 
+#' @param n_coe The number of model coefficients. 
+#' 
+#' @return This function returns a list with components: 
+#' \item{y}{The futures price \eqn{y_t}. }
+#' \item{y_jacobian}{The jacobian of \eqn{y_t}. }
+#' 
+#' @export
+#' @seealso [measurement_linear], [state_linear] for other forms of state and 
+#' measurement equations. 
+
 measurement_polynomial <- function(x, par, mats, degree, n_coe) {
-  # Polynomial measurement equation
-  # Inputs: 
-  #   x: x_t
-  #   par: a vector of parameters and model coefficients
-  #   mats: maturities
-  #   degree: degree of polynomial
-  #   n_coe: the number of model coefficients
-  # Outputs:
-  #   y: y_t
-  #   y_jacobian: Jacobian of y
   
   n_para <- length(par)
   

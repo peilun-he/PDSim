@@ -1,25 +1,49 @@
+#' Simulate commodity futures data. 
+#' 
+#' Simulate commodity futures price, time to maturity, and hidden factors based on state-space 
+#' model. See `Details` for more information about the model. 
+#' 
+#' The state-space model is give by
+#' \deqn{y_t = g(x_t, m_t) + u_t}
+#' \deqn{x_t = f(x_{t-1}, m_t) + v_t}
+#' where \eqn{y_t} is the futures price, \eqn{x_t} is the hidden state variable, \eqn{m_t} is 
+#' the time to maturity, \eqn{u_t} and \eqn{v_t} are noises with mean 0. 
+#' 
+#' @param par A vector of parameters. 
+#' @param x0 Initial values of state variables. 
+#' @param n_obs The number of observations. 
+#' @param n_contract The number of contracts. 
+#' @param func_f Function `f`, which should take two arguments, xt and a vector of parameters, 
+#' and return two values, the function value f(x) and the gredient f'(x). ( f'(x) is useless in 
+#' this function, just make it consistent as used in other functions )
+#' @param func_g Function `g`, which should take three arguments, xt, a vector of parameters 
+#' and maturities, and return two values, g(x) and g'(x). ( g'(x) is useless in this function, 
+#' just make it consistent as used in other functions )
+#' @param n_coe The number of model coefficients.  
+#' @param noise The distribution of noise, currently only "Gaussian" works. 
+#' @param seed Integer. Seed for random values. 
+#' 
+#' @return This function returns a \code{list} with components: 
+#' \item{yt}{A data frame. Commodity futures price.}
+#' \item{mats}{A data frame. Time to maturity. It has the same dimension as `yt`.} 
+#' \item{xt}{A data frame. Hidden state variables. }
+#' 
+#' @import MASS
+#' @export
+#' @seealso [state_linear], [measurement_linear], [measurement_polynomial] for examples of function 
+#' `f` and `g`. 
+#' @examples
+#' n_obs <- 100
+#' n_contract <- 10
+#' par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract))
+#' x0 <- c(0, 1/0.3)
+#' dt <- 1/360 # daily data
+#' n_coe <- 0
+#' func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+#' dat <- simulate_data(par, x0, n_obs, n_contract, func_f, measurement_linear, n_coe, "Gaussian", 1234)
+
 simulate_data <- function(par, x0, n_obs, n_contract, func_f, func_g, n_coe, noise, seed) {
-  # Simulate data, state variables and time to maturities.
-  # Inputs:
-  #   par: vector of parameters
-  #   x0: initial values of state variables
-  #   n_obs: number of observations
-  #   n_contract: number of contracts
-  #   func_f: function f(x), which should take two arguments, xt and a vector of parameters, 
-  #     and return two values, f(x) and f'(x) 
-  #     ( f'(x) is useless in this function, just make it consistent as used in other functions )
-  #   func_g: function g(x), which should take three arguments, xt, a vector
-  #       of parameters and maturities, and return two values, g(x) and g'(x) 
-  #       ( g'(x) is useless in this function, just make it consistent as used in other functions ) 
-  #   noise: Gaussian -> Gaussian noise for both state and measurement equations
-  #   seed: seed for random values
-  # Outputs: 
-  #   yt: data
-  #   mats: time to maturities
-  #   xt: state variables
-  
-  #require(MASS)
-  
+
   # Parameters
   kappa_chi  <- par[1]
   kappa_xi   <- par[2]
