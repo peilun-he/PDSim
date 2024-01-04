@@ -1,4 +1,4 @@
-#' Simulate commodity futures data. 
+#' Simulate commodity futures data
 #' 
 #' Simulate commodity futures price, time to maturity, and hidden factors based on state-space 
 #' model. See `Details` for more information about the model. 
