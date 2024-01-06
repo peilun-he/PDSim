@@ -1,6 +1,6 @@
 # Polynomial Diffusion Model Simulation and Estimation (V2.1.2)
 ## Introduction
-This package allows users to simulate commodity futures data from two models, Schwartz and Smith two-factor model and polynomial diffusion model, through both GUI and R scripts. Additionally, it gives state variables and contract estimations through Kalman Filter (KF), Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). 
+This package allows users to simulate commodity futures data from two models, Schwartz and Smith two-factor model (Schwartz & Smith, 2000) and polynomial diffusion model (Filipovic & Larsson, 2016), through both GUI and R scripts. Additionally, it gives state variables and contract estimations through Kalman Filter (KF), Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). 
 
 Plans: 
 - Add decomposition of data through the "seasonal" package 
@@ -26,7 +26,7 @@ browseVignettes("PDSim")
 
 ## How to Use PDSim (GUI)
 
-The graphical user interface (GUI) is a easy way for everyone to use PDSim package, even though you have no knowledge of programming. Just enter all necessary parameters, it will simulate data, and provide well-designed interactive visualisations. Currently, PDSim can simulate data from two models, Schwartz and Smith two-factor model, and polynomial diffusion model. In this section, we will explain how to use GUI to simulate data. A detailed description of two models are available in [Model Description](#model-description). 
+The graphical user interface (GUI) is a easy way for everyone to use PDSim package, even though you have no knowledge of programming. Just enter all necessary parameters, it will simulate data, and provide well-designed interactive visualisations. Currently, PDSim can simulate data from two models, Schwartz and Smith two-factor model (Schwartz & Smith, 2000), and polynomial diffusion model (Filipovic & Larsson, 2016). In this section, we will explain how to use GUI to simulate data. A detailed description of two models are available in [Model Description](#model-description). 
 
 ### Schwartz-Smith Model
 
@@ -34,7 +34,7 @@ Firstly, we establish certain global configurations, such as defining the number
 
 <img src="figures/SS1.png" alt="drawing" width="400"/>
 
-For Schwartz-Smith model, we assume the logarithm of spot price $S_t$, is the sum of two hidden factors: 
+For Schwartz-Smith model (Schwartz & Smith, 2000), we assume the logarithm of spot price $S_t$, is the sum of two hidden factors: 
 $$\log{(S_t)} = \chi_t + \xi_t, $$
 where $\chi_t$ represent the short term fluctuation and $\xi_t$ is the long term equilibrium price level. We assume both $\chi_t$ and $\xi_t$ follow a risk-neutral mean-reverting process: 
 $$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt + \sigma_{\chi} dW_t^{\chi*}, $$
@@ -45,20 +45,20 @@ If users have special needs for the standard errors, please use R script.
 
 <img src="figures/SS2.png" alt="drawing" width="400"/>
 
-Finally, all the simulated data are downloadable. Please click `Download prices` and `Download maturities` buttons to download futures price and maturities data. Please note, even though Schwartz and Smith models the logarithm of spot price, **all data downloaded or plotted are real price, they have been exponentiated**. The other button `Generate new data` is designed for users who want to simulate multiple realisations from the same set of parameters. Once clicking it, PDSim will get another set of random noises, so the futures price will change as well. This button is not compulsory if users only need one realisations. The data will updated automatically when you change any parameters. 
+Finally, all the simulated data are downloadable. Please click `Download prices` and `Download maturities` buttons to download futures price and maturities data. Please note, even though Schwartz and Smith (2000) models the logarithm of spot price, **all data downloaded or plotted are real price, they have been exponentiated**. The other button `Generate new data` is designed for users who want to simulate multiple realisations from the same set of parameters. Once clicking it, PDSim will get another set of random noises, so the futures price will change as well. This button is not compulsory if users only need one realisations. The data will updated automatically when you change any parameters. 
 
 <img src="figures/SS3.png" alt="drawing" width="400"/>
 
 ### Polynomial Diffusion Model
-The procedure for simulating data from the polynomial diffusion model closely resembles that of the Schwartz and Smith model. Nevertheless, it involves the specification of additional parameters. 
+The procedure for simulating data from the polynomial diffusion model (Filipovic & Larsson, 2016) closely resembles that of the Schwartz and Smith model (Schwartz & Smith, 2000). Nevertheless, it involves the specification of additional parameters. 
 
-Firstly, let's look at the difference between these two models. Both the polynomial diffusion model and the Schwartz and Smith model assume that the spot price $S_t$ is influenced by two latent factors, $\chi_t$ and $\xi_t$. However, the Schwartz and Smith model assumes that the logarithm of $S_t$ is the sum of two factors, whereas the polynomial diffusion model posits that $S_t$ takes on a polynomial form. Currently, PDSim GUI can only deal with polynomials with degree 2, i.e., 
+Firstly, let's look at the difference between these two models. Both the polynomial diffusion model (Filipovic & Larsson, 2016) and the Schwartz and Smith model (Schwartz & Smith, 2000) assume that the spot price $S_t$ is influenced by two latent factors, $\chi_t$ and $\xi_t$. However, the Schwartz and Smith model (Schwartz & Smith, 2000) assumes that the logarithm of $S_t$ is the sum of two factors, whereas the polynomial diffusion model (Filipovic & Larsson, 2016) posits that $S_t$ takes on a polynomial form. Currently, PDSim GUI can only deal with polynomials with degree 2, i.e., 
 $$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2. $$
-$\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion model. If users want to specify a polynomial with degree 1, just set $\alpha_4 = \alpha_5 = \alpha_6 = 0$. Additionally, users are required to specify one non-linear filtering methods, Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). 
+$\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion model (Filipovic & Larsson, 2016). If users want to specify a polynomial with degree 1, just set $\alpha_4 = \alpha_5 = \alpha_6 = 0$. Additionally, users are required to specify one non-linear filtering methods, Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). 
 
 <img src="figures/PD1.png" alt="drawing" width="400"/>
 
-All other procedures are the same as the Schwartz and Smith model. 
+All other procedures are the same as the Schwartz and Smith model (Schwartz & Smith, 2000). 
 
 ### Some Other Hints
 1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
@@ -89,7 +89,7 @@ dt <- 1/360 # interval between two consecutive time points, 1/360 represents dai
 ```
 
 ### Schwartz-Smith Model
-Next, we specify parameters. For the Schwartz-Smith model, there is no model coefficients. 
+Next, we specify parameters. For the Schwartz-Smith model (Schwartz & Smith, 2000), there is no model coefficients. 
 ```r
 par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters 
 x0 <- c(0, 1/0.3) # initial values of state variables
@@ -118,7 +118,7 @@ est <- KF(par = c(par, x0), yt = log_price, mats = mats, delivery_time = 0, dt =
 ```
 
 ### Polynomial Diffusion Model
-For the polynomial diffusion model, we have to specify both parameters and model coefficients: 
+For the polynomial diffusion model (Filipovic & Larsson, 2016), we have to specify both parameters and model coefficients: 
 ```r
 par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters 
 x0 <- c(0, 1/0.3) # initial values of state variables
@@ -159,7 +159,7 @@ $$d\xi_t = (\mu_{\xi} - \gamma \xi_t) dt + \sigma_{\xi} dW_t^{\xi}$$
 for real processes and
 $$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt + \sigma_{\chi} dW_t^{\chi*}$$
 $$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt + \sigma_{\xi} dW_t^{\xi*}$$
-for risk-neutral processes. $\kappa, \gamma \in \mathbb{R}^+$ are speed of mean-reversion parameters; $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor; $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities; $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums; $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions with correlation coefficient $\rho $. In the original Schwartz-Smith model, the parameter $\gamma$ is set to zero. However, in our extended model, we introduce the flexibility for this mean-reversion parameter associated with the long-term factor to take on non-zero values.
+for risk-neutral processes. $\kappa, \gamma \in \mathbb{R}^+$ are speed of mean-reversion parameters; $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor; $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities; $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums; $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions with correlation coefficient $\rho $. In the original Schwartz-Smith model (Schwartz & Smith, 2000), the parameter $\gamma$ is set to zero. However, in our extended model, we introduce the flexibility for this mean-reversion parameter associated with the long-term factor to take on non-zero values.
 
 Under the arbitrage-free assumption, the futures price $F_{t,T}$ at current time $t$ with maturity time $T$ must be equal to the expected value of spot price at maturity time, i.e.,
 $$\log(F_{t,T}) = \log(\mathbb{E}^\*(S_T \mathcal{F}_t | \mathcal{F}_t)),$$
@@ -319,7 +319,7 @@ Kleisinger-Yu, X., Komaric, V., Larsson, M., & Regez, M. (2020). A multifactor p
 
 Risk.net. (n.d.). No arbitrage pricing. Retrieved from https://www.risk.net/definition/no-arbitrage-pricing. 
 
-Schwartz, E. S., & Smith, J. E. (2000). Short-term variations and long-term dynamics in commodity prices. *Management Science*, 46(7), 893–911.
+Schwartz, E. S., & Smith, J. E. (2000). Short-term variations and long-term dynamics in commodity prices. *Management Science*, 46(7), 893–911. 
 
 Wan, E. A., & Van Der Merwe, R. (2000). The unscented kalman filter for nonlinear estimation. *Proceedings of the IEEE 2000 Adaptive Systems for Signal Processing, Communications, and Control Symposium (Cat. No. 00EX373)*, 153–158.
 
