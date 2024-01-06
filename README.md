@@ -1,6 +1,10 @@
 # Polynomial Diffusion Model Simulation and Estimation (V2.1.2)
 ## Introduction
-This package allows users to simulate commodity futures data from two models, Schwartz and Smith two-factor model (Schwartz & Smith, 2000) and polynomial diffusion model (Filipovic & Larsson, 2016), through both GUI and R scripts. Additionally, it gives state variables and contract estimations through Kalman Filter (KF), Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF).
+This package allows users to simulate commodity futures data from two models, 
+Schwartz and Smith two-factor model (Schwartz & Smith, 2000) and polynomial 
+diffusion model (Filipovic & Larsson, 2016), through both GUI and R scripts. 
+Additionally, it gives state variables and contract estimations through Kalman 
+Filter (KF), Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF).
 
 Plans:
 - Add decomposition of data through the "seasonal" package
@@ -9,9 +13,12 @@ Plans:
 ## Installation
 PDSim can be accessed in two ways:
 
-1. You can use PDSim on the Shiny server. This way, you don't need to have R installed on your computer. Just go to https://peilunhe.shinyapps.io/pdsim/ and use it there.
+1. You can use PDSim on the Shiny server. This way, you don't need to have R
+installed on your computer. Just go to https://peilunhe.shinyapps.io/pdsim/
+and use it there.
 
-2. Additionally, you can download and run PDSim locally, by running the following R code:
+2. Additionally, you can download and run PDSim locally, by running the
+following R code:
 
 ```r
 # install.packages("devtools") # uncomment if you do not have devtools installed
