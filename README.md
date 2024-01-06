@@ -2,10 +2,10 @@
 
 ## Introduction
 
-This package allows users to simulate commodity futures data from two models, 
-Schwartz and Smith two-factor model (Schwartz & Smith, 2000) and polynomial 
-diffusion model (Filipovic & Larsson, 2016), through both GUI and R scripts. 
-Additionally, it gives state variables and contract estimations through Kalman 
+This package allows users to simulate commodity futures data from two models,
+Schwartz and Smith two-factor model (Schwartz & Smith, 2000) and polynomial
+diffusion model (Filipovic & Larsson, 2016), through both GUI and R scripts.
+Additionally, it gives state variables and contract estimations through Kalman
 Filter (KF), Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF).
 
 Plans:
@@ -17,7 +17,7 @@ Plans:
 PDSim can be accessed in two ways:
 
 1. You can use PDSim on the Shiny server. This way, you don't need to have R
-installed on your computer. Just go to https://peilunhe.shinyapps.io/pdsim/
+installed on your computer. Just go to <https://peilunhe.shinyapps.io/pdsim/>
 and use it there.
 
 2. Additionally, you can download and run PDSim locally, by running the
@@ -288,7 +288,7 @@ $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 
 ## Contributions and Supports
 
-If you find any bugs or want to make a contribution to this package, please create a GitHub issue at: https://github.com/peilun-he/PDSim/issues.
+If you find any bugs or want to make a contribution to this package, please create a GitHub issue at: <https://github.com/peilun-he/PDSim/issues>.
 
 Additionally, you are very welcome to provide any kind of feedback and comments. Please send me an email at: peilun.he93\@gmail.com.
 
@@ -337,7 +337,7 @@ Julier, S. J., & Uhlmann, J. K. (2004). Unscented filtering and nonlinear estima
 
 Kleisinger-Yu, X., Komaric, V., Larsson, M., & Regez, M. (2020). A multifactor polynomial framework for long-term electricity forwards with delivery period. *SIAM Journal on Financial Mathematics*, 11(3), 928–957.
 
-Risk.net. (n.d.). No arbitrage pricing. Retrieved from https://www.risk.net/definition/no-arbitrage-pricing.
+Risk.net. (n.d.). No arbitrage pricing. Retrieved from <https://www.risk.net/definition/no-arbitrage-pricing>.
 
 Schwartz, E. S., & Smith, J. E. (2000). Short-term variations and long-term dynamics in commodity prices. *Management Science*, 46(7), 893–911.
 
