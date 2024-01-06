@@ -1,5 +1,7 @@
 # Polynomial Diffusion Model Simulation and Estimation (V2.1.2)
+
 ## Introduction
+
 This package allows users to simulate commodity futures data from two models, 
 Schwartz and Smith two-factor model (Schwartz & Smith, 2000) and polynomial 
 diffusion model (Filipovic & Larsson, 2016), through both GUI and R scripts. 
@@ -11,6 +13,7 @@ Plans:
 - Add forecasting and smoothing
 
 ## Installation
+
 PDSim can be accessed in two ways:
 
 1. You can use PDSim on the Shiny server. This way, you don't need to have R
@@ -57,6 +60,7 @@ Finally, all the simulated data are downloadable. Please click `Download prices`
 <img src="figures/SS3.png" alt="drawing" width="400"/>
 
 ### Polynomial Diffusion Model
+
 The procedure for simulating data from the polynomial diffusion model (Filipovic & Larsson, 2016) closely resembles that of the Schwartz and Smith model (Schwartz & Smith, 2000). Nevertheless, it involves the specification of additional parameters.
 
 Firstly, let's look at the difference between these two models. Both the polynomial diffusion model (Filipovic & Larsson, 2016) and the Schwartz and Smith model (Schwartz & Smith, 2000) assume that the spot price $S_t$ is influenced by two latent factors, $\chi_t$ and $\xi_t$. However, the Schwartz and Smith model (Schwartz & Smith, 2000) assumes that the logarithm of $S_t$ is the sum of two factors, whereas the polynomial diffusion model (Filipovic & Larsson, 2016) posits that $S_t$ takes on a polynomial form. Currently, PDSim GUI can only deal with polynomials with degree 2, i.e.,
@@ -68,6 +72,7 @@ $\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion mod
 All other procedures are the same as the Schwartz and Smith model (Schwartz & Smith, 2000).
 
 ### Some Other Hints
+
 1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
 
 2. The seed to generate random numbers is fixed, i.e., for the same set of parameters, users will get exactly the same data every time they use PDSim.
@@ -96,6 +101,7 @@ dt <- 1/360 # interval between two consecutive time points, 1/360 represents dai
 ```
 
 ### Schwartz-Smith Model
+
 Next, we specify parameters. For the Schwartz-Smith model (Schwartz & Smith, 2000), there is no model coefficients.
 ```r
 par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
@@ -125,6 +131,7 @@ est <- KF(par = c(par, x0), yt = log_price, mats = mats, delivery_time = 0, dt =
 ```
 
 ### Polynomial Diffusion Model
+
 For the polynomial diffusion model (Filipovic & Larsson, 2016), we have to specify both parameters and model coefficients:
 ```r
 par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
@@ -158,6 +165,7 @@ est_UKF <- UKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gau
 ## Model Description
 
 ### Schwartz-Smith Model
+
 The spot price $S_t$ is modelled as
 $$\log(S_t) = \chi_t + \xi_t,$$
 where $\chi_t$ represents the short-term fluctuation and $\xi_t$ is the long-term equilibrium price level. We assume both $\chi_t$ and $\xi_t$ follow an Ornstein–Uhlenbeck process
@@ -220,6 +228,7 @@ $$
 Moreover, we assume $\sigma_1, \dots \sigma_m$ are evenly spaced, i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 = \dots = \sigma_{m-1} - \sigma_m$.
 
 ### Polynomial Diffusion Model
+
 Consider the stochastic differential equation
 $$dX_t = b(X_t)dt + \sigma(X_t)dW_t,$$
 where $W_t$ is a $d$-dimensional standard Brownian Motion and map $\sigma: \mathbb{R}^d \to \mathbb{R}^{d \times d}$ is continuous. Define $a := \sigma \sigma^\top$. For maps $a: \mathbb{R}^d \to \mathbb{S}^{d}$ and $b: \mathbb{R}^d \to \mathbb{R}^d$, suppose we have $a_{ij} \in Pol_2$ and $b_i \in Pol_1$. $\mathbb{S}^d$ is the set of all real symmetric $d \times d$ matrices and $Pol_n$ is the set of all polynomials of degree at most $n$. Then the solution of the SDE is a polynomial diffusion. Moreover, we define the generator $\mathcal{G}$ associated to the polynomial diffusion $X_t$ as
@@ -278,6 +287,7 @@ $$x_t = c + E x_{t-1} + w_t,$$
 $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 
 ## Contributions and Supports
+
 If you find any bugs or want to make a contribution to this package, please create a GitHub issue at: https://github.com/peilun-he/PDSim/issues.
 
 Additionally, you are very welcome to provide any kind of feedback and comments. Please send me an email at: peilun.he93\@gmail.com.
@@ -285,9 +295,11 @@ Additionally, you are very welcome to provide any kind of feedback and comments.
 If you have questions about how to use this package, please also send me an email. I will get back to you as soon as possible.
 
 ## Acknowledgements
+
 We would like to thank Sam Forbes, Blake Rayfield and Mark Van de Vyver for testing PDSim and providing valuable feedback and suggestions.
 
 ## Version History
+
 **Version 2.1.2** (current version):
 - Main functions are exported, with short executable examples.
 - Add Contributions and Supports section.
@@ -312,6 +324,7 @@ We would like to thank Sam Forbes, Blake Rayfield and Mark Van de Vyver for test
 **Version 1.0**: basic functions and UI
 
 ## References
+
 Aspinall, T., Gepp, A., Harris, G., Kelly, S., Southam, C., & Vanstone, B. (2022). NFCP: N-factor commodity pricing through term structure estimation. *The Comprehensive R Archive Network*. [https://cran.rstudio.com/web/packages/NFCP/index.html](https://cran.rstudio.com/web/packages/NFCP/index.html).
 
 Filipovic, D., & Larsson, M. (2016). Polynomial diffusions and applications in finance. *Finance and Stochastics*, 20(4), 931–972.
