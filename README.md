@@ -42,7 +42,7 @@ The graphical user interface (GUI) is a easy way for everyone to use PDSim packa
 
 Firstly, we establish certain global configurations, such as defining the number of observations (trading days) and contracts. Furthermore, we make a selection regarding the model from which the simulated data is generated.
 
-<img src="figures/SS1.png" alt="drawing" width="400"/>
+![](figures/SS1.png)
 
 For Schwartz-Smith model (Schwartz & Smith, 2000), we assume the logarithm of spot price $S_t$, is the sum of two hidden factors:
 $$\log{(S_t)} = \chi_t + \xi_t, $$
@@ -53,11 +53,11 @@ $\kappa, \gamma \in \mathbb{R}^+$ are called the speed of mean-reversion paramet
 
 If users have special needs for the standard errors, please use R script.
 
-<img src="figures/SS2.png" alt="drawing" width="400"/>
+![](figures/SS2.png)
 
 Finally, all the simulated data are downloadable. Please click `Download prices` and `Download maturities` buttons to download futures price and maturities data. Please note, even though Schwartz and Smith (2000) models the logarithm of spot price, **all data downloaded or plotted are real price, they have been exponentiated**. The other button `Generate new data` is designed for users who want to simulate multiple realisations from the same set of parameters. Once clicking it, PDSim will get another set of random noises, so the futures price will change as well. This button is not compulsory if users only need one realisations. The data will updated automatically when you change any parameters.
 
-<img src="figures/SS3.png" alt="drawing" width="400"/>
+![](figures/SS3.png)
 
 ### Polynomial Diffusion Model
 
@@ -67,7 +67,7 @@ Firstly, let's look at the difference between these two models. Both the polynom
 $$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2. $$
 $\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion model (Filipovic & Larsson, 2016). If users want to specify a polynomial with degree 1, just set $\alpha_4 = \alpha_5 = \alpha_6 = 0$. Additionally, users are required to specify one non-linear filtering methods, Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF).
 
-<img src="figures/PD1.png" alt="drawing" width="400"/>
+![](figures/PD1.png)
 
 All other procedures are the same as the Schwartz and Smith model (Schwartz & Smith, 2000).
 
@@ -237,11 +237,10 @@ for $x \in \mathbb{R}^d$ and any $C^2$ function $f$. Let $N$ be the dimension of
 $$p(x) = H(x)^\top \vec{p}$$
 and $\vec{p}$ is the coordinate representation of $p(x)$. Moreover, there exists a unique matrix representation $G \in \mathbb{R}^{N \times N}$ of the generator $\mathcal{G}$, such that $G \vec{p}$ is the coordinate vector of $\mathcal{G} p$. So we have
 $$\mathcal{G} p(x) = H(x)^\top G \vec{p}.$$
-<br/><br/>
+
 **Theorem 1**: Let $p(x) \in Pol_n$ be a polynomial with coordinate representation $\vec{p} \in \mathbb{R}^N$, $G \in \mathbb{R}^{N \times N}$ be a matrix representation of generator $\mathcal{G}$, and $X_t \in \mathbb{R}^d$ satisfies the SDE. Then for $0 \le t \le T$, we have
 $$\mathbb{E} \left[ p(X_T) | \mathcal{F}_t \right] = H(X_t)^\top e^{(T-t)G} \vec{p},$$
 where $\mathcal{F}_t$ represents all information available until time $t$.
-<br/><br/><br/>
 
 Next, we apply this theorem to the two-factor model. Assume the spot price $S_t$ is modelled as
 $$S_t = p_n(x_t) = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2,$$
