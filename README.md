@@ -23,11 +23,11 @@ PDSim can be accessed in two ways:
 2. Additionally, you can download and run PDSim locally, by running the
    following R code:
 
-```r
-# install.packages("devtools") # uncomment if you do not have devtools installed
-devtools::install_github("peilun-he/PDSim", build_vignettes = TRUE)
-PDSim::run_app()
-```
+   ```r
+   # install.packages("devtools") # uncomment if you do not have devtools installed
+   devtools::install_github("peilun-he/PDSim", build_vignettes = TRUE)
+   PDSim::run_app()
+   ```
 
 A tutorial of how to use this app is available by running the following code
 and select "PDSim app tutorial":
