@@ -43,14 +43,16 @@ even though you have no knowledge of programming. Just enter all necessary param
 it will simulate data, and provide well-designed interactive visualisations. Currently,
 PDSim can simulate data from two models, Schwartz and Smith two-factor model (Schwartz
 & Smith, 2000), and polynomial diffusion model (Filipovic & Larsson, 2016). In this
-section, we will explain how to use GUI to simulate data. A detailed description of
-two models are available in [Model Description](#model-description).
+section, we will explain how to use GUI to simulate data.
+A detailed description of two models are available in 
+[Model Description](#model-description).
 
-**Schwartz-Smith Model**
+### PDSim (GUI) for Schwartz-Smith Model
 
-Firstly, we establish certain global configurations, such as defining the number of
-observations (trading days) and contracts. Furthermore, we make a selection regarding
-the model from which the simulated data is generated.
+Firstly, we establish certain global configurations, such as defining
+the number of observations (trading days) and contracts.
+Furthermore, we make a selection regarding the model from which 
+the simulated data is generated.
 
 ![](figures/SS1.png)
 
@@ -60,8 +62,10 @@ $$\log{(S_t)} = \chi_t + \xi_t, $$
 where $\chi_t$ represent the short term fluctuation and $\xi_t$ is the long term
 equilibrium price level. We assume both $\chi_t$ and $\xi_t$ follow a risk-neutral
 mean-reverting process:
-$$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt + \sigma_{\chi} dW_t^{\chi*}, $$
-$$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt + \sigma_{\xi} dW_t^{\xi*}. $$
+$$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt
++ \sigma_{\chi} dW_t^{\chi*}, $$
+$$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt
++ \sigma_{\xi} dW_t^{\xi*}. $$
 $\kappa, \gamma \in \mathbb{R}^+$ are called the speed of mean-reversion parameters,
 which controls how fast those two latent factors converge to their mean levels. Most
 of experiments suggest that $\kappa, \gamma \in (0, 3]$. In addition, we recommend
@@ -71,11 +75,12 @@ is the mean level of the long-term factor $\xi_t$. Here we assume that the short
 factor converges to 0. $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities,
 which represent the degree of variation of a price series over time. $\lambda_{\chi},
 \lambda_{\xi} \in \mathbb{R}$ are risk premiums. We price commodity under arbitrage-free
-assumption: "the price of the derivative is set at the same level as the value of the
-replicating portfolio, so that no trader can make a risk-free profit by buying one and
-selling the other. If any arbitrage opportunities do arise, they quickly disappear as
-traders taking advantage of the arbitrage push the derivative’s price until it equals
-the value of replicating portfolios"
+assumption: "the price of the derivative is set at the same level as
+the value of the replicating portfolio, so that no trader can make
+a risk-free profit by buying one and selling the other.
+If any arbitrage opportunities do arise, they quickly disappear as
+traders taking advantage of the arbitrage push the derivative’s
+price until it equals the value of replicating portfolios"
 ([Risk.Net](https://www.risk.net/definition/no-arbitrage-pricing), n.d., para. 2).
 In reality, we need to introduce the mean terms corrections - which are
 $\lambda_{\chi}$ and $\lambda_{\xi}$. $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated
@@ -96,13 +101,14 @@ Please note, even though Schwartz and Smith (2000) models the logarithm of spot
 price, **all data downloaded or plotted are real price, they have been exponentiated**.
 The other button `Generate new data` is designed for users who want to simulate
 multiple realisations from the same set of parameters. Once clicking it,
-PDSim will get another set of random noises, so the futures price will change as well.
-This button is not compulsory if users only need one realisations.
-The data will updated automatically when you change any parameters.
+PDSim will get another set of random noises, so the futures price
+will change as well. This button is not compulsory if users only
+need one realisations. The data will updated automatically when
+you change any parameters.
 
 ![](figures/SS3.png)
 
-**Polynomial Diffusion Model**
+### PDSim (GUI) for Polynomial Diffusion Model
 
 The procedure for simulating data from the polynomial diffusion model
 (Filipovic & Larsson, 2016) closely resembles that of the Schwartz and
@@ -119,7 +125,7 @@ diffusion model (Filipovic & Larsson, 2016) posits that $S_t$ takes on
 a polynomial form. Currently, PDSim GUI can only deal with polynomials
 with degree 2, i.e.,
 $$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2
-+ \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2. $$
++ \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2.$$
 $\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion
 model (Filipovic & Larsson, 2016). If users want to specify a polynomial with
 degree 1, just set $\alpha_4 = \alpha_5 = \alpha_6 = 0$. Additionally,
@@ -131,7 +137,7 @@ Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF).
 All other procedures are the same as the Schwartz and Smith model
 (Schwartz & Smith, 2000).
 
-**Some Other Hints**
+### Some Other Hints
 
 1. Once users enter all parameters, the data will be generated automatically.
    Users do NOT need to click any buttons. However, if users wish to generate more
@@ -167,16 +173,18 @@ Next, we specify the necessary global setups:
 ```r
 n_obs <- 100 # number of observations
 n_contract <- 10 # number of contracts
-dt <- 1/360 # interval between two consecutive time points, 1/360 represents daily data
+dt <- 1/360  # interval between two consecutive time points, 
+# where 1/360 represents daily data
 ```
 
-**Schwartz-Smith Model**
+### PDSim (R Script) for Schwartz-Smith Model
 
 Next, we specify parameters. For the Schwartz-Smith model (Schwartz & Smith, 2000),
 there is no model coefficients.
 
 ```r
-par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
+par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3,
+         seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
 x0 <- c(0, 1/0.3) # initial values of state variables
 n_coe <- 0 # number of model coefficient
 ```
@@ -193,16 +201,19 @@ exported functions `measurement_linear` and `state_linear` directly,
 or write you own functions.
 
 ```r
-func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
-func_g <- function(xt, par, mats) measurement_linear(xt, par, mats) # measurement equation
+# state equation
+func_f <- function(xt, par) state_linear(xt, par, dt)
+# measurement equation
+func_g <- function(xt, par, mats) measurement_linear(xt, par, mats)
 ```
 
 Finally, we can simulate the futures price, time to maturity,
 and hidden state variables:
 
 ```r
-dat <- simulate_data(par, x0, n_obs, n_contract, func_f, measurement_linear, n_coe, "Gaussian", 1234)
-log_price <- dat$yt # measurement_linear function returns the logarithm of futures price
+dat <- simulate_data(par, x0, n_obs, n_contract,
+                     func_f, func_g, n_coe, "Gaussian", 1234)
+log_price <- dat$yt # logarithm of futures price
 mats <- dat$mats # time to maturity
 xt <- dat$xt # state variables
 ```
@@ -215,16 +226,20 @@ Additionally, we can estimate the hidden state variables through
 Kalman Filter (KF):
 
 ```r
-est <- KF(par = c(par, x0), yt = log_price, mats = mats, delivery_time = 0, dt = dt, smoothing = FALSE, seasonality = "None") # delivery_time is unnecessary as we don't have seasonality
+# delivery_time is unnecessary as we don't have seasonality
+est <- KF(par = c(par, x0), yt = log_price, mats = mats,
+          delivery_time = 0, dt = dt, smoothing = FALSE,
+          seasonality = "None")
 ```
 
-**Polynomial Diffusion Model**
+### PDSim (R Script) for Polynomial Diffusion Model
 
 For the polynomial diffusion model (Filipovic & Larsson, 2016),
 we have to specify both parameters and model coefficients:
 
 ```r
-par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3, seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
+par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3,
+         seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
 x0 <- c(0, 1/0.3) # initial values of state variables
 n_coe <- 6 # number of model coefficient
 par_coe <- c(1, 1, 1, 1, 1, 1) # model coefficients
@@ -238,14 +253,17 @@ you can use the exported functions `state_linear` and
 `measurement_polynomial`.
 
 ```r
-func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
-func_g <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe) # measurement equation
+# state equation
+func_f <- function(xt, par) state_linear(xt, par, dt)
+# measurement equation
+func_g <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe)
 ```
 
 Finally, simulate the data:
 
 ```r
-dat <- simulate_data(c(par, par_coe), x0, n_obs, n_contract, func_f, func_g, n_coe, "Gaussian", 1234)
+dat <- simulate_data(c(par, par_coe), x0, n_obs, n_contract,
+                     func_f, func_g, n_coe, "Gaussian", 1234)
 price <- dat$yt # measurement_polynomial function returns the futures price
 mats <- dat$mats # time to maturity
 xt <- dat$xt # state variables
@@ -507,6 +525,11 @@ A multifactor polynomial framework for long-term electricity forwards with deliv
 Risk.net. (n.d.). No arbitrage pricing.
 Retrieved from <https://www.risk.net/definition/no-arbitrage-pricing>.
 
-Schwartz, E. S., & Smith, J. E. (2000). Short-term variations and long-term dynamics in commodity prices. *Management Science*, 46(7), 893–911.
+Schwartz, E. S., & Smith, J. E. (2000).
+Short-term variations and long-term dynamics in commodity prices.
+*Management Science*, 46(7), 893–911.
 
-Wan, E. A., & Van Der Merwe, R. (2000). The unscented kalman filter for nonlinear estimation. *Proceedings of the IEEE 2000 Adaptive Systems for Signal Processing, Communications, and Control Symposium (Cat. No. 00EX373)*, 153–158.
+Wan, E. A., & Van Der Merwe, R. (2000).
+The unscented kalman filter for nonlinear estimation.
+*Proceedings of the IEEE 2000 Adaptive Systems for Signal Processing, Communications,
+and Control Symposium (Cat. No. 00EX373)*, 153–158.
