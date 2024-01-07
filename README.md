@@ -38,7 +38,7 @@ browseVignettes("PDSim")
 
 The graphical user interface (GUI) is a easy way for everyone to use PDSim package, even though you have no knowledge of programming. Just enter all necessary parameters, it will simulate data, and provide well-designed interactive visualisations. Currently, PDSim can simulate data from two models, Schwartz and Smith two-factor model (Schwartz & Smith, 2000), and polynomial diffusion model (Filipovic & Larsson, 2016). In this section, we will explain how to use GUI to simulate data. A detailed description of two models are available in [Model Description](#model-description).
 
-### Schwartz-Smith Model
+**Schwartz-Smith Model**
 
 Firstly, we establish certain global configurations, such as defining the number of observations (trading days) and contracts. Furthermore, we make a selection regarding the model from which the simulated data is generated.
 
@@ -59,7 +59,7 @@ Finally, all the simulated data are downloadable. Please click `Download prices`
 
 ![](figures/SS3.png)
 
-### Polynomial Diffusion Model
+**Polynomial Diffusion Model**
 
 The procedure for simulating data from the polynomial diffusion model (Filipovic & Larsson, 2016) closely resembles that of the Schwartz and Smith model (Schwartz & Smith, 2000). Nevertheless, it involves the specification of additional parameters.
 
@@ -71,7 +71,7 @@ $\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion mod
 
 All other procedures are the same as the Schwartz and Smith model (Schwartz & Smith, 2000).
 
-### Some Other Hints
+**Some Other Hints**
 
 1. Once users enter all parameters, the data will be generated automatically. Users do NOT need to click any buttons. However, if users wish to generate more realisations under the same set of parameters, please click the 'Generate new data' button.
 
@@ -100,7 +100,7 @@ n_contract <- 10 # number of contracts
 dt <- 1/360 # interval between two consecutive time points, 1/360 represents daily data
 ```
 
-### Schwartz-Smith Model
+**Schwartz-Smith Model**
 
 Next, we specify parameters. For the Schwartz-Smith model (Schwartz & Smith, 2000), there is no model coefficients.
 ```r
@@ -130,7 +130,7 @@ Additionally, we can estimate the hidden state variables through Kalman Filter (
 est <- KF(par = c(par, x0), yt = log_price, mats = mats, delivery_time = 0, dt = dt, smoothing = FALSE, seasonality = "None") # delivery_time is unnecessary as we don't have seasonality
 ```
 
-### Polynomial Diffusion Model
+**Polynomial Diffusion Model**
 
 For the polynomial diffusion model (Filipovic & Larsson, 2016), we have to specify both parameters and model coefficients:
 ```r
