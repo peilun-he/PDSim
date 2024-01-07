@@ -44,14 +44,14 @@ it will simulate data, and provide well-designed interactive visualisations. Cur
 PDSim can simulate data from two models, Schwartz and Smith two-factor model (Schwartz
 & Smith, 2000), and polynomial diffusion model (Filipovic & Larsson, 2016). In this
 section, we will explain how to use GUI to simulate data.
-A detailed description of two models are available in 
+A detailed description of two models are available in
 [Model Description](#model-description).
 
 ### PDSim (GUI) for Schwartz-Smith Model
 
 Firstly, we establish certain global configurations, such as defining
 the number of observations (trading days) and contracts.
-Furthermore, we make a selection regarding the model from which 
+Furthermore, we make a selection regarding the model from which
 the simulated data is generated.
 
 ![](figures/SS1.png)
@@ -62,10 +62,10 @@ $$\log{(S_t)} = \chi_t + \xi_t, $$
 where $\chi_t$ represent the short term fluctuation and $\xi_t$ is the long term
 equilibrium price level. We assume both $\chi_t$ and $\xi_t$ follow a risk-neutral
 mean-reverting process:
-$$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt
-+ \sigma_{\chi} dW_t^{\chi*}, $$
-$$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt
-+ \sigma_{\xi} dW_t^{\xi*}. $$
+$$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt +
+\sigma_{\chi} dW_t^{\chi*}, $$
+$$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt +
+\sigma_{\xi} dW_t^{\xi*}. $$
 $\kappa, \gamma \in \mathbb{R}^+$ are called the speed of mean-reversion parameters,
 which controls how fast those two latent factors converge to their mean levels. Most
 of experiments suggest that $\kappa, \gamma \in (0, 3]$. In addition, we recommend
@@ -124,8 +124,8 @@ logarithm of $S_t$ is the sum of two factors, whereas the polynomial
 diffusion model (Filipovic & Larsson, 2016) posits that $S_t$ takes on
 a polynomial form. Currently, PDSim GUI can only deal with polynomials
 with degree 2, i.e.,
-$$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2
-+ \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2.$$
+$$S_t = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t + \alpha_4 \chi_t^2 +
+\alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2.$$
 $\alpha_i, i = 1, \dots, 6$ are extra parameters to the polynomial diffusion
 model (Filipovic & Larsson, 2016). If users want to specify a polynomial with
 degree 1, just set $\alpha_4 = \alpha_5 = \alpha_6 = 0$. Additionally,
@@ -139,18 +139,18 @@ All other procedures are the same as the Schwartz and Smith model
 
 ### Some Other Hints
 
-1. Once users enter all parameters, the data will be generated automatically.
-   Users do NOT need to click any buttons. However, if users wish to generate more
-   realisations under the same set of parameters, please click the
-   'Generate new data' button.
-2. The seed to generate random numbers is fixed, i.e., for the same set of parameters,
-   users will get exactly the same data every time they use PDSim.
-3. Futures prices in all tables / plots are REAL prices (NOT the logarithm),
-   no matter which model is used.
-4. The 95% confidence interval is shown as a grey ribbon on each plot.
-5. Because of the limitation of filtering methods, the standard error of the
-   estimated futures price on the first day is extremely large. All plots of
-   contracts estimation start from the second day.
+- Once users enter all parameters, the data will be generated automatically.
+  Users do NOT need to click any buttons. However, if users wish to generate more
+  realisations under the same set of parameters, please click the
+  'Generate new data' button.
+- The seed to generate random numbers is fixed, i.e., for the same set of parameters,
+  users will get exactly the same data every time they use PDSim.
+- Futures prices in all tables / plots are REAL prices (NOT the logarithm),
+  no matter which model is used.
+- The 95% confidence interval is shown as a grey ribbon on each plot.
+- Because of the limitation of filtering methods, the standard error of the
+  estimated futures price on the first day is extremely large. All plots of
+  contracts estimation start from the second day.
 
 ## How to Use PDSim (R Script)
 
@@ -173,7 +173,7 @@ Next, we specify the necessary global setups:
 ```r
 n_obs <- 100 # number of observations
 n_contract <- 10 # number of contracts
-dt <- 1/360  # interval between two consecutive time points, 
+dt <- 1/360  # interval between two consecutive time points,
 # where 1/360 represents daily data
 ```
 
@@ -386,7 +386,8 @@ and $b_i \in Pol_1$. $\mathbb{S}^d$ is the set of all real symmetric $d \times d
 matrices and $Pol_n$ is the set of all polynomials of degree at most $n$.
 Then the solution of the SDE is a polynomial diffusion. Moreover, we define the
 generator $\mathcal{G}$ associated to the polynomial diffusion $X_t$ as
-$$\mathcal{G}f(x) = \frac{1}{2} Tr\left( a(x) \nabla^2 f(x)\right) + b(x)^\top \nabla f(x)$$
+$$\mathcal{G}f(x) = \frac{1}{2} Tr\left( a(x) \nabla^2 f(x)\right) +
+b(x)^\top \nabla f(x)$$
 for $x \in \mathbb{R}^d$ and any $C^2$ function $f$. Let $N$ be the dimension
 of $Pol_n$, and $H: \mathbb{R}^d \to \mathbb{R}^N$ be a function whose components
 form a basis of $Pol_n$. Then for any $p \in Pol_n$, there exists a unique vector
@@ -409,7 +410,8 @@ Next, we apply this theorem to the two-factor model. Assume the spot price
 $S_t$ is modelled as
 $$S_t = p_n(x_t) = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t +
 \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2,$$
-which is a polynomial with order $n = 2$. $x_t = (\chi_t, \xi_t)^\top$ is a vector of
+which is a polynomial with order $n = 2$.
+$x_t = (\chi_t, \xi_t)^\top$ is a vector of
 state variables. Obviously, $x_t$ satisfies the SDE with
 
 $$
@@ -435,7 +437,8 @@ By applying $\mathcal{G}$ to each element of $H(x_t)$, we get the matrix represe
 
 $$
 G = \left[ \begin{matrix}
-0 & -\lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} & \sigma_{\chi}^2 & 0 & \sigma_{\xi}^2 \\
+0 & -\lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} &
+\sigma_{\chi}^2 & 0 & \sigma_{\xi}^2 \\
 0 & -\kappa & 0 & -2 \lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} & 0 \\
 0 & 0 & -\gamma & 0 & -\lambda_{\chi} & 2\mu_{\xi} - 2\lambda_{\xi} \\
 0 & 0 & 0 & -2\kappa & 0 & 0 \\
@@ -519,7 +522,8 @@ Unscented filtering and nonlinear estimation.
 *Proceedings of the IEEE*, 92(3), 401–422.
 
 Kleisinger-Yu, X., Komaric, V., Larsson, M., & Regez, M. (2020).
-A multifactor polynomial framework for long-term electricity forwards with delivery period.
+A multifactor polynomial framework for long-term electricity
+forwards with delivery period.
 *SIAM Journal on Financial Mathematics*, 11(3), 928–957.
 
 Risk.net. (n.d.). No arbitrage pricing.
