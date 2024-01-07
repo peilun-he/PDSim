@@ -20,7 +20,7 @@ PDSim can be accessed in two ways:
 1. You can use PDSim on the Shiny server. This way, you don't need to have R
    installed on your computer. Just go to <https://peilunhe.shinyapps.io/pdsim/>
    and use it there.
-2. Additionally, you can download and run PDSim locally, by running the
+1. Additionally, you can download and run PDSim locally, by running the
    following R code:
 
    ```r
