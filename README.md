@@ -74,7 +74,7 @@ fluctuation factor converges faster than the long-term factor. $\mu_{\xi} \in \m
 is the mean level of the long-term factor $\xi_t$. Here we assume that the short-term
 factor converges to 0. $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities,
 which represent the degree of variation of a price series over time. $\lambda_{\chi},
-\lambda_{\xi} \in \mathbb{R}$ are risk premiums. We price commodity under arbitrage-free
+\lambda_{\xi} \in \mathbb{R}$ are risk premiums. We price commodity under arbitrary-free
 assumption: "the price of the derivative is set at the same level as
 the value of the replicating portfolio, so that no trader can make
 a risk-free profit by buying one and selling the other.
