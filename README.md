@@ -305,7 +305,10 @@ with correlation coefficient $\rho $.
 In the original Schwartz-Smith model (Schwartz & Smith, 2000),
 the parameter $\gamma$ is set to zero. However, in our extended model,
 we introduce the flexibility for this mean-reversion parameter associated
-with the long-term factor to take on non-zero values.
+with the long-term factor to take on non-zero values. Arbitrage-free pricing
+for the extended model has found application in agricultural commodity futures
+(Sørensen, 2002) and crude oil futures (Ames et al., 2020; Cortazar et al.,
+2019; Cortazar & Naranjo 2006). 
 
 Under the arbitrage-free assumption, the futures price $F_{t,T}$ at
 current time $t$ with maturity time $T$ must be equal to the
@@ -376,15 +379,15 @@ spaced, i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 =
 
 ### Polynomial Diffusion Model
 
-Under the polynomial diffusion framework, the spot price $S_t$ is expressed as 
-a polynomial function of the hidden state vector $x_t$ (with components $\chi_t$ 
-and $\xi_t$): 
+Under the polynomial diffusion framework, the spot price $S_t$ is expressed as
+a polynomial function of the hidden state vector $x_t$ (with components $\chi_t$
+and $\xi_t$):
 $$S_t = p_n(x_t) = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t +
 \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2. $$
-In this context, we assume that the polynomial $p_n(x_t)$ has a degree of 2 
+In this context, we assume that the polynomial $p_n(x_t)$ has a degree of 2
 (or 1 if $\alpha_4 = \alpha_5 = \alpha_6 = 0$). However, it is worth noting that
-all the theorems presented here are applicable even for polynomials of higher 
-degrees. Additionally, similar to the Schwartz and Smith model, we assume that 
+all the theorems presented here are applicable even for polynomials of higher
+degrees. Additionally, similar to the Schwartz and Smith model, we assume that
 $\chi_t$ and $\xi_t$ follow an Ornstein–Uhlenbeck process
 $$d\chi_t = - \kappa \chi_t dt + \sigma_{\chi} dW_t^{\chi}$$
 $$d\xi_t = (\mu_{\xi} - \gamma \xi_t) dt + \sigma_{\xi} dW_t^{\xi}$$
@@ -512,9 +515,22 @@ PDSim and providing valuable feedback and suggestions.
 
 ## References
 
+Ames, M., Bagnarosa, G., Matsui, T., Peters, G. W., & Shevchenko, P. V. (2020).
+Which risk factors drive oil futures price curves?
+*Energy Economics*, 87, 104676.
+
 Aspinall, T., Gepp, A., Harris, G., Kelly, S., Southam, C., & Vanstone, B. (2022).
 NFCP: N-factor commodity pricing through term structure estimation.
 *The Comprehensive R Archive Network*. [https://cran.rstudio.com/web/packages/NFCP/index.html](https://cran.rstudio.com/web/packages/NFCP/index.html).
+
+Cortazar, G., Millard, C., Ortega, H., & Schwartz, E. S. (2019).
+Commodity price forecasts, futures prices, and pricing models.
+*Management Science*, 65(9), 4141-4155.
+
+Cortazar, G., & Naranjo, L. (2006).
+An N‐factor Gaussian model of oil futures prices.
+*Journal of futures markets: futures, options, and other derivative products*,
+26(3), 243-268.
 
 Filipovic, D., & Larsson, M. (2016).
 Polynomial diffusions and applications in finance.
@@ -543,6 +559,11 @@ Retrieved from <https://www.risk.net/definition/no-arbitrage-pricing>.
 Schwartz, E. S., & Smith, J. E. (2000).
 Short-term variations and long-term dynamics in commodity prices.
 *Management Science*, 46(7), 893–911.
+
+Sørensen, C. (2002).
+Modeling seasonality in agricultural commodity futures.
+*Journal of Futures Markets: Futures, Options, and Other Derivative Products*,
+22(5), 393-426.
 
 Wan, E. A., & Van Der Merwe, R. (2000).
 The unscented kalman filter for nonlinear estimation.
