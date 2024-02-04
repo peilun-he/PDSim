@@ -376,7 +376,24 @@ spaced, i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 =
 
 ### Polynomial Diffusion Model
 
-Consider the stochastic differential equation
+Under the polynomial diffusion framework, the spot price $S_t$ is expressed as 
+a polynomial function of the hidden state vector $x_t$ (with components $\chi_t$ 
+and $\xi_t$): 
+$$S_t = p_n(x_t) = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t +
+\alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2. $$
+In this context, we assume that the polynomial $p_n(x_t)$ has a degree of 2 
+(or 1 if $\alpha_4 = \alpha_5 = \alpha_6 = 0$). However, it is worth noting that
+all the theorems presented here are applicable even for polynomials of higher 
+degrees. Additionally, similar to the Schwartz and Smith model, we assume that 
+$\chi_t$ and $\xi_t$ follow an Ornstein–Uhlenbeck process
+$$d\chi_t = - \kappa \chi_t dt + \sigma_{\chi} dW_t^{\chi}$$
+$$d\xi_t = (\mu_{\xi} - \gamma \xi_t) dt + \sigma_{\xi} dW_t^{\xi}$$
+for real processes and
+$$d\chi_t = (- \kappa \chi_t - \lambda_{\chi}) dt + \sigma_{\chi} dW_t^{\chi*}$$
+$$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt + \sigma_{\xi} dW_t^{\xi*}$$
+for risk-neutral processes.
+
+Now, consider any processes that follow the stochastic differential equation
 $$dX_t = b(X_t)dt + \sigma(X_t)dW_t,$$
 where $W_t$ is a $d$-dimensional standard Brownian Motion and map $\sigma:
 \mathbb{R}^d \to \mathbb{R}^{d \times d}$ is continuous. Define
@@ -406,13 +423,7 @@ Then for $0 \le t \le T$, we have
 $$\mathbb{E} \left[ p(X_T) | \mathcal{F}_t \right] = H(X_t)^\top e^{(T-t)G} \vec{p},$$
 where $\mathcal{F}_t$ represents all information available until time $t$.
 
-Next, we apply this theorem to the two-factor model. Assume the spot price
-$S_t$ is modelled as
-$$S_t = p_n(x_t) = \alpha_1 + \alpha_2 \chi_t + \alpha_3 \xi_t +
-\alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t + \alpha_6 \xi_t^2,$$
-which is a polynomial with order $n = 2$.
-$x_t = (\chi_t, \xi_t)^\top$ is a vector of
-state variables. Obviously, $x_t$ satisfies the SDE with
+Obviously, the hidden state vector $x_t$ satisfies the SDE with
 
 $$
 b(x_t) = \left[ \begin{matrix}
