@@ -416,16 +416,14 @@ $\mathcal{G}$, such that $G \vec{p}$ is the coordinate vector of $\mathcal{G} p$
 So we have
 $$\mathcal{G} p(x) = H(x)^\top G \vec{p}.$$
 
-```{theorem, label, name="Theorem name"}
-Here is my theorem.
-```
-
-**Theorem 1**: Let $p(x) \in Pol_n$ be a polynomial with coordinate representation
+```{theorem, th1}
+Let $p(x) \in Pol_n$ be a polynomial with coordinate representation
 $\vec{p} \in \mathbb{R}^N$, $G \in \mathbb{R}^{N \times N}$ be a matrix representation
 of generator $\mathcal{G}$, and $X_t \in \mathbb{R}^d$ satisfies the SDE.
 Then for $0 \le t \le T$, we have
 $$\mathbb{E} \left[ p(X_T) | \mathcal{F}_t \right] = H(X_t)^\top e^{(T-t)G} \vec{p},$$
 where $\mathcal{F}_t$ represents all information available until time $t$.
+```
 
 Obviously, the hidden state vector $x_t$ satisfies the SDE with
 
@@ -462,7 +460,7 @@ G = \left[ \begin{matrix}
 \end{matrix} \right].
 $$
 
-Then, by Theorem 1, the futures price $F_{t,T}$ is given by
+Then, by Theorem \@ref(th1), the futures price $F_{t,T}$ is given by
 $$F_{t,T} = \mathbb{E}^*(S_T | \mathcal{F}_t) = H(x_t)^\top e^{(T-t)G} \vec{p}.$$
 
 Therefore, we have the non-linear state-space model
