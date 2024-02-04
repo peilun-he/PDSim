@@ -460,7 +460,7 @@ G = \left[ \begin{matrix}
 \end{matrix} \right].
 $$
 
-Then, by Theorem \@ref(th1), the futures price $F_{t,T}$ is given by
+Then, by Theorem @ref(th1), the futures price $F_{t,T}$ is given by
 $$F_{t,T} = \mathbb{E}^*(S_T | \mathcal{F}_t) = H(x_t)^\top e^{(T-t)G} \vec{p}.$$
 
 Therefore, we have the non-linear state-space model
