@@ -416,7 +416,7 @@ $\mathcal{G}$, such that $G \vec{p}$ is the coordinate vector of $\mathcal{G} p$
 So we have
 $$\mathcal{G} p(x) = H(x)^\top G \vec{p}.$$
 
-**Theorem 1** Let $p(x) \in Pol_n$ be a polynomial with coordinate representation
+**Theorem 1:** Let $p(x) \in Pol_n$ be a polynomial with coordinate representation
 $\vec{p} \in \mathbb{R}^N$, $G \in \mathbb{R}^{N \times N}$ be a matrix representation
 of generator $\mathcal{G}$, and $X_t \in \mathbb{R}^d$ satisfies the SDE.
 Then for $0 \le t \le T$, we have
