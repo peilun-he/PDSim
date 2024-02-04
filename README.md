@@ -468,6 +468,42 @@ Therefore, we have the non-linear state-space model
 $$x_t = c + E x_{t-1} + w_t,$$
 $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 
+## Tests
+
+Theoretically, there are few constraints on parameters, apart from those outlined
+in the [Model Description](#model-description), where $\kappa, \gamma, \sigma_{\chi},
+\sigma_{\xi} \in \mathbb{R}^+$ and $\rho \in [-1, 1]$ (as $\rho$ represents the
+correlation coefficient). Additionally, we recommend users to impose the constraint
+$\kappa > \gamma$. Although users won't encounter errors if this constraint is
+violated, it proves beneficial in resolving the latent parameter identification
+problem. Without this constraint, there is a risk of misidentification, where the
+short-term factor $\chi_t$ maight be mistaken for the long-term factor $\xi_t$,
+and vice versa. The recommended constraint helps prevent such misinterpretations.
+
+Despite the flexibility in choosing parameter values, certain selections may lead to
+poor simulations of futures prices, resulting in subpar estimations. Optimal
+parameter values should yield a "simulated vs estimated contract" plot similar to
+the following:
+
+![](figures/SS_Est_Futures.png)
+
+![](figures/PD_Est_Futures.png)
+
+In the first plot, representing the Schwartz and Smith model, and the second plot,
+illustraing the polynomial diffusion model, all the parameters are set to their
+default values. In both plots, the black curve denotes the simulated futures
+price, while the red curve denotes the estimated futures price. The grey ribbon
+visually encapsulated the 95% confidence interval. Remarkably, for both plots,
+nearly all simulated prices fall within the confidence intervals.
+
+One more crucial consideration for users is that there is no need to check for
+negative futures prices, especially for the polynomial diffusion model. On 20
+April 2020, there was an unprecedented occurrence where the crude oil futures
+price plummeted to a negative value. Although such instances are extremely
+rare, they can happen. The polynomial diffusion model is designed to
+accommodate the possibility of negative prices, and this flexibility serves as
+one of the motivations behind its formulation.
+
 ## Contributions and Supports
 
 If you find any bugs or want to make a contribution to this package,
