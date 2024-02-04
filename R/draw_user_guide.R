@@ -43,7 +43,7 @@ draw_user_guide <- function() {
              are volatilities. \\( \\lambda_{\\chi}, \\lambda_{\\xi} \\in \\mathbb{R} \\) are risk 
              premiums. \\( W_t^{\\chi*} \\) and \\( W_t^{\\xi*} \\) are 
              correlated standard Brownian Motions with correlation coefficient \\( \\rho \\). 
-             In the original Schwartz-Smith model, \\( \gamma = 0 \\), but here we extend this model 
+             In the original Schwartz-Smith model, \\( \\gamma = 0 \\), but here we extend this model 
              to allow non-zero speed of mean-reversion parameter for the long-term factor. 
              Under the arbitrage-free assumption, the futures price \\( T_{t,T} \\) at current 
              time \\( t \\) with maturity time \\( T \\) must be equal to the expected value of 
