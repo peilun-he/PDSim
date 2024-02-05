@@ -308,7 +308,7 @@ we introduce the flexibility for this mean-reversion parameter associated
 with the long-term factor to take on non-zero values. Arbitrage-free pricing
 for the extended model has found application in agricultural commodity futures
 (Sørensen, 2002) and crude oil futures (Ames et al., 2020; Cortazar et al.,
-2019; Cortazar & Naranjo 2006). 
+2019; Cortazar & Naranjo 2006).
 
 Under the arbitrage-free assumption, the futures price $F_{t,T}$ at
 current time $t$ with maturity time $T$ must be equal to the
@@ -480,10 +480,10 @@ problem. Without this constraint, there is a risk of misidentification, where th
 short-term factor $\chi_t$ maight be mistaken for the long-term factor $\xi_t$,
 and vice versa. The recommended constraint helps prevent such misinterpretations.
 
-Despite the flexibility in choosing parameter values, certain selections may lead to
-poor simulations of futures prices, resulting in subpar estimations. Optimal
-parameter values should yield a "simulated vs estimated contract" plot similar to
-the following:
+Despite the flexibility in choosing parameter values, certain selections may
+lead to poor simulations of futures prices, resulting in subpar estimations.
+Optimal parameter values should yield a "simulated vs estimated contract" plot
+similar to the following:
 
 ![](figures/SS_Est_Futures.png)
 
