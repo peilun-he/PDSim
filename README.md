@@ -68,7 +68,9 @@ $$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt +
 \sigma_{\xi} dW_t^{\xi*}. $$
 $\kappa, \gamma \in \mathbb{R}^+$ are called the speed of mean-reversion parameters,
 which controls how fast those two latent factors converge to their mean levels. Most
-of experiments suggest that $\kappa, \gamma \in (0, 3]$. In addition, we recommend
+of experiments suggest that $\kappa, \gamma \in (0, 3]$. In addition, to avoid a subtle
+parameter identification error (due to a latent parameter identification problem, see
+[Tests](#tests) section), we recommend
 that users limit $\kappa$ to be greater than $\gamma$, which means that the short-term
 fluctuation factor converges faster than the long-term factor. $\mu_{\xi} \in \mathbb{R}$
 is the mean level of the long-term factor $\xi_t$. Here we assume that the short-term
