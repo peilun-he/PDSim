@@ -482,21 +482,216 @@ problem. Without this constraint, there is a risk of misidentification, where th
 short-term factor $\chi_t$ maight be mistaken for the long-term factor $\xi_t$,
 and vice versa. The recommended constraint helps prevent such misinterpretations.
 
-Despite the flexibility in choosing parameter values, certain selections may
-lead to poor simulations of futures prices, resulting in subpar estimations.
-Optimal parameter values should yield a "simulated vs estimated contract" plot
-similar to the following:
+### Tests for Schwartz and Smith Model
+
+Users can utilise the following codes snippets to evaluate the performance of
+simulation and estimation for the Schwartz and Smith model:
+
+```r
+library(ggplot2)
+n_obs <- 100 # number of observations
+n_contract <- 10 # number of contracts
+dt <- 1/360  # interval between two consecutive time points,
+# where 1/360 represents daily data
+seed <- 1234 # seed for random number
+
+# In the order of: kappa, gamma, mu, sigma_chi, sigma_xi,
+# rho, lambda_chi, lambda_xi, measurement errors
+par <- c(1.5, 1.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3,
+         seq(from = 0.01, to = 0.001, length.out = n_contract)) # set of parameters
+x0 <- c(0, 1/0.3) # initial values of state variables
+n_coe <- 0 # number of model coefficient
+
+# state equation
+func_f <- function(xt, par) state_linear(xt, par, dt)
+# measurement equation
+func_g <- function(xt, par, mats) measurement_linear(xt, par, mats)
+
+sim <- simulate_data(par, x0, n_obs, n_contract,
+                     func_f, func_g, n_coe, "Gaussian", seed)
+log_price <- sim$yt # logarithm of futures price
+mats <- sim$mats # time to maturity
+xt <- sim$xt # state variables
+
+# delivery_time is unnecessary as we don't have seasonality
+est <- KF(par = c(par, x0), yt = log_price, mats = mats,
+          delivery_time = 0, dt = dt, smoothing = FALSE,
+          seasonality = "None")
+
+yt_hat <- data.frame(exp(func_g(t(est$xt_filter), par, mats)$y))
+
+# rmse should be:
+# 0.1979, 0.1502, 0.1198, 0.0799, 0.0526
+# 0.0422, 0.0283, 0.0195, 0.0102, 0.0031
+rmse <- sqrt( colMeans((exp(sim$yt) - yt_hat)^2) )
+round(rmse, 4)
+```
+
+The code should execute without encountering any errors, and the resulting
+RMSE should match the specified values precisely. Moreover, users have the
+option to examine the plot of simulated and estimated (1st available)
+contracts using these codes:
+
+```r
+cov_y <- est$cov_y # covariance matrix
+
+contract <- 1 # 1st available contract
+CI_lower <- qlnorm(0.025,
+                   meanlog = log(yt_hat[, contract]),
+                   sdlog = sqrt(cov_y[contract, contract, ]))
+CI_upper <- qlnorm(0.975,
+                   meanlog = log(yt_hat[, contract]),
+                   sdlog = sqrt(cov_y[contract, contract, ]))
+
+trunc <- 2 # truncated the data at the second observation
+
+colors <- c("Simulated" = "black", "Estimated" = "red")
+ggplot(mapping = aes(x = trunc: n_obs)) +
+  geom_line(aes(y = exp(log_price[trunc: n_obs, contract]), color = "Simulated")) +
+  geom_line(aes(y = yt_hat[trunc: n_obs, contract], color = "Estimated")) +
+  geom_ribbon(aes(ymin = CI_lower[trunc: n_obs],
+                  ymax = CI_upper[trunc: n_obs]),
+              alpha = 0.2) +
+  labs(x = "Dates", y = "Futures prices (SS)", color = "",
+       title = "Simulated vs estimated futures price from Schwartz and Smith model") +
+  scale_color_manual(values = colors)
+```
+
+Users should expect to generate the following plot, which mirrors the "Simulated
+vs Estimated Contract" plot found within the application. In the plot, the black
+curve denotes the simulated futures price, while the red curve denotes the estimated
+futures price. The grey ribbon visually encapsulated the 95% confidence interval.
 
 ![](figures/SS_Est_Futures.png)
 
+### Tests for Polynomial Diffusion Model
+
+Users can utilise the following codes snippets to evaluate the performance of
+simulation and estimation for the polynomial diffusion model:
+
+```r
+library(ggplot2)
+n_obs <- 100 # number of observations
+n_contract <- 10 # number of contracts
+dt <- 1/360  # interval between two consecutive time points,
+# where 1/360 represents daily data
+seed <- 1234 # seed for random number
+
+# In the order of: kappa, gamma, mu, sigma_chi, sigma_xi,
+# rho, lambda_chi, lambda_xi, measurement errors
+par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3,
+         seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
+x0 <- c(0, 1/0.3) # initial values of state variables
+n_coe <- 6 # number of model coefficient
+par_coe <- c(1, 1, 1, 1, 1, 1) # model coefficients
+
+# state equation
+func_f <- function(xt, par) state_linear(xt, par, dt)
+# measurement equation
+func_g <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe)
+
+sim <- simulate_data(c(par, par_coe), x0, n_obs, n_contract,
+                     func_f, func_g, n_coe, "Gaussian", seed)
+price <- sim$yt # measurement_polynomial function returns the futures price
+mats <- sim$mats # time to maturity
+xt <- sim$xt # state variables
+
+est <- EKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gaussian")
+
+yt_hat <- data.frame(func_g(t(est$xt_filter), c(par, par_coe), mats)$y)
+
+# rmse should be:
+# 0.0897, 0.0841, 0.0837, 0.0676, 0.0535,
+# 0.0477, 0.0369, 0.0307, 0.0189, 0.0093
+rmse <- sqrt( colMeans((sim$yt - yt_hat)^2) )
+round(rmse, 4)
+```
+
+The code should execute without encountering any errors, and the resulting
+RMSE should match the specified values precisely. Moreover, users have the
+option to examine the plot of simulated and estimated (1st available)
+contracts using these codes:
+
+```r
+cov_y <- est$cov_y # covariance matrix
+
+contract <- 1 # 1st available contract
+CI_lower <- yt_hat[, contract] - 1.96 * sqrt(cov_y[contract, contract, ])
+CI_upper <- yt_hat[, contract] + 1.96 * sqrt(cov_y[contract, contract, ])
+
+trunc <- 2 # truncated the data at the second observation
+
+colors <- c("Simulated" = "blue", "Estimated" = "green")
+ggplot(mapping = aes(x = trunc: n_obs)) +
+  geom_line(aes(y = price[trunc: n_obs, contract], color = "Simulated")) +
+  geom_line(aes(y = yt_hat[trunc: n_obs, contract], color = "Estimated")) +
+  geom_ribbon(aes(ymin = CI_lower[trunc: n_obs],
+                  ymax = CI_upper[trunc: n_obs]),
+              alpha = 0.2) +
+  labs(x = "Dates", y = "Futures prices (PD)", color = "",
+       title = "Simulated vs estimated futures price from polynomial diffusion model") +
+  scale_color_manual(values = colors)
+```
+
+Users should expect to generate the following plot, which mirrors the "Simulated
+vs Estimated Contract" plot found within the application. In the plot, the blue
+curve denotes the simulated futures price, while the green curve denotes the estimated
+futures price. The grey ribbon visually encapsulated the 95% confidence interval.
+
 ![](figures/PD_Est_Futures.png)
 
-In the first plot, representing the Schwartz and Smith model, and the second plot,
-illustraing the polynomial diffusion model, all the parameters are set to their
-default values. In both plots, the black curve denotes the simulated futures
-price, while the red curve denotes the estimated futures price. The grey ribbon
-visually encapsulated the 95% confidence interval. Remarkably, for both plots,
-nearly all simulated prices fall within the confidence intervals.
+### Comparison of Simulated Futures Price
+
+For the same set of parameters and simulated innovations, the Schwartz and Smith
+model and the polynomial diffusion model typically yield significantly divergent
+simulated futures prices. Users can utilize the following code to compare the
+simulated futures from both models: 
+
+```r
+library(ggplot2)
+n_obs <- 100 # number of observations
+n_contract <- 10 # number of contracts
+dt <- 1/360  # interval between two consecutive time points,
+# where 1/360 represents daily data
+seed <- 1234 # seed for random number
+
+par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3,
+         seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
+x0 <- c(0, 1/0.3) # initial values of state variables
+n_coe <- 6 # number of model coefficient
+par_coe <- c(1, 1, 1, 1, 1, 1) # model coefficients
+
+# state equation
+func_f_SS <- function(xt, par) state_linear(xt, par, dt)
+func_f_PD <- function(xt, par) state_linear(xt, par, dt)
+# measurement equation
+func_g_SS <- function(xt, par, mats) measurement_linear(xt, par, mats)
+func_g_PD <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe)
+
+sim_SS <- simulate_data(par, x0, n_obs, n_contract,
+                     func_f_SS, func_g_SS, 0, "Gaussian", seed)
+
+sim_PD <- simulate_data(c(par, par_coe), x0, n_obs, n_contract,
+                     func_f_PD, func_g_PD, n_coe, "Gaussian", seed)
+
+price_SS <- exp(sim_SS$yt)
+price_PD <- sim_PD$yt
+
+contract <- 1 # 1st available contract
+
+colors <- c("Schwartz Smith" = "blue", "Polynomial Diffusion" = "green")
+ggplot(mapping = aes(x = 1: n_obs)) +
+  geom_line(aes(y = price_SS[, contract], color = "Schwartz Smith")) +
+  geom_line(aes(y = price_PD[, contract], color = "Polynomial Diffusion")) +
+  labs(x = "Dates", y = "Futures prices", color = "",
+       title = "Simulated futures price from Schwartz Smith model and
+       polynomial diffusion model") +
+  scale_color_manual(values = colors)
+```
+
+This example gives the following plot of simulated futures price: 
+
+![](figures/sim.png)
 
 One more crucial consideration for users is that there is no need to check for
 negative futures prices, especially for the polynomial diffusion model. On 20
