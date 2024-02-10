@@ -691,7 +691,7 @@ ggplot(mapping = aes(x = 1: n_obs)) +
 
 This example gives the following plot of simulated futures price: 
 
-![](figures/sim.png)
+![](figures/sim_futures.png)
 
 One more crucial consideration for users is that there is no need to check for
 negative futures prices, especially for the polynomial diffusion model. On 20
