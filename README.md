@@ -679,7 +679,7 @@ price_PD <- sim_PD$yt
 
 contract <- 1 # 1st available contract
 
-colors <- c("Schwartz Smith" = "blue", "Polynomial Diffusion" = "green")
+colors <- c("Schwartz Smith" = "purple", "Polynomial Diffusion" = "darkblue")
 ggplot(mapping = aes(x = 1: n_obs)) +
   geom_line(aes(y = price_SS[, contract], color = "Schwartz Smith")) +
   geom_line(aes(y = price_PD[, contract], color = "Polynomial Diffusion")) +
