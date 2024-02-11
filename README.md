@@ -479,7 +479,7 @@ correlation coefficient). Additionally, we recommend users to impose the constra
 $\kappa > \gamma$. Although users won't encounter errors if this constraint is
 violated, it proves beneficial in resolving the latent parameter identification
 problem. Without this constraint, there is a risk of misidentification, where the
-short-term factor $\chi_t$ maight be mistaken for the long-term factor $\xi_t$,
+short-term factor $\chi_t$ might be mistaken for the long-term factor $\xi_t$,
 and vice versa. The recommended constraint helps prevent such misinterpretations.
 
 ### Tests for Schwartz and Smith Model
