@@ -68,9 +68,9 @@ $$d\xi_t = (\mu_{\xi} - \gamma \xi_t - \lambda_{\xi}) dt +
 \sigma_{\xi} dW_t^{\xi*}. $$
 $\kappa, \gamma \in \mathbb{R}^+$ are called the speed of mean-reversion parameters,
 which controls how fast those two latent factors converge to their mean levels. Most
-of experiments suggest that $\kappa, \gamma \in (0, 3]$. In addition, to avoid a subtle
-parameter identification error (due to a latent parameter identification problem, see
-[Tests](#tests) section), we recommend
+of experiments suggest that $\kappa, \gamma \in (0, 3]$. In addition, to avoid
+a subtle parameter identification error (due to a latent parameter identification
+problem, see [Tests](#tests) section), we recommend
 that users limit $\kappa$ to be greater than $\gamma$, which means that the short-term
 fluctuation factor converges faster than the long-term factor. $\mu_{\xi} \in \mathbb{R}$
 is the mean level of the long-term factor $\xi_t$. Here we assume that the short-term
@@ -547,13 +547,15 @@ trunc <- 2 # truncated the data at the second observation
 
 colors <- c("Simulated" = "black", "Estimated" = "red")
 ggplot(mapping = aes(x = trunc: n_obs)) +
-  geom_line(aes(y = exp(log_price[trunc: n_obs, contract]), color = "Simulated")) +
+  geom_line(aes(y = exp(log_price[trunc: n_obs, contract]),
+                color = "Simulated")) +
   geom_line(aes(y = yt_hat[trunc: n_obs, contract], color = "Estimated")) +
   geom_ribbon(aes(ymin = CI_lower[trunc: n_obs],
                   ymax = CI_upper[trunc: n_obs]),
               alpha = 0.2) +
   labs(x = "Dates", y = "Futures prices (SS)", color = "",
-       title = "Simulated vs estimated futures price from Schwartz and Smith model") +
+       title = "Simulated vs estimated futures price
+                from Schwartz and Smith model") +
   scale_color_manual(values = colors)
 ```
 
@@ -629,7 +631,8 @@ ggplot(mapping = aes(x = trunc: n_obs)) +
                   ymax = CI_upper[trunc: n_obs]),
               alpha = 0.2) +
   labs(x = "Dates", y = "Futures prices (PD)", color = "",
-       title = "Simulated vs estimated futures price from polynomial diffusion model") +
+       title = "Simulated vs estimated futures price
+                from polynomial diffusion model") +
   scale_color_manual(values = colors)
 ```
 
