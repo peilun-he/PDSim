@@ -640,66 +640,36 @@ futures price. The grey ribbon visually encapsulated the 95% confidence interval
 
 ![](figures/PD_Est_Futures.png)
 
-### Comparison of Simulated Futures Price
+### Simulation Accuracy
 
-For the same set of parameters and simulated innovations, the Schwartz and Smith
-model and the polynomial diffusion model typically yield significantly divergent
-simulated futures prices. Users can utilize the following code to compare the
-simulated futures from both models: 
+In this section, we will illustrate the simulation accuracy through
+the following figure by demonstrating that with appropriate parameters, our
+simulated data closely aligns with the real data.
 
-```r
-library(ggplot2)
-n_obs <- 100 # number of observations
-n_contract <- 10 # number of contracts
-dt <- 1/360  # interval between two consecutive time points,
-# where 1/360 represents daily data
-seed <- 1234 # seed for random number
+![](figures/real_data.png)
 
-par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3,
-         seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
-x0 <- c(0, 1/0.3) # initial values of state variables
-n_coe <- 6 # number of model coefficient
-par_coe <- c(1, 1, 1, 1, 1, 1) # model coefficients
+The black curve represents the WTI crude oil futures with a 1-month maturity
+spanning from 1 November 2014 to 30 June 2015. Initially, we estimated parameters
+using real data. Unfortunately, this parameter estimation falls outside the
+scope of PDSim. Therefore, we will not delve into the details here. However,
+if you are interested, you can refer to the works of Ames et al. (2020),
+Cortazar et al. (2019), Cortazar and Naranjo (2016), Kleisinger-Yu et al. (2020),
+and Sørensen (2002) for further insights. The estimated futures by the Schwartz
+Smith model and the polynomial diffusion model are represented by the solid and
+dashed red lines, respectively. Subsequently, we utilised the estimated parameters
+to simulate 1000 sample paths. In the generated plot, blue curves depict the
+Schwartz Smith model, while green curves represent the polynomial diffusion model.
+Within this ensemble of curves, the two dashed lines illustrate the 5th and 95th
+percentiles of the 1000 paths, the solid line denotes the sample mean, the
+dot-dashed line signifies the analytical mean, and the dotted line represents
+a random sample path.
 
-# state equation
-func_f_SS <- function(xt, par) state_linear(xt, par, dt)
-func_f_PD <- function(xt, par) state_linear(xt, par, dt)
-# measurement equation
-func_g_SS <- function(xt, par, mats) measurement_linear(xt, par, mats)
-func_g_PD <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe)
-
-sim_SS <- simulate_data(par, x0, n_obs, n_contract,
-                     func_f_SS, func_g_SS, 0, "Gaussian", seed)
-
-sim_PD <- simulate_data(c(par, par_coe), x0, n_obs, n_contract,
-                     func_f_PD, func_g_PD, n_coe, "Gaussian", seed)
-
-price_SS <- exp(sim_SS$yt)
-price_PD <- sim_PD$yt
-
-contract <- 1 # 1st available contract
-
-colors <- c("Schwartz Smith" = "purple", "Polynomial Diffusion" = "darkblue")
-ggplot(mapping = aes(x = 1: n_obs)) +
-  geom_line(aes(y = price_SS[, contract], color = "Schwartz Smith")) +
-  geom_line(aes(y = price_PD[, contract], color = "Polynomial Diffusion")) +
-  labs(x = "Dates", y = "Futures prices", color = "",
-       title = "Simulated futures price from Schwartz Smith model and
-       polynomial diffusion model") +
-  scale_color_manual(values = colors)
-```
-
-This example gives the following plot of simulated futures price: 
-
-![](figures/sim_futures.png)
-
-One more crucial consideration for users is that there is no need to check for
-negative futures prices, especially for the polynomial diffusion model. On 20
-April 2020, there was an unprecedented occurrence where the crude oil futures
-price plummeted to a negative value. Although such instances are extremely
-rare, they can happen. The polynomial diffusion model is designed to
-accommodate the possibility of negative prices, and this flexibility serves as
-one of the motivations behind its formulation.
+From this plot, it is evident that regardless of the model used for simulation,
+the percentile band consistently encompasses the actual price. Addtionally, it
+is noteworthy that while Schwartz Smith model provides a more accurate point
+estimation, it also exhibits larger measurement errors. Consequently, the band
+associated with this model is wider compared to the band of the polynomial
+diffusion model.
 
 ## Contributions and Supports
 
