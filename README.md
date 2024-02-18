@@ -756,6 +756,11 @@ A multifactor polynomial framework for long-term electricity
 forwards with delivery period.
 *SIAM Journal on Financial Mathematics*, 11(3), 928–957.
 
+Peters, G. W., Briers, M., Shevchenko, P., & Doucet, A. (2013).
+Calibration and filtering for multi factor commodity models with seasonality:
+incorporating panel data from futures contracts.
+*Methodology and Computing in Applied Probability*, 15, 841-874.
+
 Risk.net. (n.d.). No arbitrage pricing.
 Retrieved from <https://www.risk.net/definition/no-arbitrage-pricing>.
 
