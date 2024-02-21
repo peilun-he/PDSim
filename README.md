@@ -662,7 +662,18 @@ Smith model and the polynomial diffusion model are represented by the solid and
 dashed red lines, respectively. Subsequently, we utilised the estimated parameters
 to simulate 1000 sample paths. In the generated plot, blue curves depict the
 Schwartz Smith model, while green curves represent the polynomial diffusion model.
-Within this ensemble of curves, the two dashed lines illustrate the 5th and 95th
+We utilized the following parameter values to simulate data from the
+Schwartz Smith model: $\kappa = 0.8235$, $\gamma = 0.1040$, $\mu_{\xi} =
+0.3635$, $\sigma_{\chi} = 0.9284$, $\sigma_{\xi} = 0.3103$, $\rho = 0.4114$,
+$\lambda_{\chi} = 0.6553$, $\lambda_{\xi} = -0.1274$, $\sigma_1 = 0.0199$,
+$\chi_0 = -0.5046$ and $\xi_0 = 4.4163$. For the polynomial diffusion model,
+we used the following parameter values: $\kappa = 0.6478$, $\gamma = 0.0989$,
+$\mu_{\xi} = -1.1114$, $\sigma_{\chi} = 1.4731$, $\sigma_{\xi} = 1.5703$,
+$\rho = -0.1387$, $\lambda_{\chi} = 2.8583$, $\lambda_{\xi} = -0.9778$,
+$\sigma_1 = 0.9991$, $\chi_0 = 0$, $\xi_0 = -11.2376$, $\alpha_1 = 1$,
+$\alpha_2 = 1$, $\alpha_3 = 1$, $\alpha_4 = 0.5$, $\alpha_5 = 1$ and
+$\alpha_6 = 0.5.$ Within this ensemble of curves,
+the two dashed lines illustrate the 5th and 95th
 percentiles of the 1000 paths, the solid line denotes the sample mean, the
 dot-dashed line signifies the analytical mean, and the dotted line represents
 a random sample path.
