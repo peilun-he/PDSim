@@ -643,6 +643,111 @@ futures price. The grey ribbon visually encapsulated the 95% confidence interval
 
 ![](figures/PD_Est_Futures.png)
 
+### Relationship Between Two Models
+
+Although the Schwartz-Smith model and the polynomial diffusion model are
+technically distinct models, it is possible to manipulate certain parameters
+to ensure that the difference between the simulated (logarithm of) futures
+prices of the two models remains constant or can be controlled.
+
+Recalling the measurement equation of the polynomial diffusion model:
+$$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t,$$
+where $G$ is a $6 \times 6$ matrix:
+
+$$
+G = \left[ \begin{matrix}
+0 & -\lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} &
+\sigma_{\chi}^2 & 0 & \sigma_{\xi}^2 \\
+0 & -\kappa & 0 & -2 \lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} & 0 \\
+0 & 0 & -\gamma & 0 & -\lambda_{\chi} & 2\mu_{\xi} - 2\lambda_{\xi} \\
+0 & 0 & 0 & -2\kappa & 0 & 0 \\
+0 & 0 & 0 & 0 & -\kappa - \gamma & 0 \\
+0 & 0 & 0 & 0 & 0 & -2\gamma
+\end{matrix} \right].
+$$
+
+When $\mu_{\xi}$, $\sigma_{\chi}$, $\sigma_{\xi}$, $\lambda_{\chi}$, and
+$\lambda_{\xi}$ are all equal to 0, the matrix $G$ becomes diagonal.
+Consequently, the matrix exponential simplifies to the exponential of the
+diagonal elements. Moreover, in this scenario, the state equation reduces
+to:
+$$x_t = E x_{t-1},$$
+which lacks randomness. The state vector at any time $t$ solely depends
+on the initial vector $x_0$.
+
+Next, we delve into the analytical futures price. The measurement equation
+of the Schwartz-Smith model simplifies to
+$$\log{(F_{t,T}^{(SS)})} = e^{-\kappa (T-t) } \chi_t +
+e^{-\gamma (T-t)} \xi_t + v_t,$$
+while the measurement equation of the polynomial diffusion model, assuming
+model coefficients $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = \alpha_5
+= \alpha_6 = 1$, becomes:
+$$F_{t,T}^{(PD)} = 1 + e^{-\kappa (T-t) } \chi_t + e^{-\gamma (T-t) } \xi_t +
+e^{-2 \kappa (T-t) } \chi_t^2 + e^{-(\kappa+\gamma) (T-t) } \chi_t \xi_t +
+e^{-2 \gamma (T-t) } \xi_t^2 + v_t.$$
+Provided the same random seed, the noise terms are identical. Thus, the
+difference between the two becomes:
+$$F_{t,T}^{(PD)} - \log{(F_{t,T}^{(SS)})} = 1 +
+e^{-2 \kappa (T-t)} \chi_t^2 + e^{-(\kappa+\gamma) (T-t) } \chi_t \xi_t +
+e^{-2 \gamma (T-t) } \xi_t^2.$$
+This difference solely depends on the state vector $x_t$ (i.e., the initial
+vector $x_0$) and parameters $\kappa$ and $\gamma$, exhibiting no randomness.
+
+Finally, the correctness of the implementation of both models can be verified
+by comparing the empirical and analytical values of
+$F_{t,T}^{(PD)} - \log{(F_{t,T}^{(SS)})}$. This comparison can be facilitated
+using the following code:
+
+```r
+library(ggplot2)
+library(PDSim)
+n_obs <- 100 # number of observations
+n_contract <- 10 # number of contracts
+dt <- 1/360  # interval between two consecutive time points,
+# where 1/360 represents daily data
+seed <- 1234 # seed for random number
+
+# kappa = 0.5, gamma = 0.3, rho = -0.3: these 3 parameters
+# can be changed to any values.
+par <- c(0.5, 0.3, 0, 0, 0, -0.3, 0, 0,
+         seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
+x0 <- c(1, 1) # initial values of state variables, can be changed to any values
+n_coe <- 6 # number of model coefficient
+par_coe <- c(1, 1, 1, 1, 1, 1) # model coefficients, do not change this value
+
+# state equation
+func_f_SS <- function(xt, par) state_linear(xt, par, dt)
+func_f_PD <- function(xt, par) state_linear(xt, par, dt)
+# measurement equation
+func_g_SS <- function(xt, par, mats) measurement_linear(xt, par, mats)
+func_g_PD <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe)
+
+sim_SS <- simulate_data(par, x0, n_obs, n_contract,
+                        func_f_SS, func_g_SS, 0, "Gaussian", seed)
+
+sim_PD <- simulate_data(c(par, par_coe), x0, n_obs, n_contract,
+                        func_f_PD, func_g_PD, n_coe, "Gaussian", seed)
+xt_SS <- sim_SS$xt # simulated state vector from Schwartz Smith model
+xt_PD <- sim_PD$xt # simulated state vector from polynomial diffusion model
+mats <- sim_SS$mats # time to maturity
+price_SS <- exp(sim_SS$yt) # simulated futures price from Schwartz Smith model
+log_price_SS <- sim_SS$yt # simulated logarithm of futures price
+# from Schwartz Smith model
+price_PD <- sim_PD$yt # simulated futures price from polynomial diffusion model
+
+kappa <- par[1]
+gamma <- par[2]
+
+diff <- price_PD - log_price_SS
+
+diff_analytical <- 1 +
+                   exp(-2*kappa*mats) * xt_PD[, 1]^2 +
+                   exp(-(kappa + gamma)*mats) * xt_PD[, 1] * xt_PD[, 2] +
+                   exp(-2*gamma*mats) * xt_PD[, 2]^2
+
+sum(abs(diff - diff_analytical) < 1e-08) # should be equal to n_obs*n_contract
+```
+
 ### Simulation Accuracy
 
 In this section, we will illustrate the simulation accuracy through
