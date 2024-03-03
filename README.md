@@ -643,12 +643,18 @@ futures price. The grey ribbon visually encapsulated the 95% confidence interval
 
 ![](figures/PD_Est_Futures.png)
 
-### Relationship Between Two Models
+## Relationship Between Two Models
 
-Although the Schwartz-Smith model and the polynomial diffusion model are
-technically distinct models, it is possible to manipulate certain parameters
-to ensure that the difference between the simulated (logarithm of) futures
-prices of the two models remains constant or can be controlled.
+In this section, we delve into the relationship between the Schwartz Smith model
+and the polynomial diffusioon model, considering three special scenarios.
+The first scenario involves manipulating certain parameters to ensure that the
+difference between the simulated (logarithm of) futures prices of the two models
+remains constant. The second case entails fixing certain polynomial diffusion
+model coefficients, where it can be demonstrated that the simulated spot prices
+of both models converge to each other. Finally, we illustrate the simulation
+accuracy.
+
+### Difference between Futures Prices
 
 Recalling the measurement equation of the polynomial diffusion model:
 $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t,$$
@@ -693,6 +699,14 @@ e^{-2 \gamma (T-t) } \xi_t^2.$$
 This difference solely depends on the state vector $x_t$ (i.e., the initial
 vector $x_0$) and parameters $\kappa$ and $\gamma$, exhibiting no randomness.
 
+Moreover, if we assume $\alpha_1 = \alpha_2 = \alpha_3 = 1$ but $\alpha_4 =
+\alpha_5 = \alpha_6 = 0$, the measurement equation of the polynomial diffusion
+model simplifies to
+$$F_{t,T}^{(PD)} = 1 + e^{-\kappa (T-t) } \chi_t + e^{-\gamma (T-t) } \xi_t +
+v_t.$$
+In this case, the difference $F_{t,T}^{(PD)} - \log{(F_{t,T}^{(SS)})}$ is
+exactly 1.
+
 Finally, the correctness of the implementation of both models can be verified
 by comparing the empirical and analytical values of
 $F_{t,T}^{(PD)} - \log{(F_{t,T}^{(SS)})}$. This comparison can be facilitated
@@ -713,7 +727,9 @@ par <- c(0.5, 0.3, 0, 0, 0, -0.3, 0, 0,
          seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
 x0 <- c(1, 1) # initial values of state variables, can be changed to any values
 n_coe <- 6 # number of model coefficient
-par_coe <- c(1, 1, 1, 1, 1, 1) # model coefficients, do not change this value
+par_coe1 <- c(1, 1, 1, 1, 1, 1) # model coefficients set 1
+par_coe2 <- c(1, 1, 1, 0, 0, 0) # model coefficients set 2
+par_coe <- par_coe1 # par_coe1 or par_coe2
 
 # state equation
 func_f_SS <- function(xt, par) state_linear(xt, par, dt)
@@ -745,8 +761,42 @@ diff_analytical <- 1 +
                    exp(-(kappa + gamma)*mats) * xt_PD[, 1] * xt_PD[, 2] +
                    exp(-2*gamma*mats) * xt_PD[, 2]^2
 
-sum(abs(diff - diff_analytical) < 1e-08) # should be equal to n_obs*n_contract
+sum(abs(diff - diff_analytical) < 1e-08) # if par_coe = par_coe1, 
+# this value should be equal to n_obs*n_contract
+sum(abs(diff - 1) < 1e-08) # if par_coe = par_coe2, 
+# this value should be equal to n_obs*n_contract
 ```
+
+### Spot Prices Convergence
+
+For the Schwartz Smith model, we assume that the logarithm of spot price $S_t$ is
+$$\log{(S_t^{(SS)})} = \chi_t + \xi_t,$$
+or equivalently, 
+$$S_t^{(SS)} = \exp{ (\chi_t + \xi_t) }.$$
+If we perform a second order Taylor expansion at point $(0, 0)$, we have
+$$S_t^{(SS)} = 1 + \chi_t + \xi_t + 0.5 \chi_t^2 + \chi_t \xi_t + 0.5 \xi_t^2,$$
+which corresponds to the spot price of the polynomial diffusion model with
+coefficients $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_5 = 1$
+and $\alpha_4 = \alpha_6 = 0.5$.
+Therefore, for appropriate values of $\alpha$'s, we can demonstrate that the
+spot price of the polynomial diffusion model converges to the spot price of the
+Schwartz Smith model. Without loss of generality, we assume the spot price of
+the Schwartz Smith model is
+$$S_t^{(SS)} = \exp{ (a \chi_t + b \xi_t) },$$
+and the spot price of the polynomial diffusion model (or the second order
+Taylor expansion of Schwartz Smith spot price) is
+$$S_t^{(PD)} = 1 + a \chi_t + b \xi_t + \frac{a^2}{2} \chi_t^2 +
+ab \chi_t \xi_t + \frac{b^2}{2} \xi_t^2,$$
+i.e., $\alpha_1 = 1$, $\alpha_2 = a$, $\alpha_3 = b$, $\alpha_4 = \frac{a^2}{2}$,
+$\alpha_5 = ab$ and $\alpha_6 = \frac{b^2}{2}$. Additionally, we assume that
+$\chi_t = 0$ at all time $t$. Therefore, as $b$ converges to 0, $S_t^{(PD)}$
+converges to $S_t^{(SS)}$.
+
+![](figures/Mean_Spot.png)
+
+This plot illustrates the simulated spot prices with $b$ values set to 1, 1/3,
+and 1/6. It's evident that as $b$ approaches 0, the simulated spot prices
+from both models converge to each other.
 
 ### Simulation Accuracy
 
