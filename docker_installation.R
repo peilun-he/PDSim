@@ -1,3 +1,5 @@
+# This file is used for building Docker image only. 
+
 install.packages(c('DT', 
                    'ggplot2', 
                    'lubridate', 
