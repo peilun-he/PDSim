@@ -513,6 +513,48 @@ typically requires around 15 seconds on a standard laptop.
 
 ### Replicating Schwartz and Smith's Results
 
+In this section, we reproduce Figure 1 and Figure 4 from Schwartz and
+Smith's paper using our own implementation.
+
+The figure below displays the replication of Figure 1 from Schwartz and
+Smith's paper. This figure illustrates the mean simulated spot price
+($\exp{(\chi_t+\xi_t)}$) and the mean long-term component ($\exp{(\xi)}$),
+alongside their respective 10th and 90th percentiles. Utilizing identical
+parameters, our results match those of Schwartz and Smith. As time
+approaches infinity, the short-term factor tends towards 0, leading the
+long-term factor to converge towards the spot price.
+
+![](figures/SS_Figure1.png)
+
+Below is a plot depicting the polynomial diffusion model. In this model,
+the spot price is represented as $S_t = \alpha_1 + \alpha_2 \chi_t +
+\alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t +
+\alpha_6 \xi_t^2$. Meanwhile, the long-term component is expressed as
+$\alpha_1 + \alpha_3 \xi_t + \alpha_6 \xi_t^2$. 
+
+![](figures/PD_Figure1.png)
+
+Below are two plots replicating Figure 4 from Schwartz and Smith's
+paper. Since we lack access to their original data, we simulate
+trajectories using their estimated parameters instead. The first plot
+illustrates the simulated spot price alongside the estimated spot price,
+both within the 95% confidence interval of estimation. The second plot
+displays the estimated long-term component, also within the
+95% confidence interval.
+
+![](figures/SS_Figure4_1.png)
+
+![](figures/SS_Figure4_2.png)
+
+Below are two plots presenting the estimated spot price and long-term
+component for the polynomial diffusion model. Each point falls within
+the 95% confidence interval, providing a comprehensive visualization
+of the model's estimations.
+
+![](figures/PD_Figure4_1.png)
+
+![](figures/PD_Figure4_2.png)
+
 ### Tests for Schwartz and Smith Model
 
 Users can utilise the following codes snippets to evaluate the performance of
