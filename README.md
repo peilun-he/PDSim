@@ -1,4 +1,4 @@
-# Polynomial Diffusion Model Simulation and Estimation (V2.1.2)
+# Polynomial Diffusion Model Simulation and Estimation (V3.0.0)
 
 ## Introduction
 
@@ -7,11 +7,6 @@ Schwartz and Smith two-factor model (Schwartz & Smith, 2000) and polynomial
 diffusion model (Filipovic & Larsson, 2016), through both GUI and R scripts.
 Additionally, it gives state variables and contract estimations through Kalman
 Filter (KF), Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF).
-
-Plans:
-
-- Add decomposition of data through the "seasonal" package
-- Add forecasting and smoothing
 
 ## Installation
 
@@ -858,7 +853,13 @@ PDSim and providing valuable feedback and suggestions.
 
 ## Version History
 
-**Version 2.1.2** (current version):
+**Version 3.0.0** (current version): 
+
+- Incorporate Original Schwartz and Smith model where $\gamma = 0$.
+- Add a new tab panel for unit test.
+- Docker installation is added.
+
+**Version 2.1.2**:
 
 - Main functions are exported, with short executable examples.
 - Add Contributions and Supports section.
