@@ -20,7 +20,7 @@ PDSim can be accessed in two ways:
 1. You can use PDSim on the Shiny server. This way, you don't need to have R
    installed on your computer. Just go to <https://peilunhe.shinyapps.io/pdsim/>
    and use it there.
-1. Additionally, you can download and run PDSim locally, by running the
+2. Additionally, you can download and run PDSim locally, by running the
    following R code:
 
    ```r
@@ -35,6 +35,39 @@ and select "PDSim app tutorial":
 ```r
 browseVignettes("PDSim")
 ```
+
+### Docker Installation
+For those users who do not want to pollute your system, we also provide Docker
+installation. Please follow these steps:
+1. Make sure you have Docker installed on you machine. Then download all files.
+2. From your terminal, in the directory where the Dockerfile is located, run:
+
+   ```
+   docker build -t pdsim .
+   ```
+
+   to build the image. For Macbook M1/M2/M3 chip users, if you have a
+   "no match for platform in manifest" error for building the image,
+   please run this instead:
+   
+   ```
+   docker build -t pdsim . --platform=linux/amd64 --no-cache
+   ```
+3. To start a container, run
+
+   ```
+   docker run -p 8787:8787 --name pdsim1  pdsim
+   ```
+   
+4. Open browser and go to `localhost:8787`. The default username is `rstudio` and
+   the random password is available in terminal.  
+5. Finally, you can use PDSim by running
+
+   ```r
+   PDSim::run_app()
+   ```
+   
+   in the opened R Studio server. 
 
 ## How to Use PDSim (GUI)
 
