@@ -307,6 +307,16 @@ for the extended model has found application in agricultural commodity futures
 (Sørensen, 2002) and crude oil futures (Ames et al., 2020; Cortazar et al.,
 2019; Cortazar & Naranjo 2006).
 
+Theoretically, there are few constraints on parameters, apart from those outlined
+above, where $\kappa, \gamma, \sigma_{\chi},
+\sigma_{\xi} \in \mathbb{R}^+$ and $\rho \in [-1, 1]$ (as $\rho$ represents the
+correlation coefficient). Additionally, we recommend users to impose the constraint
+$\kappa > \gamma$. Although users won't encounter errors if this constraint is
+violated, it proves beneficial in resolving the latent parameter identification
+problem. Without this constraint, there is a risk of misidentification, where the
+short-term factor $\chi_t$ might be mistaken for the long-term factor $\xi_t$,
+and vice versa. The recommended constraint helps prevent such misinterpretations.
+
 Under the arbitrage-free assumption, the futures price $F_{t,T}$ at
 current time $t$ with maturity time $T$ must be equal to the
 expected value of spot price at maturity time, i.e.,
@@ -467,15 +477,41 @@ $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 
 ## Tests
 
-Theoretically, there are few constraints on parameters, apart from those outlined
-in the [Model Description](#model-description), where $\kappa, \gamma, \sigma_{\chi},
-\sigma_{\xi} \in \mathbb{R}^+$ and $\rho \in [-1, 1]$ (as $\rho$ represents the
-correlation coefficient). Additionally, we recommend users to impose the constraint
-$\kappa > \gamma$. Although users won't encounter errors if this constraint is
-violated, it proves beneficial in resolving the latent parameter identification
-problem. Without this constraint, there is a risk of misidentification, where the
-short-term factor $\chi_t$ might be mistaken for the long-term factor $\xi_t$,
-and vice versa. The recommended constraint helps prevent such misinterpretations.
+In this section, we explore various tests that users can employ to
+validate the full functionality of PDSim. Firstly, we introduce unit tests,
+which are accessible within the PDSim application. Next, we present
+replications of Schwartz and Smith's results, followed by individual tests
+for each model utilizing an R script. Finally, we offer real-world
+data applications to demonstrate the accuracy of PDSim.
+
+### Unit tests
+
+Users can undergo a unit test under the "Unit Tests" navigaion bar of PDSim
+to ensure that all functionalities of PDSim are operating correctly. This
+test sequence entails several key steps: initially, users define the desired
+number of trajectories and relevant parameters. Subsequently, PDSim executes
+simulations based on these specifications, generating simulated trajectories.
+Upon simulation completion, we employ KF/EKF/UKF methodologies to estimate
+trajectories alongside their 95% confidence intervals. The coverage rate,
+indicating the proportion of trajectories where over 95% of points fall
+within the confidence interval, is then computed. Given our knowledge of
+the true parameter values, a high coverage rate, ideally close to 100%,
+is expected.
+
+Users receive detailed feedback under the 'Results' tab panel. Moreover,
+PDSim generates two plots: one illustrating the trajectory with the highest
+coverage rate and another depicting the trajectory with the lowest coverage
+rate. Additionally, a table presents the coverage rate for each trajectory.
+
+It's important to note a few considerations: firstly, for simplicity,
+only a single contract is simulated, regardless of the number specified by
+the user. Secondly, if the coverage rate falls below 99%, users are advised
+to either increase the number of trajectories or adjust parameters.
+Lastly, users are informed that extensive simulations may lead to longer
+processing times; for instance, generating results for 100 trajectories
+typically requires around 15 seconds on a standard laptop.
+
+### Replicating Schwartz and Smith's Results
 
 ### Tests for Schwartz and Smith Model
 
