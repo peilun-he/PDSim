@@ -26,9 +26,14 @@ state_linear <- function(x, par, dt) {
   lambda_chi <- par[7]
   lambda_xi  <- par[8]
   
-  A <- c( 0, mu_xi/kappa_xi*(1-exp(-kappa_xi*dt)) )
-  B <- matrix(c( exp(-kappa_chi*dt), 0, 0, exp(-kappa_xi*dt) ), nrow = 2, byrow = TRUE)
-
+  if (kappa_xi != 0) {
+    A <- c( 0, mu_xi/kappa_xi*(1-exp(-kappa_xi*dt)) )
+    B <- matrix(c( exp(-kappa_chi*dt), 0, 0, exp(-kappa_xi*dt) ), nrow = 2, byrow = TRUE)
+  } else if (kappa_xi == 0) {
+    A <- c( 0, mu_xi*dt )
+    B <- matrix(c( exp(-kappa_chi*dt), 0, 0, 1 ), nrow = 2, byrow = TRUE)
+  }
+  
   y <- A + B %*% x
   y_jacobian <- B
   

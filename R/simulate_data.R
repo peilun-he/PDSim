@@ -72,13 +72,23 @@ simulate_data <- function(par, x0, n_obs, n_contract, func_f, func_g, n_coe, noi
     } else {
       V <- diag( par[9: (n_para-n_coe)] ^ 2 )
     }
-    W = matrix(c(sigma_chi^2/(2*kappa_chi) * ( 1-exp(-2*kappa_chi*dt) ), 
-                 rho*sigma_chi*sigma_xi/(kappa_chi+kappa_xi) * ( 1-exp(-(kappa_chi+kappa_xi)*dt) ),  
-                 rho*sigma_chi*sigma_xi/(kappa_chi+kappa_xi) * ( 1-exp(-(kappa_chi+kappa_xi)*dt) ), 
-                 sigma_xi^2/(2*kappa_xi) * ( 1-exp(-2*kappa_xi*dt) )), 
-               nrow = 2, byrow = TRUE)
-    noise_xt = mvrnorm(n_obs, c(0, 0), W)
-    noise_yt = mvrnorm(n_obs, rep(0, n_contract), V)
+    
+    if (kappa_xi != 0) {
+      W <- matrix(c(sigma_chi^2/(2*kappa_chi) * ( 1-exp(-2*kappa_chi*dt) ), 
+                   rho*sigma_chi*sigma_xi/(kappa_chi+kappa_xi) * ( 1-exp(-(kappa_chi+kappa_xi)*dt) ),  
+                   rho*sigma_chi*sigma_xi/(kappa_chi+kappa_xi) * ( 1-exp(-(kappa_chi+kappa_xi)*dt) ), 
+                   sigma_xi^2/(2*kappa_xi) * ( 1-exp(-2*kappa_xi*dt) )), 
+                 nrow = 2, byrow = TRUE)
+    } else if (kappa_xi == 0) {
+      W <- matrix(c(sigma_chi^2/(2*kappa_chi) * ( 1-exp(-2*kappa_chi*dt) ), 
+                    rho*sigma_chi*sigma_xi/(kappa_chi) * ( 1-exp(-(kappa_chi)*dt) ), 
+                    rho*sigma_chi*sigma_xi/(kappa_chi) * ( 1-exp(-(kappa_chi)*dt) ), 
+                    sigma_xi^2*dt), 
+                  nrow = 2, byrow = TRUE)
+    }
+    
+    noise_xt <- mvrnorm(n_obs, c(0, 0), W)
+    noise_yt <- mvrnorm(n_obs, rep(0, n_contract), V)
   } else {
     stop("Incorrect distribution of noises. ")
   }

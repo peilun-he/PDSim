@@ -99,24 +99,46 @@ KF <- function(par, yt, mats, delivery_time, dt, smoothing, seasonality) {
     V <- diag( par[9: length(par)]^2 )
   }
   
-  W <- matrix(c(sigma_chi^2/(2*kappa_chi) * ( 1-exp(-2*kappa_chi*dt) ), 
-                rho*sigma_chi*sigma_xi/(kappa_chi+kappa_xi) * ( 1-exp(-(kappa_chi+kappa_xi)*dt) ), 
-                rho*sigma_chi*sigma_xi/(kappa_chi+kappa_xi) * ( 1-exp(-(kappa_chi+kappa_xi)*dt) ), 
-                sigma_xi^2/(2*kappa_xi) * ( 1-exp(-2*kappa_xi*dt) )), 
-              nrow = 2, byrow = TRUE)
+  if (kappa_xi != 0) {
+    W <- matrix(c(sigma_chi^2/(2*kappa_chi) * ( 1-exp(-2*kappa_chi*dt) ), 
+                  rho*sigma_chi*sigma_xi/(kappa_chi+kappa_xi) * ( 1-exp(-(kappa_chi+kappa_xi)*dt) ), 
+                  rho*sigma_chi*sigma_xi/(kappa_chi+kappa_xi) * ( 1-exp(-(kappa_chi+kappa_xi)*dt) ), 
+                  sigma_xi^2/(2*kappa_xi) * ( 1-exp(-2*kappa_xi*dt) )), 
+                nrow = 2, byrow = TRUE)
+  } else if (kappa_xi == 0) {
+    W <- matrix(c(sigma_chi^2/(2*kappa_chi) * ( 1-exp(-2*kappa_chi*dt) ), 
+                  rho*sigma_chi*sigma_xi/(kappa_chi) * ( 1-exp(-(kappa_chi)*dt) ), 
+                  rho*sigma_chi*sigma_xi/(kappa_chi) * ( 1-exp(-(kappa_chi)*dt) ), 
+                  sigma_xi^2*dt), 
+                nrow = 2, byrow = TRUE)
+  }
+  
   
   # Initialization
   # xt_filter <- c( 0, mu_xi / kappa_xi ) # x_0|0
   xt_filter <- x0
-  Pt_filter <- matrix(c(sigma_chi^2 / (2*kappa_chi), 
-                        sigma_chi*sigma_xi*rho / (kappa_chi + kappa_xi), 
-                        sigma_chi*sigma_xi*rho / (kappa_chi + kappa_xi), 
-                        sigma_xi^2 / (2*kappa_xi)), 
-                      nrow = 2, byrow = TRUE) # P_0|0
+  if (kappa_xi != 0) {
+    Pt_filter <- matrix(c(sigma_chi^2 / (2*kappa_chi), 
+                          sigma_chi*sigma_xi*rho / (kappa_chi + kappa_xi), 
+                          sigma_chi*sigma_xi*rho / (kappa_chi + kappa_xi), 
+                          sigma_xi^2 / (2*kappa_xi)), 
+                        nrow = 2, byrow = TRUE) # P_0|0
+    
+    C <- c( 0, mu_xi/kappa_xi*(1-exp(-kappa_xi*dt)) )
+    G <- matrix(c( exp(-kappa_chi*dt), 0, 0, exp(-kappa_xi*dt) ), 
+                nrow = 2, byrow = TRUE)
+  } else if (kappa_xi == 0) {
+    Pt_filter <- matrix(c(sigma_chi^2 / (2*kappa_chi), 
+                          sigma_chi*sigma_xi*rho / (kappa_chi), 
+                          sigma_chi*sigma_xi*rho / (kappa_chi), 
+                          sigma_xi^2), 
+                        nrow = 2, byrow = TRUE) # P_0|0
+    
+    C <- c( 0, mu_xi*dt )
+    G <- matrix(c( exp(-kappa_chi*dt), 0, 0, 1 ), nrow = 2, byrow = TRUE)
+  }
   
-  C <- c( 0, mu_xi/kappa_xi*(1-exp(-kappa_xi*dt)) )
-  G <- matrix(c( exp(-kappa_chi*dt), 0, 0, exp(-kappa_xi*dt) ), 
-              nrow = 2, byrow = TRUE)
+  
   
   # Kalman Filter
   for (i in 1:n_obs) {   
