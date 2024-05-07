@@ -16,10 +16,17 @@ AofT <- function(par, t) {
   lambdachi <- par[7]
   lambdaxi  <- par[8]
   
-  A <- -(lambdachi/kappa)*(1-exp(-kappa*t)) + (mu - lambdaxi)/gamma*(1-exp(-gamma*t)) + 
+  if (gamma != 0) {
+    A <- -(lambdachi/kappa)*(1-exp(-kappa*t)) + (mu - lambdaxi)/gamma*(1-exp(-gamma*t)) + 
       0.5*( (1-exp(-2*kappa*t))*sigmachi^2/2/kappa + 
-            (1-exp(-2*gamma*t))*sigmaxi^2/2/gamma + 
-            2*(1-exp(-(kappa+gamma)*t))*sigmachi*sigmaxi*rho/(kappa+gamma) )
+              (1-exp(-2*gamma*t))*sigmaxi^2/2/gamma + 
+              2*(1-exp(-(kappa+gamma)*t))*sigmachi*sigmaxi*rho/(kappa+gamma) )
+  } else if (gamma == 0) {
+    A <- -(lambdachi/kappa)*(1-exp(-kappa*t)) + (mu - lambdaxi)*t + 
+      0.5*( (1-exp(-2*kappa*t))*sigmachi^2/2/kappa + 
+              sigmaxi^2*t + 
+              2*(1-exp(-kappa*t))*sigmachi*sigmaxi*rho/kappa )
+  }
   
   return(A)
 }

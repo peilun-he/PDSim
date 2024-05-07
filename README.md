@@ -1,4 +1,4 @@
-# Polynomial Diffusion Model Simulation and Estimation (V2.1.2)
+# Polynomial Diffusion Model Simulation and Estimation (V3.0.0)
 
 ## Introduction
 
@@ -7,11 +7,6 @@ Schwartz and Smith two-factor model (Schwartz & Smith, 2000) and polynomial
 diffusion model (Filipovic & Larsson, 2016), through both GUI and R scripts.
 Additionally, it gives state variables and contract estimations through Kalman
 Filter (KF), Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF).
-
-Plans:
-
-- Add decomposition of data through the "seasonal" package
-- Add forecasting and smoothing
 
 ## Installation
 
@@ -345,6 +340,16 @@ for the extended model has found application in agricultural commodity futures
 (Sørensen, 2002) and crude oil futures (Ames et al., 2020; Cortazar et al.,
 2019; Cortazar & Naranjo 2006).
 
+Theoretically, there are few constraints on parameters, apart from those outlined
+above, where $\kappa, \gamma, \sigma_{\chi},
+\sigma_{\xi} \in \mathbb{R}^+$ and $\rho \in [-1, 1]$ (as $\rho$ represents the
+correlation coefficient). Additionally, we recommend users to impose the constraint
+$\kappa > \gamma$. Although users won't encounter errors if this constraint is
+violated, it proves beneficial in resolving the latent parameter identification
+problem. Without this constraint, there is a risk of misidentification, where the
+short-term factor $\chi_t$ might be mistaken for the long-term factor $\xi_t$,
+and vice versa. The recommended constraint helps prevent such misinterpretations.
+
 Under the arbitrage-free assumption, the futures price $F_{t,T}$ at
 current time $t$ with maturity time $T$ must be equal to the
 expected value of spot price at maturity time, i.e.,
@@ -505,15 +510,83 @@ $$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t.$$
 
 ## Tests
 
-Theoretically, there are few constraints on parameters, apart from those outlined
-in the [Model Description](#model-description), where $\kappa, \gamma, \sigma_{\chi},
-\sigma_{\xi} \in \mathbb{R}^+$ and $\rho \in [-1, 1]$ (as $\rho$ represents the
-correlation coefficient). Additionally, we recommend users to impose the constraint
-$\kappa > \gamma$. Although users won't encounter errors if this constraint is
-violated, it proves beneficial in resolving the latent parameter identification
-problem. Without this constraint, there is a risk of misidentification, where the
-short-term factor $\chi_t$ might be mistaken for the long-term factor $\xi_t$,
-and vice versa. The recommended constraint helps prevent such misinterpretations.
+In this section, we explore various tests that users can employ to
+validate the full functionality of PDSim. Firstly, we introduce unit tests,
+which are accessible within the PDSim application. Next, we present
+replications of Schwartz and Smith's results, followed by individual tests
+for each model utilizing an R script. Finally, we offer real-world
+data applications to demonstrate the accuracy of PDSim.
+
+### Unit tests
+
+Users can undergo a unit test under the "Unit Tests" navigaion bar of PDSim
+to ensure that all functionalities of PDSim are operating correctly. This
+test sequence entails several key steps: initially, users define the desired
+number of trajectories and relevant parameters. Subsequently, PDSim executes
+simulations based on these specifications, generating simulated trajectories.
+Upon simulation completion, we employ KF/EKF/UKF methodologies to estimate
+trajectories alongside their 95% confidence intervals. The coverage rate,
+indicating the proportion of trajectories where over 95% of points fall
+within the confidence interval, is then computed. Given our knowledge of
+the true parameter values, a high coverage rate, ideally close to 100%,
+is expected.
+
+Users receive detailed feedback under the 'Results' tab panel. Moreover,
+PDSim generates two plots: one illustrating the trajectory with the highest
+coverage rate and another depicting the trajectory with the lowest coverage
+rate. Additionally, a table presents the coverage rate for each trajectory.
+
+It's important to note a few considerations: firstly, for simplicity,
+only a single contract is simulated, regardless of the number specified by
+the user. Secondly, if the coverage rate falls below 99%, users are advised
+to either increase the number of trajectories or adjust parameters.
+Lastly, users are informed that extensive simulations may lead to longer
+processing times; for instance, generating results for 100 trajectories
+typically requires around 15 seconds on a standard laptop.
+
+### Replicating Schwartz and Smith's Results
+
+In this section, we reproduce Figure 1 and Figure 4 from Schwartz and
+Smith's paper using our own implementation.
+
+The figure below displays the replication of Figure 1 from Schwartz and
+Smith's paper. This figure illustrates the mean simulated spot price
+($\exp{(\chi_t+\xi_t)}$) and the mean long-term component ($\exp{(\xi)}$),
+alongside their respective 10th and 90th percentiles. Utilizing identical
+parameters, our results match those of Schwartz and Smith. As time
+approaches infinity, the short-term factor tends towards 0, leading the
+long-term factor to converge towards the spot price.
+
+![](figures/SS_Figure1.png)
+
+Below is a plot depicting the polynomial diffusion model. In this model,
+the spot price is represented as $S_t = \alpha_1 + \alpha_2 \chi_t +
+\alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t +
+\alpha_6 \xi_t^2$. Meanwhile, the long-term component is expressed as
+$\alpha_1 + \alpha_3 \xi_t + \alpha_6 \xi_t^2$. 
+
+![](figures/PD_Figure1.png)
+
+Below are two plots replicating Figure 4 from Schwartz and Smith's
+paper. Since we lack access to their original data, we simulate
+trajectories using their estimated parameters instead. The first plot
+illustrates the simulated spot price alongside the estimated spot price,
+both within the 95% confidence interval of estimation. The second plot
+displays the estimated long-term component, also within the
+95% confidence interval.
+
+![](figures/SS_Figure4_1.png)
+
+![](figures/SS_Figure4_2.png)
+
+Below are two plots presenting the estimated spot price and long-term
+component for the polynomial diffusion model. Each point falls within
+the 95% confidence interval, providing a comprehensive visualization
+of the model's estimations.
+
+![](figures/PD_Figure4_1.png)
+
+![](figures/PD_Figure4_2.png)
 
 ### Tests for Schwartz and Smith Model
 
@@ -676,161 +749,6 @@ futures price. The grey ribbon visually encapsulated the 95% confidence interval
 
 ![](figures/PD_Est_Futures.png)
 
-## Relationship Between Two Models
-
-In this section, we delve into the relationship between the Schwartz Smith model
-and the polynomial diffusioon model, considering three special scenarios.
-The first scenario involves manipulating certain parameters to ensure that the
-difference between the simulated (logarithm of) futures prices of the two models
-remains constant. The second case entails fixing certain polynomial diffusion
-model coefficients, where it can be demonstrated that the simulated spot prices
-of both models converge to each other. Finally, we illustrate the simulation
-accuracy.
-
-### Difference between Futures Prices
-
-Recalling the measurement equation of the polynomial diffusion model:
-$$y_t = H(x_t)^\top e^{(T-t)G} \vec{p} + v_t,$$
-where $G$ is a $6 \times 6$ matrix:
-
-$$
-G = \left[ \begin{matrix}
-0 & -\lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} &
-\sigma_{\chi}^2 & 0 & \sigma_{\xi}^2 \\
-0 & -\kappa & 0 & -2 \lambda_{\chi} & \mu_{\xi} - \lambda_{\xi} & 0 \\
-0 & 0 & -\gamma & 0 & -\lambda_{\chi} & 2\mu_{\xi} - 2\lambda_{\xi} \\
-0 & 0 & 0 & -2\kappa & 0 & 0 \\
-0 & 0 & 0 & 0 & -\kappa - \gamma & 0 \\
-0 & 0 & 0 & 0 & 0 & -2\gamma
-\end{matrix} \right].
-$$
-
-When $\mu_{\xi}$, $\sigma_{\chi}$, $\sigma_{\xi}$, $\lambda_{\chi}$, and
-$\lambda_{\xi}$ are all equal to 0, the matrix $G$ becomes diagonal.
-Consequently, the matrix exponential simplifies to the exponential of the
-diagonal elements. Moreover, in this scenario, the state equation reduces
-to:
-$$x_t = E x_{t-1},$$
-which lacks randomness. The state vector at any time $t$ solely depends
-on the initial vector $x_0$.
-
-Next, we delve into the analytical futures price. The measurement equation
-of the Schwartz-Smith model simplifies to
-$$\log{(F_{t,T}^{(SS)})} = e^{-\kappa (T-t) } \chi_t +
-e^{-\gamma (T-t)} \xi_t + v_t,$$
-while the measurement equation of the polynomial diffusion model, assuming
-model coefficients $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = \alpha_5
-= \alpha_6 = 1$, becomes:
-$$F_{t,T}^{(PD)} = 1 + e^{-\kappa (T-t) } \chi_t + e^{-\gamma (T-t) } \xi_t +
-e^{-2 \kappa (T-t) } \chi_t^2 + e^{-(\kappa+\gamma) (T-t) } \chi_t \xi_t +
-e^{-2 \gamma (T-t) } \xi_t^2 + v_t.$$
-Provided the same random seed, the noise terms are identical. Thus, the
-difference between the two becomes:
-$$F_{t,T}^{(PD)} - \log{(F_{t,T}^{(SS)})} = 1 +
-e^{-2 \kappa (T-t)} \chi_t^2 + e^{-(\kappa+\gamma) (T-t) } \chi_t \xi_t +
-e^{-2 \gamma (T-t) } \xi_t^2.$$
-This difference solely depends on the state vector $x_t$ (i.e., the initial
-vector $x_0$) and parameters $\kappa$ and $\gamma$, exhibiting no randomness.
-
-Moreover, if we assume $\alpha_1 = \alpha_2 = \alpha_3 = 1$ but $\alpha_4 =
-\alpha_5 = \alpha_6 = 0$, the measurement equation of the polynomial diffusion
-model simplifies to
-$$F_{t,T}^{(PD)} = 1 + e^{-\kappa (T-t) } \chi_t + e^{-\gamma (T-t) } \xi_t +
-v_t.$$
-In this case, the difference $F_{t,T}^{(PD)} - \log{(F_{t,T}^{(SS)})}$ is
-exactly 1.
-
-Finally, the correctness of the implementation of both models can be verified
-by comparing the empirical and analytical values of
-$F_{t,T}^{(PD)} - \log{(F_{t,T}^{(SS)})}$. This comparison can be facilitated
-using the following code:
-
-```r
-library(ggplot2)
-library(PDSim)
-n_obs <- 100 # number of observations
-n_contract <- 10 # number of contracts
-dt <- 1/360  # interval between two consecutive time points,
-# where 1/360 represents daily data
-seed <- 1234 # seed for random number
-
-# kappa = 0.5, gamma = 0.3, rho = -0.3: these 3 parameters
-# can be changed to any values.
-par <- c(0.5, 0.3, 0, 0, 0, -0.3, 0, 0,
-         seq(from = 0.1, to = 0.01, length.out = n_contract)) # set of parameters
-x0 <- c(1, 1) # initial values of state variables, can be changed to any values
-n_coe <- 6 # number of model coefficient
-par_coe1 <- c(1, 1, 1, 1, 1, 1) # model coefficients set 1
-par_coe2 <- c(1, 1, 1, 0, 0, 0) # model coefficients set 2
-par_coe <- par_coe1 # par_coe1 or par_coe2
-
-# state equation
-func_f_SS <- function(xt, par) state_linear(xt, par, dt)
-func_f_PD <- function(xt, par) state_linear(xt, par, dt)
-# measurement equation
-func_g_SS <- function(xt, par, mats) measurement_linear(xt, par, mats)
-func_g_PD <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe)
-
-sim_SS <- simulate_data(par, x0, n_obs, n_contract,
-                        func_f_SS, func_g_SS, 0, "Gaussian", seed)
-
-sim_PD <- simulate_data(c(par, par_coe), x0, n_obs, n_contract,
-                        func_f_PD, func_g_PD, n_coe, "Gaussian", seed)
-xt_SS <- sim_SS$xt # simulated state vector from Schwartz Smith model
-xt_PD <- sim_PD$xt # simulated state vector from polynomial diffusion model
-mats <- sim_SS$mats # time to maturity
-price_SS <- exp(sim_SS$yt) # simulated futures price from Schwartz Smith model
-log_price_SS <- sim_SS$yt # simulated logarithm of futures price
-# from Schwartz Smith model
-price_PD <- sim_PD$yt # simulated futures price from polynomial diffusion model
-
-kappa <- par[1]
-gamma <- par[2]
-
-diff <- price_PD - log_price_SS
-
-diff_analytical <- 1 +
-                   exp(-2*kappa*mats) * xt_PD[, 1]^2 +
-                   exp(-(kappa + gamma)*mats) * xt_PD[, 1] * xt_PD[, 2] +
-                   exp(-2*gamma*mats) * xt_PD[, 2]^2
-
-sum(abs(diff - diff_analytical) < 1e-08) # if par_coe = par_coe1, 
-# this value should be equal to n_obs*n_contract
-sum(abs(diff - 1) < 1e-08) # if par_coe = par_coe2, 
-# this value should be equal to n_obs*n_contract
-```
-
-### Spot Prices Convergence
-
-For the Schwartz Smith model, we assume that the logarithm of spot price $S_t$ is
-$$\log{(S_t^{(SS)})} = \chi_t + \xi_t,$$
-or equivalently, 
-$$S_t^{(SS)} = \exp{ (\chi_t + \xi_t) }.$$
-If we perform a second order Taylor expansion at point $(0, 0)$, we have
-$$S_t^{(SS)} = 1 + \chi_t + \xi_t + 0.5 \chi_t^2 + \chi_t \xi_t + 0.5 \xi_t^2,$$
-which corresponds to the spot price of the polynomial diffusion model with
-coefficients $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_5 = 1$
-and $\alpha_4 = \alpha_6 = 0.5$.
-Therefore, for appropriate values of $\alpha$'s, we can demonstrate that the
-spot price of the polynomial diffusion model converges to the spot price of the
-Schwartz Smith model. Without loss of generality, we assume the spot price of
-the Schwartz Smith model is
-$$S_t^{(SS)} = \exp{ (a \chi_t + b \xi_t) },$$
-and the spot price of the polynomial diffusion model (or the second order
-Taylor expansion of Schwartz Smith spot price) is
-$$S_t^{(PD)} = 1 + a \chi_t + b \xi_t + \frac{a^2}{2} \chi_t^2 +
-ab \chi_t \xi_t + \frac{b^2}{2} \xi_t^2,$$
-i.e., $\alpha_1 = 1$, $\alpha_2 = a$, $\alpha_3 = b$, $\alpha_4 = \frac{a^2}{2}$,
-$\alpha_5 = ab$ and $\alpha_6 = \frac{b^2}{2}$. Additionally, we assume that
-$\chi_t = 0$ at all time $t$. Therefore, as $b$ converges to 0, $S_t^{(PD)}$
-converges to $S_t^{(SS)}$.
-
-![](figures/Mean_Spot.png)
-
-This plot illustrates the simulated spot prices with $b$ values set to 1, 1/3,
-and 1/6. It's evident that as $b$ approaches 0, the simulated spot prices
-from both models converge to each other.
-
 ### Simulation Accuracy
 
 In this section, we will illustrate the simulation accuracy through
@@ -891,7 +809,13 @@ PDSim and providing valuable feedback and suggestions.
 
 ## Version History
 
-**Version 2.1.2** (current version):
+**Version 3.0.0** (current version): 
+
+- Incorporate Original Schwartz and Smith model where $\gamma = 0$.
+- Add a new tab panel for unit test.
+- Docker installation is added.
+
+**Version 2.1.2**:
 
 - Main functions are exported, with short executable examples.
 - Add Contributions and Supports section.

@@ -10,7 +10,7 @@ my_server <- function(input, output, session) {
   })
   
   # Download futures data button
-  output$download_data<- downloadHandler(filename = "data.csv", content = function(file){
+  output$download_data <- downloadHandler(filename = "data.csv", content = function(file){
     dat <- sim_dat()
     write.csv(dat$yt, file)
   })
@@ -23,10 +23,15 @@ my_server <- function(input, output, session) {
   
   # Simulate data
   sim_dat <<- reactive({
-    a <- input$new_data # This value has no meaning. Just make sure every time the button is clicked, this function will be run again  
+    a <- input$new_data # This value has no meaning. Just make sure every time the button is clicked, this function will be run again
     par_org <- c(input$kappa, input$gamma, input$mu, input$sc, input$sx, input$rho, input$lc, input$lx, 
                  seq(from = input$s1, to = input$sn, length.out = input$n_contract)) # all required parameters
-    x0 <- c(0, input$mu / input$gamma) # initialisation 
+    if (input$gamma != 0) {
+      x0 <- c(0, input$mu / input$gamma) # initialisation 
+    } else if (input$gamma == 0) {
+      x0 <- c(0, 0) # initialisation 
+    }
+    
     noise <- "Gaussian"
     dt <- 1/360
     if (input$model == "SS2000") {
@@ -66,7 +71,12 @@ my_server <- function(input, output, session) {
     mats <- as.matrix(dat$mats)
     par_org <- c(input$kappa, input$gamma, input$mu, input$sc, input$sx, input$rho, input$lc, input$lx, 
                  seq(from = input$s1, to = input$sn, length.out = input$n_contract))
-    x0 <- c(0, input$mu / input$gamma)
+    if (input$gamma != 0) {
+      x0 <- c(0, input$mu / input$gamma)
+    } else if (input$gamma == 0) {
+      x0 <- c(0, 0)
+    }
+    
     noise <- "Gaussian"
     dt <- 1/360
     
@@ -117,30 +127,152 @@ my_server <- function(input, output, session) {
   check <<- reactive({
     if (input$n_obs <= 0 || !is.integer(input$n_obs)) {
       showModal(modalDialog("The number of trading days must be a positive integer. "))
-    } else if (input$n_contract <= 0 || !is.integer(input$n_contract)) {
+    }
+    if (input$n_contract <= 0 || !is.integer(input$n_contract)) {
       showModal(modalDialog("The number of contracts must be a positive integer. "))
-    } else if (input$contract <= 0 || !is.integer(input$contract) || input$contract > input$n_contract) {
+    }
+    if (input$contract <= 0 || !is.integer(input$contract) || input$contract > input$n_contract) {
       showModal(modalDialog("The contract must be a positive integer and no greater than the number of contracts. "))
-    } else if (input$day <= 0 || !is.integer(input$day) || input$day > input$n_obs) {
+    }
+    if (input$day <= 0 || !is.integer(input$day) || input$day > input$n_obs) {
       showModal(modalDialog("The day must be a positive integer and no greater than the number of trading days. "))
-    } else if (input$kappa <= 0) {
+    }
+    if (input$kappa <= 0) {
       showModal(modalDialog(withMathJax("\\( \\kappa \\) must be positive. ")))
-    } else if (input$gamma <= 0) {
-      showModal(modalDialog(withMathJax("\\( \\gamma \\) must be positive. ")))
-    } else if (input$sc <= 0) {
+    }
+    if (input$gamma < 0) {
+      showModal(modalDialog(withMathJax("\\( \\gamma \\) must be non-negative. ")))
+    }
+    if (input$sc <= 0) {
       showModal(modalDialog(withMathJax("\\( \\sigma_{\\chi} \\) must be positive. ")))
-    } else if (input$sx <= 0) {
+    }
+    if (input$sx <= 0) {
       showModal(modalDialog(withMathJax("\\( \\sigma_{\\xi} \\) must be positive. ")))
-    } else if (input$rho < -1 || input$rho > 1) {
+    }
+    if (input$rho < -1 || input$rho > 1) {
       showModal(modalDialog(withMathJax("\\( \\rho \\) must be between -1 and 1. ")))
-    } else if (input$s1 <= 0) {
-      showModal(modalDialog("Standard error must be positive. "))
-    }else if (input$sn <= 0) {
+    }
+    if (input$s1 <= 0) {
       showModal(modalDialog("Standard error must be positive. "))
     }
+    if (input$sn <= 0) {
+      showModal(modalDialog("Standard error must be positive. "))
+    }
+    if (input$chi == 0 && input$xi == 0 && input$chi2 == 0 && input$chi_xi == 0 && input$xi2 == 0) {
+      showModal(modalDialog("You have set all coefficients to 0. All parameters now have no effect on the model. "))
+    }
+    if (input$chi == 0 && input$chi_xi == 0 && input$chi2 == 0 && (input$xi != 0 || input$xi2 != 0)) {
+      showModal(modalDialog(withMathJax("You have set all coefficients related to \\( \\chi_t \\) to 0. \\( \\kappa, \\sigma_{\\chi}}, \\rho, \\lambda_{\\chi} \\) now have no effect on the model. ")))
+    }
+    if (input$xi == 0 && input$chi_xi == 0 && input$xi2 == 0 && (input$chi != 0 || input$chi2 != 0)) {
+      showModal(modalDialog(withMathJax("You have set all coefficients related to \\( \\xi_t \\) to 0. \\( \\gamma, \\mu_{\\xi}, \\sigma_{\\xi}}, \\rho, \\lambda_{\\xi} \\) now have no effect on the model. ")))
+    }
+    if (input$n_tra <= 0 || !is.integer(input$n_tra)) {
+      showModal(modalDialog("The number of trajectories must be a positive integer. "))
+    }
+  })
+  
+  # Unit test
+  unit_test <<- reactive({
+    
+  })
+  
+  # Start unit test
+  unit_test <<- eventReactive(input$start, {
+    check()
+    
+    n_contract_unit_test <- 1
+    
+    par_org <- c(input$kappa, input$gamma, input$mu, input$sc, input$sx, input$rho, input$lc, input$lx, 
+                 seq(from = input$s1, to = input$sn, length.out = n_contract_unit_test)) # all required parameters
+    if (input$gamma != 0) {
+      x0 <- c(0, input$mu / input$gamma) # initialisation 
+    } else if (input$gamma == 0) {
+      x0 <- c(0, 0) # initialisation 
+    }
+    
+    noise <- "Gaussian"
+    dt <- 1/360
+    if (input$model == "SS2000") {
+      n_coe <- 0 # number of model coefficients
+      func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+      func_g <- function(xt, par, mats) measurement_linear(xt, par, mats) # measurement equation
+    } else if (input$model == "PD") {
+      n_coe <- 6 # number of model coefficients
+      par_coe <- c(input$constant, input$chi, input$xi, input$chi2, input$chi_xi, input$xi2) 
+      par_org <- c(par_org, par_coe) 
+      func_f <- function(xt, par) state_linear(xt, par, dt) # state equation
+      func_g <- function(xt, par, mats) measurement_polynomial(xt, par, mats, 2, n_coe) # measurement equation
+    }
+    
+    n_tra <- input$n_tra
+    contract <- 1
+    coverage_rate_vec <- numeric(n_tra)
+    
+    for (i in 1: n_tra) {
+      seed_unit_test <- 1234+i
+      dat <- simulate_data(par_org, x0, input$n_obs, n_contract_unit_test, func_f, func_g, n_coe, noise, seed_unit_test)
+      if (input$model == "SS2000") {
+        dat$yt <- exp(dat$yt) # true futures prices 
+      } 
+      dat$yt <- data.frame(dat$yt)
+      
+      yt_all <- as.matrix(dat$yt)
+      if (input$model == "SS2000") {
+        yt_all <- log(yt_all)
+      }
+      mats <- as.matrix(dat$mats)
+      
+      if (input$model == "SS2000") {
+        est <- KF(c(par_org, x0), yt_all, mats, 0, dt, FALSE, "None")
+        est$yt_hat <- data.frame(exp(func_g(t(est$xt_filter), par_org, mats)$y))
+      } else if (input$model == "PD") {
+        if (input$filter == "Extended Kalman Filter") {
+          est <- EKF(c(par_org, x0), yt_all, mats, func_f, func_g, dt, n_coe, noise)
+        } else if (input$filter == "Unscented Kalman Filter") {
+          est <- UKF(c(par_org, x0), yt_all, mats, func_f, func_g, dt, n_coe, noise)
+        }
+        est$yt_hat <- data.frame(func_g(t(est$xt_filter), par_org, mats)$y)
+      }
+      
+      yt <- dat$yt[, contract]
+      yt_hat <- est$yt_hat[, contract]
+      cov_y <- est$cov_y[contract, contract, ]
+      
+      if (input$model == "SS2000") {
+        CI_lower <- qlnorm(0.025, meanlog = log(yt_hat), sdlog = sqrt(cov_y))
+        CI_upper <- qlnorm(0.975, meanlog = log(yt_hat), sdlog = sqrt(cov_y))
+      } else if (input$model == "PD") {
+        CI_lower <- yt_hat - 1.96 * sqrt(cov_y)
+        CI_upper <- yt_hat + 1.96 * sqrt(cov_y)
+      }
+      
+      # Calculate the coverage rate
+      coverage_rate <- mean(yt <= CI_upper & yt >= CI_lower)
+      coverage_rate_vec[i] <- coverage_rate
+      
+      if (i == 1) {
+        min_coverage_rate <- coverage_rate
+        max_coverage_rate <- coverage_rate
+        best <- data.frame(yt = yt, yt_hat = yt_hat, CI_lower = CI_lower, CI_upper = CI_upper)
+        worst <- data.frame(yt = yt, yt_hat = yt_hat, CI_lower = CI_lower, CI_upper = CI_upper)
+      } else if (coverage_rate < min_coverage_rate) {
+        min_coverage_rate <- coverage_rate
+        worst <- data.frame(yt = yt, yt_hat = yt_hat, CI_lower = CI_lower, CI_upper = CI_upper)
+      } else if (coverage_rate > max_coverage_rate) {
+        max_coverage_rate <- coverage_rate
+        best <- data.frame(yt = yt, yt_hat = yt_hat, CI_lower = CI_lower, CI_upper = CI_upper)
+      }
+    }
+    
+    return(list(best = best, 
+                worst = worst, 
+                coverage_rate = data.frame(`Trajectory` = 1: n_tra, 
+                                           `Coverage rate` = coverage_rate_vec)))
   })
   
   server_welcome() # server for welcome page
   server_app() # server for app page
+  server_unit_tests() # server for unit tests page
   server_members() # server for team members page
 }

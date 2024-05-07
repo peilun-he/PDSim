@@ -19,6 +19,13 @@
 
 measurement_polynomial <- function(x, par, mats, degree, n_coe) {
   
+  # method for matrix exponential
+  if (par[2] == 0){
+    mat_exp <- function(A) polynomial_newton(A)
+  } else {
+    mat_exp <- function(A) decomposition_eigen(A)
+  }
+  
   n_para <- length(par)
   
   if (n_coe != 0) {
@@ -54,7 +61,7 @@ measurement_polynomial <- function(x, par, mats, degree, n_coe) {
   if (dim(mats)[1] == 1 & n_point == 1) {
     y_jacobian <- matrix(0, nrow = n_contract, ncol = 2) 
     for (j in 1: n_contract) {
-      exp_matG <- decomposition_eigen(mats[, j] * G)
+      exp_matG <- mat_exp(mats[, j] * G)
       exp_matG_p <- exp_matG %*% p_coordinate
       y[, j] <- Hx %*% exp_matG %*% p_coordinate
       for (s in 1: degree) {
@@ -72,14 +79,14 @@ measurement_polynomial <- function(x, par, mats, degree, n_coe) {
   } else if (dim(mats)[1] == 1 && n_point > 1) {
     y_jacobian <- 0
     for (j in 1: n_contract) {
-      exp_matG <- decomposition_eigen(mats[, j] * G)
+      exp_matG <- mat_exp(mats[, j] * G)
       y[, j] <- Hx %*% exp_matG %*% p_coordinate 
     }
   } else {
     y_jacobian <- 0
     for (i in 1: n_point) {
       for (j in 1: n_contract) {
-        exp_matG <- decomposition_eigen(mats[i, j]*G)
+        exp_matG <- mat_exp(mats[i, j]*G)
         y[i, j] <- Hx[i, ] %*% exp_matG %*% p_coordinate
       }
     }

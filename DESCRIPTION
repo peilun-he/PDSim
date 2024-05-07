@@ -1,6 +1,6 @@
 Package: PDSim
 Title: Polynomial diffusion model simulation and estimation
-Version: 2.1.2
+Version: 3.0.0
 Authors@R: c(
     person("Peilun", "He", , "peilun.he93@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-2740-3390")),
