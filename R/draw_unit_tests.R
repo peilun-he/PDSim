@@ -11,8 +11,9 @@ draw_unit_tests <- function() {
              completion, we employ KF/EKF/UKF methodologies to estimate trajectories 
              alongside their 95% confidence intervals. The coverage rate, indicating 
              the proportion of trajectories where over 95% of points fall within the 
-             confidence interval, is then computed. Given our knowledge of the true 
-             parameter values, a high coverage rate, ideally close to 100%, is expected.", 
+             confidence interval, is then computed. We expect the coverage rate is above
+             95%, but it is affected by the measurement noise \\( \\sigma_1 \\). For a
+             large value of \\( \\sigma_1 \\), the coverage rate could be lower than 95%.", 
              style = style), 
            p("Users receive detailed feedback under the 'Results' tab panel. Moreover, 
              PDSim generates two plots: one illustrating the trajectory with the highest 
@@ -21,7 +22,7 @@ draw_unit_tests <- function() {
              style = style),
            p("It's important to note a few considerations: firstly, for simplicity, only 
              a single contract is simulated, regardless of the number specified by the user. 
-             Secondly, if the coverage rate falls below 99%, users are advised to either 
+             Secondly, if the coverage rate falls below 95%, users are advised to either 
              increase the number of trajectories or adjust parameters. Lastly, users are 
              informed that extensive simulations may lead to longer processing times; 
              for instance, generating results for 100 trajectories typically requires around 

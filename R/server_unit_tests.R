@@ -5,7 +5,7 @@ server_unit_tests <- function() {
     coverage_rate <- unit_test()$coverage_rate$Coverage.rate
     mean_coverage_rate <- mean(coverage_rate)
     
-    if (mean_coverage_rate > 0.9) {
+    if (mean_coverage_rate > 0.95) {
       msg <- paste("Congratulations! The mean coverage rate for this set of parameters is ", 
                    round(mean_coverage_rate*100, 2), 
                    "%, unit test is successful!", sep = "")
@@ -47,8 +47,10 @@ server_unit_tests <- function() {
   
   # Table for the coverage rate of each trajectory
   output$table_coverage <- renderDT({
+    df <- unit_test()$coverage_rate
+    df$Coverage.rate <- sprintf("%.2f%%", df$Coverage.rate * 100)
     datatable(
-      round(unit_test()$coverage_rate, 4), 
+      df, 
       options = list(
         columnDefs = list( list(className = 'dt-center', targets = "_all") )
       ) )

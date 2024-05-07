@@ -248,7 +248,7 @@ my_server <- function(input, output, session) {
       }
       
       # Calculate the coverage rate
-      coverage_rate <- mean(yt_hat <= CI_upper & yt_hat >= CI_lower)
+      coverage_rate <- mean(yt <= CI_upper & yt >= CI_lower)
       coverage_rate_vec[i] <- coverage_rate
       
       if (i == 1) {
