@@ -32,7 +32,7 @@ browseVignettes("PDSim")
 ```
 
 ### Docker Installation
-For those users who do not want to pollute your system, we also provide Docker
+For those users who do not want to modify your system, we also provide Docker
 installation. Please follow these steps:
 1. Make sure you have Docker installed on you machine. Then download all files.
 2. From your terminal, in the directory where the Dockerfile is located, run:
@@ -527,9 +527,9 @@ simulations based on these specifications, generating simulated trajectories.
 Upon simulation completion, we employ KF/EKF/UKF methodologies to estimate
 trajectories alongside their 95% confidence intervals. The coverage rate,
 indicating the proportion of trajectories where over 95% of points fall
-within the confidence interval, is then computed. Given our knowledge of
-the true parameter values, a high coverage rate, ideally close to 100%,
-is expected.
+within the confidence interval, is then computed. We expect the coverage rate
+is above 95%, but it is affected by the measurement noise $\sigma_1$. For a
+large value of $\sigma_1$, the coverage rate could be lower than 95%.
 
 Users receive detailed feedback under the 'Results' tab panel. Moreover,
 PDSim generates two plots: one illustrating the trajectory with the highest
@@ -538,7 +538,7 @@ rate. Additionally, a table presents the coverage rate for each trajectory.
 
 It's important to note a few considerations: firstly, for simplicity,
 only a single contract is simulated, regardless of the number specified by
-the user. Secondly, if the coverage rate falls below 99%, users are advised
+the user. Secondly, if the coverage rate falls below 95%, users are advised
 to either increase the number of trajectories or adjust parameters.
 Lastly, users are informed that extensive simulations may lead to longer
 processing times; for instance, generating results for 100 trajectories
