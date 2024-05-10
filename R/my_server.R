@@ -162,10 +162,10 @@ my_server <- function(input, output, session) {
       showModal(modalDialog("You have set all coefficients to 0. All parameters now have no effect on the model. "))
     }
     if (input$chi == 0 && input$chi_xi == 0 && input$chi2 == 0 && (input$xi != 0 || input$xi2 != 0)) {
-      showModal(modalDialog(withMathJax("You have set all coefficients related to \\( \\chi_t \\) to 0. \\( \\kappa, \\sigma_{\\chi}}, \\rho, \\lambda_{\\chi} \\) now have no effect on the model. ")))
+      showModal(modalDialog(withMathJax("You have set all coefficients related to \\( \\chi_t \\) to 0. \\( \\kappa  \\), \\( \\sigma_{\\chi} \\), \\( \\rho \\), \\( \\lambda_{\\chi} \\) now have no effect on the model. ")))
     }
     if (input$xi == 0 && input$chi_xi == 0 && input$xi2 == 0 && (input$chi != 0 || input$chi2 != 0)) {
-      showModal(modalDialog(withMathJax("You have set all coefficients related to \\( \\xi_t \\) to 0. \\( \\gamma, \\mu_{\\xi}, \\sigma_{\\xi}}, \\rho, \\lambda_{\\xi} \\) now have no effect on the model. ")))
+      showModal(modalDialog(withMathJax("You have set all coefficients related to \\( \\xi_t \\) to 0. \\( \\gamma \\), \\( \\mu_{\\xi} \\), \\( \\sigma_{\\xi} \\), \\( \\rho \\), \\( \\lambda_{\\xi} \\) now have no effect on the model. ")))
     }
     if (input$n_tra <= 0 || !is.integer(input$n_tra)) {
       showModal(modalDialog("The number of trajectories must be a positive integer. "))
