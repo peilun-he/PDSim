@@ -562,18 +562,17 @@ long-term factor to converge towards the spot price.
 Below is a plot depicting the polynomial diffusion model. In this model,
 the spot price is represented as $S_t = \alpha_1 + \alpha_2 \chi_t +
 \alpha_3 \xi_t + \alpha_4 \chi_t^2 + \alpha_5 \chi_t \xi_t +
-\alpha_6 \xi_t^2$. Meanwhile, the long-term component is expressed as
+\alpha_6 \xi_t^2$. Thus, the long-term component is expressed as
 $\alpha_1 + \alpha_3 \xi_t + \alpha_6 \xi_t^2$. 
 
 ![](figures/PD_Figure1.png)
 
-Below are two plots replicating Figure 4 from Schwartz and Smith's
-paper. Since we lack access to their original data, we simulate
-trajectories using their estimated parameters instead. The first plot
-illustrates the simulated spot price alongside the estimated spot price,
-both within the 95% confidence interval of estimation. The second plot
-displays the estimated long-term component, also within the
-95% confidence interval.
+In the following tow plots below, we produced Figure 4 from Schwartz
+and Smith's paper. We simulated the trajectories of the relevant
+processes using the parameter estimates from this paper.
+The first plot illustrates the simulated spot price and its estimated
+version using PDSim. Both trajectories are located within the 95%
+band. The second plot displays the estimated long-term component.
 
 ![](figures/SS_Figure4_1.png)
 
