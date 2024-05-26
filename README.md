@@ -849,7 +849,8 @@ Which risk factors drive oil futures price curves?
 
 Aspinall, T., Gepp, A., Harris, G., Kelly, S., Southam, C., & Vanstone, B. (2022).
 NFCP: N-factor commodity pricing through term structure estimation.
-*The Comprehensive R Archive Network*. [https://cran.rstudio.com/web/packages/NFCP/index.html](https://cran.rstudio.com/web/packages/NFCP/index.html).
+*The Comprehensive R Archive Network*.
+[https://cran.rstudio.com/web/packages/NFCP/index.html](https://cran.rstudio.com/web/packages/NFCP/index.html).
 
 Cortazar, G., Millard, C., Ortega, H., & Schwartz, E. S. (2019).
 Commodity price forecasts, futures prices, and pricing models.
