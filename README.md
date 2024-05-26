@@ -882,8 +882,8 @@ forwards with delivery period.
 *SIAM Journal on Financial Mathematics*, 11(3), 928–957.
 
 Ncube, M. (2024). 
-Simulation of Schwartz-Smith two Factor model (https://www.mathworks.com/
-matlabcentral/fileexchange/29745-simulation-of-schwartz-smith-two-factor-model),
+Simulation of Schwartz-Smith two Factor model
+(https://www.mathworks.com/matlabcentral/fileexchange/29745-simulation-of-schwartz-smith-two-factor-model),
 MATLAB Central File Exchange. Retrieved May 26, 2024.
 
 Peters, G. W., Briers, M., Shevchenko, P., & Doucet, A. (2013).
