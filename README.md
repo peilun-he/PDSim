@@ -333,8 +333,8 @@ $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums;
 $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions
 with correlation coefficient $\rho $.
 In the original Schwartz-Smith model (Schwartz & Smith, 2000),
-the parameter $\gamma$ is set to zero. However, in our extended model,
-we introduce the flexibility for this mean-reversion parameter associated
+the parameter $\gamma$ is set to zero. However, in the extended two-factor model,
+the flexibility is introduced for this mean-reversion parameter associated
 with the long-term factor to take on non-zero values. Arbitrage-free pricing
 for the extended model has found application in agricultural commodity futures
 (Sørensen, 2002) and crude oil futures (Ames et al., 2020; Cortazar et al.,
