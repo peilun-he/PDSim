@@ -337,7 +337,7 @@ the long-term factor, is geometric Brownian motion (gBm), that is $\gamma=0$.
 Historically, Casassus and Collin-Dufresne (2005) and Peters et al. (2013)
 considered the extended version of Schwartz-Smith model by introducing any
 $\gamma \ge 0$. Further, for consistency, we continue to refer to this model
-as Schwartz-Smith model. Arbitrage-free pricing for the Schwartz-Smith model
+as the Schwartz-Smith model. Arbitrage-free pricing for the Schwartz-Smith model
 has found application in agricultural commodity futures (Sørensen, 2002),
 natural gas futures (Manoliu & Tompaidis, 2002) and crude oil futures
 (Ames et al., 2020; Cortazar et al., 2019; Cortazar & Naranjo, 2006).
