@@ -331,16 +331,23 @@ $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor;
 $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities;
 $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums;
 $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions
-with correlation coefficient $\rho $.
-In the original Schwartz-Smith model (Schwartz & Smith, 2000),
+with correlation coefficient $\rho$.
+In the original Schwartz-Smith model (Schwartz & Smith, 2000), $\xi$,
+the long-term factor, is geometric Brownian motion (gBm), that is $\gamma=0$.
+Historically, Casassus and Collin-Dufresne (2005) and Peters et al. (2013)
+considered the extended version of Schwartz-Smith model by introducing any
+$\gamma \ge 0$. Further, for consistency, we continue to refer to this model
+as Schwartz-Smith model.
+
 the parameter $\gamma$ is set to zero. However, Peters et al. (2013) extended
 this model to introduce flexibility for the mean-reversion parameter
 associated with the long-term factor to take on non-zero values.
 Throughout this application, we use Peters's extended model but, for consistency,
 we continue to refer to it as the Schwartz and Smith's model. Arbitrage-free
 pricing for the extended model has found application in agricultural commodity
-futures (Sørensen, 2002) and crude oil futures (Ames et al., 2020; Cortazar et al.,
-2019; Cortazar & Naranjo 2006).
+futures (Sørensen, 2002), natural gas futures (Manoliu & Tompaidis, 2002) and 
+crude oil futures (Ames et al., 2020; Cortazar et al., 2019;
+Cortazar & Naranjo, 2006).
 
 Theoretically, there are few constraints on parameters, apart from those outlined
 above, where $\kappa, \gamma, \sigma_{\chi},
@@ -854,6 +861,10 @@ NFCP: N-factor commodity pricing through term structure estimation.
 *The Comprehensive R Archive Network*.
 [https://cran.rstudio.com/web/packages/NFCP/index.html](https://cran.rstudio.com/web/packages/NFCP/index.html).
 
+Casassus, J., & Collin‐Dufresne, P. (2005).
+Stochastic convenience yield implied from commodity futures and interest rates.
+*The Journal of Finance*, 60(5), 2283-2331.
+
 Cortazar, G., Millard, C., Ortega, H., & Schwartz, E. S. (2019).
 Commodity price forecasts, futures prices, and pricing models.
 *Management Science*, 65(9), 4141-4155.
@@ -883,6 +894,10 @@ Kleisinger-Yu, X., Komaric, V., Larsson, M., & Regez, M. (2020).
 A multifactor polynomial framework for long-term electricity
 forwards with delivery period.
 *SIAM Journal on Financial Mathematics*, 11(3), 928–957.
+
+Manoliu, M., & Tompaidis, S. (2002).
+Energy futures prices: term structure models with Kalman filter estimation.
+*Applied mathematical finance*, 9(1), 21-43.
 
 Ncube, M. (2024). 
 Simulation of Schwartz-Smith two Factor model
