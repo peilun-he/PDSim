@@ -334,13 +334,12 @@ $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions
 with correlation coefficient $\rho$.
 In the original Schwartz-Smith model (Schwartz & Smith, 2000), $\xi$,
 the long-term factor, is geometric Brownian motion (gBm), that is $\gamma=0$.
-Historically, Casassus and Collin-Dufresne (2005) and Peters et al. (2013)
-considered the extended version of Schwartz-Smith model by introducing any
-$\gamma \ge 0$. Further, for consistency, we continue to refer to this model
-as the Schwartz-Smith model. Arbitrage-free pricing for the Schwartz-Smith model
-has found application in agricultural commodity futures (Sørensen, 2002),
-natural gas futures (Manoliu & Tompaidis, 2002) and crude oil futures
-(Ames et al., 2020; Cortazar et al., 2019; Cortazar & Naranjo, 2006).
+Historically, Manoliu and Tompaidis (2002), Casassus and Collin-Dufresne (2005)
+and Peters et al. (2013) considered the extended version of Schwartz-Smith model
+by introducing any $\gamma \ge 0$. Further, for consistency, we continue to refer
+to this model as the Schwartz-Smith model. Previous applications of
+Schwartz-Smith model include works by Ncube (2010), Goodwin (2015),
+He (2020) and Aspinall (2022).
 
 Theoretically, there are few constraints on parameters, apart from those outlined
 above, where $\kappa, \gamma, \sigma_{\chi},
@@ -871,9 +870,19 @@ Filipovic, D., & Larsson, M. (2016).
 Polynomial diffusions and applications in finance.
 *Finance and Stochastics*, 20(4), 931–972.
 
+Goodwin, D. (2015).
+Schwartz-Smith 2-factor model - Parameter estimation
+(https://www.mathworks.com/matlabcentral/fileexchange/43352-schwartz-smith-2-factor-model-parameter-estimation).
+*MATLAB Central File Exchange*. Retrieved May 28, 2024.
+
 Harvey, A. C. (1990).
 Forecasting, structural time series models and the kalman filter.
 *Cambridge University Press*.
+
+He, P. (2020).
+Crude Oil Futures
+(https://github.com/peilun-he/Crude-Oil-Futures).
+*GitHub*. Retrieved May 28, 2024.
 
 Julier, S. J., & Uhlmann, J. K. (1997).
 New extension of the kalman filter to nonlinear systems.
@@ -892,10 +901,10 @@ Manoliu, M., & Tompaidis, S. (2002).
 Energy futures prices: term structure models with Kalman filter estimation.
 *Applied mathematical finance*, 9(1), 21-43.
 
-Ncube, M. (2024). 
+Ncube, M. (2010). 
 Simulation of Schwartz-Smith two Factor model
-(https://www.mathworks.com/matlabcentral/fileexchange/29745-simulation-of-schwartz-smith-two-factor-model),
-MATLAB Central File Exchange. Retrieved May 26, 2024.
+(https://www.mathworks.com/matlabcentral/fileexchange/29745-simulation-of-schwartz-smith-two-factor-model).
+*MATLAB Central File Exchange*. Retrieved May 26, 2024.
 
 Peters, G. W., Briers, M., Shevchenko, P., & Doucet, A. (2013).
 Calibration and filtering for multi factor commodity models with seasonality:
