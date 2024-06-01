@@ -332,14 +332,16 @@ $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities;
 $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums;
 $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions
 with correlation coefficient $\rho$.
-In the original Schwartz-Smith model (Schwartz & Smith, 2000), $\xi$,
-the long-term factor, is geometric Brownian motion (gBm), that is $\gamma=0$.
-Historically, Manoliu and Tompaidis (2002), Casassus and Collin-Dufresne (2005)
-and Peters et al. (2013) considered the extended version of Schwartz-Smith model
-by introducing any $\gamma \ge 0$. Further, for consistency, we continue to refer
-to this model as the Schwartz-Smith model. Previous applications of
-Schwartz-Smith model include works by Ncube (2010), Goodwin (2015),
-He (2020) and Aspinall (2022).
+In the original Schwartz-Smith model (Schwartz & Smith, 2000), where
+the long-term factor $\xi$ is geometric Brownian motion (gBm), corresponds
+to $\gamma=0$. Since 2000, Manoliu and
+Tompaidis (2002), Casassus and Collin-Dufresne (2005), Peters et al. (2013),
+and others considered the extended version of Schwartz-Smith model by introducing
+any $\gamma \ge 0$. For consistency, further we continue to refer to this model
+with $\gamma \ge 0$ as the Schwartz-Smith model. The codes for implementation
+of Schwartz-Smith model are publicly available for $\gamma = 0$ by Ncube (2010)
+and Goodwin (2015) on Matlab File Exchange, and for $\gamma \ge 0$ by He (2020)
+on GitHub and Aspinall (2022) in R. 
 
 Theoretically, there are few constraints on parameters, apart from those outlined
 above, where $\kappa, \gamma, \sigma_{\chi},
@@ -568,25 +570,19 @@ $\alpha_1 + \alpha_3 \xi_t + \alpha_6 \xi_t^2$.
 
 ![](figures/PD_Figure1.png)
 
-In the following tow plots below, we produced Figure 4 from Schwartz
-and Smith's paper. We simulated the trajectories of the relevant
-processes using the parameter estimates from this paper.
-The first plot illustrates the simulated spot price and its estimated
-version using PDSim. Both trajectories are located within the 95%
-band. The second plot displays the estimated long-term component.
+In the plot below, we replicated Figure 4 from Schwartz
+and Smith's paper using crude oil data from Ncube (2010) and the
+estimated parameters from Schwartz and Smith (2000). The blue curve
+represents the estimated spot price given by 
+$S_t = e^{\chi_t + \xi_t}$, while the purple curve represents
+the estimated equlibrium price given by $e^{\xi_t}$. 
 
-![](figures/SS_Figure4_1.png)
-
-![](figures/SS_Figure4_2.png)
+![](figures/Replicated_figure4.png)
 
 Below are two plots presenting the estimated spot price and long-term
 component for the polynomial diffusion model. Each point falls within
 the 95% confidence interval, providing a comprehensive visualization
 of the model's estimations.
-
-![](figures/PD_Figure4_1.png)
-
-![](figures/PD_Figure4_2.png)
 
 ### Tests for Schwartz and Smith Model
 
