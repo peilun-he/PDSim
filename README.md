@@ -800,8 +800,15 @@ I will get back to you as soon as possible.
 
 ## Acknowledgements
 
-We would like to thank Sam Forbes, Blake Rayfield and Mark Van de Vyver for testing
-PDSim and providing valuable feedback and suggestions.
+We are indebted to Mark Van de Vyver for his constructive suggestions and
+ongoing support in improving the paper since the paper’s submission. Thanks
+to the suggestions, which included helpful references, we were able to
+achieve code containerisation, develop and provide the results of the unit
+tests.
+
+We would also like to thank Sam Forbes, and Blake Rayfield for their
+valuable feedback and suggestions, which helped us to improve the PDSim's
+code.
 
 ## Version History
 
