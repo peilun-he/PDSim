@@ -334,8 +334,8 @@ $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions
 with correlation coefficient $\rho$.
 In the original Schwartz-Smith model (Schwartz & Smith, 2000), where
 the long-term factor $\xi$ is geometric Brownian motion (gBm), corresponds
-to $\gamma=0$. Since 2000, Manoliu and
-Tompaidis (2002), Casassus and Collin-Dufresne (2005), Peters et al. (2013),
+to $\gamma=0$. Since 2000, Manoliu and Tompaidis (2002), Casassus and
+Collin-Dufresne (2005), Peters et al. (2013), Ames et al. (2020),
 and others considered the extended version of Schwartz-Smith model by introducing
 any $\gamma \ge 0$. For consistency, further we continue to refer to this model
 with $\gamma \ge 0$ as the Schwartz-Smith model. The codes for implementation
