@@ -572,17 +572,14 @@ $\alpha_1 + \alpha_3 \xi_t + \alpha_6 \xi_t^2$.
 
 In the plot below, we replicated Figure 4 from Schwartz
 and Smith's paper using crude oil data from Ncube (2010) and the
-estimated parameters from Schwartz and Smith (2000). The blue curve
-represents the estimated spot price given by 
-$S_t = e^{\chi_t + \xi_t}$, while the purple curve represents
-the estimated equlibrium price given by $e^{\xi_t}$. 
+estimated parameters from Schwartz and Smith (2000). We also compared our
+curves with those obtained using Ncube's code. The red and
+blue curves represent the estimated equlibrium price (given by $e^{\xi_t}$)
+and spot price (given by $S_t = e^{\chi_t + \xi_t}$) respectively,
+using our codes. The black and green curves represent the estimated
+equlibrium price and spot price, respectively, using Ncube's code. 
 
-![](figures/Replicated_figure4.png)
-
-Below are two plots presenting the estimated spot price and long-term
-component for the polynomial diffusion model. Each point falls within
-the 95% confidence interval, providing a comprehensive visualization
-of the model's estimations.
+![](figures/Figure4_Ncube.png)
 
 ### Tests for Schwartz and Smith Model
 
