@@ -82,7 +82,7 @@ the number of observations (trading days) and contracts.
 Furthermore, we make a selection regarding the model from which
 the simulated data is generated.
 
-```
+
 If I wanted to refer to the plot I could do so \autoref{fig:SS1}.
 
 ![](figures/SS1.png)
