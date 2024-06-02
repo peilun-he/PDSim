@@ -83,11 +83,7 @@ Furthermore, we make a selection regarding the model from which
 the simulated data is generated.
 
 
-If I wanted to refer to the plot I could do so \autoref{fig:SS1}.
-
 ![](figures/SS1.png)
-
-![The explanatory note, what and why \label{fig:SS1}](figures/SS1.png){ width=100% }
 
 For Schwartz-Smith model (Schwartz & Smith, 2000), we assume the logarithm of spot
 price $S_t$, is the sum of two hidden factors:
@@ -565,7 +561,14 @@ parameters, our results match those of Schwartz and Smith. As time
 approaches infinity, the short-term factor tends towards 0, leading the
 long-term factor to converge towards the spot price.
 
+If I wanted to refer to the plot I could do so \autoref{fig:SS_Figure1}.
+
+
 ![](figures/SS_Figure1.png)
+
+![The explanatory note, what and why \label{fig:SS_Figure1}](figures/SS_Figure1.png){ width=100% }
+
+
 
 Below is a plot depicting the polynomial diffusion model. In this model,
 the spot price is represented as $S_t = \alpha_1 + \alpha_2 \chi_t +
