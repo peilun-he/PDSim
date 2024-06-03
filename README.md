@@ -339,8 +339,8 @@ to $\gamma=0$. Since 2000, Manoliu and Tompaidis (2002), Casassus and
 Collin-Dufresne (2005), Peters et al. (2013), Ames et al. (2020),
 and others considered the extended version of Schwartz-Smith model by introducing
 any $\gamma \ge 0$. For consistency, further we continue to refer to this model
-with $\gamma \ge 0$ as the Schwartz-Smith model. The codes for implementation
-of Schwartz-Smith model are publicly available for $\gamma = 0$ by Ncube (2010)
+with $\gamma \ge 0$ as the Schwartz-Smith model. The codes for implementing
+Schwartz-Smith model are publicly available for $\gamma = 0$ by Ncube (2010)
 and Goodwin (2015) on Matlab File Exchange, and for $\gamma \ge 0$ by He (2020)
 on GitHub and Aspinall (2022) in R. 
 
