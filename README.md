@@ -3,7 +3,7 @@
 ## Introduction
 
 This package allows users to simulate commodity futures data from two models,
-Schwartz and Smith two-factor model (Schwartz & Smith, 2000) and polynomial
+Schwartz and Smith's two-factor model (Schwartz & Smith, 2000) and polynomial
 diffusion model (Filipovic & Larsson, 2016), through both GUI and R scripts.
 Additionally, it gives state variables and contract estimations through Kalman
 Filter (KF), Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF).
@@ -24,7 +24,7 @@ PDSim can be accessed in two ways:
    PDSim::run_app()
    ```
 
-A tutorial of how to use this app is available by running the following code
+A tutorial on how to use this app is available by running the following code
 and select "PDSim app tutorial":
 
 ```r
@@ -34,7 +34,7 @@ browseVignettes("PDSim")
 ### Docker Installation
 For those users who do not want to modify your system, we also provide Docker
 installation. Please follow these steps:
-1. Make sure you have Docker installed on you machine. Then download all files.
+1. Make sure you have Docker installed on your machine. Then download all files.
 2. From your terminal, in the directory where the Dockerfile is located, run:
 
    ```
@@ -54,8 +54,8 @@ installation. Please follow these steps:
    docker run -p 8787:8787 --name pdsim1  pdsim
    ```
    
-4. Open browser and go to `localhost:8787`. The default username is `rstudio` and
-   the random password is available in terminal.  
+4. Open the browser and go to `localhost:8787`. The default username is `rstudio` and
+   the random password is available in the terminal.  
 5. Finally, you can use PDSim by running
 
    ```r
@@ -72,7 +72,7 @@ it will simulate data, and provide well-designed interactive visualisations. Cur
 PDSim can simulate data from two models, Schwartz and Smith two-factor model (Schwartz
 & Smith, 2000), and polynomial diffusion model (Filipovic & Larsson, 2016). In this
 section, we will explain how to use GUI to simulate data.
-A detailed description of two models are available in
+A detailed description of the two models is available in
 [Model Description](#model-description).
 
 ### PDSim (GUI) for Schwartz-Smith Model
@@ -85,7 +85,7 @@ the simulated data is generated.
 
 ![](figures/SS1.png)
 
-For Schwartz-Smith model (Schwartz & Smith, 2000), we assume the logarithm of spot
+For the Schwartz-Smith model (Schwartz & Smith, 2000), we assume the logarithm of the spot
 price $S_t$, is the sum of two hidden factors:
 $$\log{(S_t)} = \chi_t + \xi_t, $$
 where $\chi_t$ represent the short term fluctuation and $\xi_t$ is the long term
@@ -116,20 +116,20 @@ price until it equals the value of replicating portfolios"
 In reality, we need to introduce the mean terms corrections - which are
 $\lambda_{\chi}$ and $\lambda_{\xi}$. $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated
 standard Brownian Motions with correlation coefficient $\rho$. In discrete time,
-these processes are discretised to Gaussian noises. All of them are parameters need
+these processes are discretised to Gaussian noises. All of them are parameters that need
 to be specified. Additionally, for simplicity, we assume the standard errors
 $\sigma_i, i = 1, \dots, m$ for futures contracts are evenly spaced,
 i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 = \dots = \sigma_{m-1} - \sigma_m$.
 If users don't know the value of a parameter, we recommend using the default value.
 
-If users have special needs for the standard errors, please use R script.
+If users have special requirements for the structure of the standard errors, please use R script.
 
 ![](figures/SS2.png)
 
 Finally, all the simulated data are downloadable. Please click `Download prices`
-and `Download maturities` buttons to download futures price and maturities data.
-Please note, even though Schwartz and Smith (2000) models the logarithm of spot
-price, **all data downloaded or plotted are real price, they have been exponentiated**.
+and `Download maturities` buttons to download futures prices and maturities data.
+Please note, even though in Schwartz and Smith's (2000) model the logarithm of spot
+price is specified, **all data downloaded or plotted are real prices, they have been exponentiated**.
 The other button `Generate new data` is designed for users who want to simulate
 multiple realisations from the same set of parameters. Once clicking it,
 PDSim will get another set of random noises, so the futures price
@@ -142,7 +142,7 @@ you change any parameters.
 ### PDSim (GUI) for Polynomial Diffusion Model
 
 The procedure for simulating data from the polynomial diffusion model
-(Filipovic & Larsson, 2016) closely resembles that of the Schwartz and
+(Filipovic & Larsson, 2016) closely resembles that of Schwartz and
 Smith model (Schwartz & Smith, 2000). Nevertheless, it involves the
 specification of additional parameters.
 
@@ -176,17 +176,17 @@ All other procedures are the same as the Schwartz and Smith model
   'Generate new data' button.
 - The seed to generate random numbers is fixed, i.e., for the same set of parameters,
   users will get exactly the same data every time they use PDSim.
-- Futures prices in all tables / plots are REAL prices (NOT the logarithm),
+- Futures prices in all tables/plots are REAL prices (NOT the logarithm),
   no matter which model is used.
 - The 95% confidence interval is shown as a grey ribbon on each plot.
 - Because of the limitation of filtering methods, the standard error of the
   estimated futures price on the first day is extremely large. All plots of
-  contracts estimation start from the second day.
+  contract estimation start from the second day.
 
 ## How to Use PDSim (R Script)
 
-The GUI should be suffice. However, if you want to have more control of
-the data simulated, you can use R script. In this section, we will discuss
+The GUI should suffice. However, if you want to have more control over
+the simulated data,  you can use R script. In this section, we will discuss
 how to use exported functions from this package to simulate data,
 as well as how to use Kalman Filter (KF), Extended Kalman Filter (EKF)
 and Unscented Kalman Filter (UKF) to estimate the hidden state variables.
@@ -197,9 +197,9 @@ Firstly, load the package:
 library(PDSim)
 ```
 
-If you don't have PDSim installed, please refer [Installation](#installation).
+If you don't have PDSim installed, please refer to [Installation](#installation).
 
-Next, we specify the necessary global setups:
+Next, we specify the necessary global setup:
 
 ```r
 n_obs <- 100 # number of observations
@@ -211,7 +211,7 @@ dt <- 1/360  # interval between two consecutive time points,
 ### PDSim (R Script) for Schwartz-Smith Model
 
 Next, we specify parameters. For the Schwartz-Smith model (Schwartz & Smith, 2000),
-there is no model coefficients.
+there are no model coefficients.
 
 ```r
 par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3,
@@ -225,11 +225,11 @@ The set of parameters are in the order of: $\kappa, \gamma, \mu_{\xi},
 The long sequence is the standard errors of measurement equation.
 We assume all futures curves are uncorrelated and standard errors
 are evenly decreasing. You can have your own assumptions on standard
-errors, but the independence of curves must be hold.
+errors, but the independence of curves must be held.
 
 Then, we specify the measurement and state equations. You can use the
 exported functions `measurement_linear` and `state_linear` directly,
-or write you own functions.
+or write your own functions.
 
 ```r
 # state equation
@@ -249,9 +249,9 @@ mats <- dat$mats # time to maturity
 xt <- dat$xt # state variables
 ```
 
-Please note, `measurement_linear` returns the logarithm of futures price
-(which is required by the Schwartz and Smith model), so the data simulated
-is also the logarithm.
+Please note, `measurement_linear` returns the logarithm of the futures price
+(which is required by the Schwartz and Smith model), so the simulated data 
+is also in logarithmic scale.
 
 Additionally, we can estimate the hidden state variables through
 Kalman Filter (KF):
@@ -334,11 +334,11 @@ $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums;
 $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions
 with correlation coefficient $\rho$.
 In the original Schwartz-Smith model (Schwartz & Smith, 2000), where
-the long-term factor $\xi$ is geometric Brownian motion (gBm), corresponds
+the long-term factor $\xi$ is geometric Brownian motion (gBm), corresponding
 to $\gamma=0$. Since 2000, Manoliu and Tompaidis (2002), Casassus and
 Collin-Dufresne (2005), Peters et al. (2013), Ames et al. (2020),
-and others considered the extended version of Schwartz-Smith model by introducing
-any $\gamma \ge 0$. For consistency, further we continue to refer to this model
+and others considered the extended version of the Schwartz-Smith model by introducing
+any $\gamma \ge 0$. For consistency, further, we continue to refer to this model
 with $\gamma \ge 0$ as the Schwartz-Smith model. The codes for implementing
 Schwartz-Smith model are publicly available for $\gamma = 0$ by Ncube (2010)
 and Goodwin (2015) on Matlab File Exchange, and for $\gamma \ge 0$ by He (2020)
@@ -550,16 +550,15 @@ typically requires around 15 seconds on a standard laptop.
 
 ### Replicating Schwartz and Smith's Results
 
-In this section, we reproduce Figure 1 and Figure 4 from Schwartz and
-Smith's paper using our own implementation.
-
-The figure below displays the replication of Figure 1 from Schwartz and
+In this section, we replicate the Figures 1 and 4 from Schwartz and
+Smith's paper using PDSIM.
+The figure below represents the replication of Figure 1 from Schwartz and
 Smith's paper. This figure illustrates the mean simulated spot price
 ($\exp{(\chi_t+\xi_t)}$) and the mean long-term component ($\exp{(\xi)}$),
-alongside their respective 10th and 90th percentiles. Utilizing identical
-parameters, our results match those of Schwartz and Smith. As time
-approaches infinity, the short-term factor tends towards 0, leading the
-long-term factor to converge towards the spot price.
+alongside their respective 10th and 90th percentiles. We used the model parameters estimates
+from Schwartz and Smith (2000). As the time
+approaches infinity, the short-term factor tends to 0, whereas the
+long-term factor converges to the spot price.
 
 ![](figures/SS_Figure1.png)
 
@@ -571,20 +570,19 @@ $\alpha_1 + \alpha_3 \xi_t + \alpha_6 \xi_t^2$.
 
 ![](figures/PD_Figure1.png)
 
-In the plot below, we replicated Figure 4 from Schwartz
-and Smith's paper using crude oil data from Ncube (2010) and the
-estimated parameters from Schwartz and Smith (2000). We also compared our
-curves with those obtained using Ncube's code. The red and
-blue curves represent the estimated equlibrium price (given by $e^{\xi_t}$)
-and spot price (given by $S_t = e^{\chi_t + \xi_t}$) respectively,
-using our codes. The black and green curves represent the estimated
-equlibrium price and spot price, respectively, using Ncube's code. 
+
+In the graph below, we replicate Figure 4 from Schwartz
+and Smith (2000) and the model parameters estimates from Schwartz and Smith (2000). 
+These estimates were verified using the futures prices data and Matlab code from  Ncube (2010).
+The red and blue time series plots represent the estimated equilibrium price ($e^{\xi_t}$)
+and spot price ( $S_t = e^{\chi_t + \xi_t}$), respectively, were produced using PDSIM.
+The black and green time series plots for the equilibrium and spot prices, respectively, were produced using Ncube's parameter estimates.
 
 ![](figures/Figure4_Ncube.png)
 
 ### Tests for Schwartz and Smith Model
 
-Users can utilise the following codes snippets to evaluate the performance of
+Users can utilise the following code snippets to evaluate the performance of
 simulation and estimation for the Schwartz and Smith model:
 
 ```r
@@ -668,7 +666,7 @@ futures price. The grey ribbon visually encapsulated the 95% confidence interval
 
 ### Tests for Polynomial Diffusion Model
 
-Users can utilise the following codes snippets to evaluate the performance of
+Users can utilise the following code snippets to evaluate the performance of
 simulation and estimation for the polynomial diffusion model:
 
 ```r
@@ -745,13 +743,11 @@ futures price. The grey ribbon visually encapsulated the 95% confidence interval
 
 ### Simulation Accuracy
 
-In this section, we will illustrate the simulation accuracy through
-the following figure by demonstrating that with appropriate parameters, our
-simulated data closely aligns with the real data.
+In the figure below, we illustrate the alignment between the data simulated using PDSIM and the real data.
 
 ![](figures/real_data.png)
 
-The black curve represents the WTI crude oil futures with a 1-month maturity
+The black time series plot represents the WTI crude oil futures with a 1-month maturity
 spanning from 1 November 2014 to 30 June 2015. Initially, we estimated parameters
 using real data. Unfortunately, this parameter estimation falls outside the
 scope of PDSim. Therefore, we will not delve into the details here. However,
@@ -779,15 +775,15 @@ dot-dashed line signifies the analytical mean, and the dotted line represents
 a random sample path.
 
 From this plot, it is evident that regardless of the model used for simulation,
-the percentile band consistently encompasses the actual price. Addtionally, it
-is noteworthy that while Schwartz Smith model provides a more accurate point
+the percentile band consistently encompasses the actual price. Additionally, it
+is noteworthy that while the Schwartz-Smith model provides a more accurate point
 estimation, it also exhibits larger measurement errors. Consequently, the band
 associated with this model is wider compared to the band of the polynomial
 diffusion model.
 
 ## Contributions and Supports
 
-If you find any bugs or want to make a contribution to this package,
+If you find any bugs or want to contribute to this package,
 please create a GitHub issue at: <https://github.com/peilun-he/PDSim/issues>.
 
 Additionally, you are very welcome to provide any kind of feedback and comments.
@@ -811,8 +807,8 @@ feedback and suggestions, which helped us to improve the PDSim's code.
 
 **Version 3.0.0** (current version): 
 
-- Incorporate Original Schwartz and Smith model where $\gamma = 0$.
-- Add a new tab panel for unit test.
+- Incorporate the Original Schwartz and Smith model where $\gamma = 0$.
+- Add a new tab panel for unit tests.
 - Docker installation is added.
 
 **Version 2.1.2**:
@@ -826,8 +822,8 @@ feedback and suggestions, which helped us to improve the PDSim's code.
 
 **Version 2.1**:
 
-- PDSim is packaged into an R package. Some structures is changed to achieve this.
-- A exported function "run_app" is added to run PDSim.
+- PDSim is packaged into an R package. Some structures are changed to achieve this.
+- An exported function "run_app" is added to run PDSim.
 - Add some documentation.  
 
 **Version 2.0**:
@@ -837,7 +833,7 @@ feedback and suggestions, which helped us to improve the PDSim's code.
 - Allow users to download simulated data as csv files.
 - Add 95% confidence intervals to all estimations.  
 - Add a 3D surface of data.
-- Allow users to generate new realisations of data using same set of parameters.
+- Allow users to generate new realisations of data using the same set of parameters.
 - Bugs fixed.
 
 **Version 1.0**: basic functions and UI
@@ -876,7 +872,7 @@ Schwartz-Smith 2-factor model - Parameter estimation
 *MATLAB Central File Exchange*. Retrieved May 28, 2024.
 
 Harvey, A. C. (1990).
-Forecasting, structural time series models and the kalman filter.
+Forecasting, structural time series models, and the Kalman filter.
 *Cambridge University Press*.
 
 He, P. (2020).
@@ -889,7 +885,7 @@ Multi-Factor Polynomial Diffusion Models and Inter-Temporal Futures Dynamics.
 *2021-2022 MATRIX Annals*, 363-382.
 
 Julier, S. J., & Uhlmann, J. K. (1997).
-New extension of the kalman filter to nonlinear systems.
+New extension of the Kalman filter to nonlinear systems.
 *Signal Processing, Sensor Fusion, and Target Recognition VI*, 3068, 182–193.
 
 Julier, S. J., & Uhlmann, J. K. (2004).
@@ -911,7 +907,7 @@ Simulation of Schwartz-Smith two Factor model
 *MATLAB Central File Exchange*. Retrieved May 26, 2024.
 
 Peters, G. W., Briers, M., Shevchenko, P., & Doucet, A. (2013).
-Calibration and filtering for multi factor commodity models with seasonality:
+Calibration and filtering for multi-factor commodity models with seasonality:
 incorporating panel data from futures contracts.
 *Methodology and Computing in Applied Probability*, 15, 841-874.
 
@@ -928,6 +924,6 @@ Modeling seasonality in agricultural commodity futures.
 22(5), 393-426.
 
 Wan, E. A., & Van Der Merwe, R. (2000).
-The unscented kalman filter for nonlinear estimation.
+The unscented Kalman filter for nonlinear estimation.
 *Proceedings of the IEEE 2000 Adaptive Systems for Signal Processing, Communications,
 and Control Symposium (Cat. No. 00EX373)*, 153–158.
