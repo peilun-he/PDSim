@@ -82,6 +82,7 @@ the number of observations (trading days) and contracts.
 Furthermore, we make a selection regarding the model from which
 the simulated data is generated.
 
+
 ![](figures/SS1.png)
 
 For Schwartz-Smith model (Schwartz & Smith, 2000), we assume the logarithm of spot
@@ -331,14 +332,17 @@ $\mu_{\xi} \in \mathbb{R}$ is the mean level of the long-term factor;
 $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities;
 $\lambda_{\chi}, \lambda_{\xi} \in \mathbb{R}$ are risk premiums;
 $W_t^{\chi*}$ and $W_t^{\xi*}$ are correlated standard Brownian Motions
-with correlation coefficient $\rho $.
-In the original Schwartz-Smith model (Schwartz & Smith, 2000),
-the parameter $\gamma$ is set to zero. However, in our extended model,
-we introduce the flexibility for this mean-reversion parameter associated
-with the long-term factor to take on non-zero values. Arbitrage-free pricing
-for the extended model has found application in agricultural commodity futures
-(Sørensen, 2002) and crude oil futures (Ames et al., 2020; Cortazar et al.,
-2019; Cortazar & Naranjo 2006).
+with correlation coefficient $\rho$.
+In the original Schwartz-Smith model (Schwartz & Smith, 2000), where
+the long-term factor $\xi$ is geometric Brownian motion (gBm), corresponds
+to $\gamma=0$. Since 2000, Manoliu and Tompaidis (2002), Casassus and
+Collin-Dufresne (2005), Peters et al. (2013), Ames et al. (2020),
+and others considered the extended version of Schwartz-Smith model by introducing
+any $\gamma \ge 0$. For consistency, further we continue to refer to this model
+with $\gamma \ge 0$ as the Schwartz-Smith model. The codes for implementing
+Schwartz-Smith model are publicly available for $\gamma = 0$ by Ncube (2010)
+and Goodwin (2015) on Matlab File Exchange, and for $\gamma \ge 0$ by He (2020)
+on GitHub and Aspinall (2022) in R. 
 
 Theoretically, there are few constraints on parameters, apart from those outlined
 above, where $\kappa, \gamma, \sigma_{\chi},
@@ -557,7 +561,13 @@ parameters, our results match those of Schwartz and Smith. As time
 approaches infinity, the short-term factor tends towards 0, leading the
 long-term factor to converge towards the spot price.
 
+If I wanted to refer to the plot I could do so in PDF - test \autoref{fig:SS_Figure1}.
+
 ![](figures/SS_Figure1.png)
+
+![The explanatory note, what and why \label{fig:SS_Figure1}](figures/SS_Figure1.png){ width=100% }
+
+
 
 Below is a plot depicting the polynomial diffusion model. In this model,
 the spot price is represented as $S_t = \alpha_1 + \alpha_2 \chi_t +
@@ -567,25 +577,16 @@ $\alpha_1 + \alpha_3 \xi_t + \alpha_6 \xi_t^2$.
 
 ![](figures/PD_Figure1.png)
 
-In the following tow plots below, we produced Figure 4 from Schwartz
-and Smith's paper. We simulated the trajectories of the relevant
-processes using the parameter estimates from this paper.
-The first plot illustrates the simulated spot price and its estimated
-version using PDSim. Both trajectories are located within the 95%
-band. The second plot displays the estimated long-term component.
+In the plot below, we replicated Figure 4 from Schwartz
+and Smith's paper using crude oil data from Ncube (2010) and the
+estimated parameters from Schwartz and Smith (2000). We also compared our
+curves with those obtained using Ncube's code. The red and
+blue curves represent the estimated equlibrium price (given by $e^{\xi_t}$)
+and spot price (given by $S_t = e^{\chi_t + \xi_t}$) respectively,
+using our codes. The black and green curves represent the estimated
+equlibrium price and spot price, respectively, using Ncube's code. 
 
-![](figures/SS_Figure4_1.png)
-
-![](figures/SS_Figure4_2.png)
-
-Below are two plots presenting the estimated spot price and long-term
-component for the polynomial diffusion model. Each point falls within
-the 95% confidence interval, providing a comprehensive visualization
-of the model's estimations.
-
-![](figures/PD_Figure4_1.png)
-
-![](figures/PD_Figure4_2.png)
+![](figures/Figure4_Ncube.png)
 
 ### Tests for Schwartz and Smith Model
 
@@ -803,8 +804,14 @@ I will get back to you as soon as possible.
 
 ## Acknowledgements
 
-We would like to thank Sam Forbes, Blake Rayfield and Mark Van de Vyver for testing
-PDSim and providing valuable feedback and suggestions.
+We are indebted to Mark Van de Vyver for his constructive suggestions and
+ongoing support in improving the paper since its submission. Thanks to Mark's
+suggestions, which included helpful references to the previous work, we were
+able to achieve code containerisation, and develop and provide the results of
+the two unit tests.
+
+We would also like to thank Sam Forbes, and Blake Rayfield for their valuable
+feedback and suggestions, which helped us to improve the PDSim's code.
 
 ## Version History
 
@@ -854,6 +861,10 @@ NFCP: N-factor commodity pricing through term structure estimation.
 *The Comprehensive R Archive Network*.
 [https://cran.rstudio.com/web/packages/NFCP/index.html](https://cran.rstudio.com/web/packages/NFCP/index.html).
 
+Casassus, J., & Collin‐Dufresne, P. (2005).
+Stochastic convenience yield implied from commodity futures and interest rates.
+*The Journal of Finance*, 60(5), 2283-2331.
+
 Cortazar, G., Millard, C., Ortega, H., & Schwartz, E. S. (2019).
 Commodity price forecasts, futures prices, and pricing models.
 *Management Science*, 65(9), 4141-4155.
@@ -867,9 +878,19 @@ Filipovic, D., & Larsson, M. (2016).
 Polynomial diffusions and applications in finance.
 *Finance and Stochastics*, 20(4), 931–972.
 
+Goodwin, D. (2015).
+Schwartz-Smith 2-factor model - Parameter estimation
+(https://www.mathworks.com/matlabcentral/fileexchange/43352-schwartz-smith-2-factor-model-parameter-estimation).
+*MATLAB Central File Exchange*. Retrieved May 28, 2024.
+
 Harvey, A. C. (1990).
 Forecasting, structural time series models and the kalman filter.
 *Cambridge University Press*.
+
+He, P. (2020).
+Crude Oil Futures
+(https://github.com/peilun-he/Crude-Oil-Futures).
+*GitHub*. Retrieved May 28, 2024.
 
 Julier, S. J., & Uhlmann, J. K. (1997).
 New extension of the kalman filter to nonlinear systems.
@@ -884,10 +905,14 @@ A multifactor polynomial framework for long-term electricity
 forwards with delivery period.
 *SIAM Journal on Financial Mathematics*, 11(3), 928–957.
 
-Ncube, M. (2024). 
+Manoliu, M., & Tompaidis, S. (2002).
+Energy futures prices: term structure models with Kalman filter estimation.
+*Applied mathematical finance*, 9(1), 21-43.
+
+Ncube, M. (2010). 
 Simulation of Schwartz-Smith two Factor model
-(https://www.mathworks.com/matlabcentral/fileexchange/29745-simulation-of-schwartz-smith-two-factor-model),
-MATLAB Central File Exchange. Retrieved May 26, 2024.
+(https://www.mathworks.com/matlabcentral/fileexchange/29745-simulation-of-schwartz-smith-two-factor-model).
+*MATLAB Central File Exchange*. Retrieved May 26, 2024.
 
 Peters, G. W., Briers, M., Shevchenko, P., & Doucet, A. (2013).
 Calibration and filtering for multi factor commodity models with seasonality:
