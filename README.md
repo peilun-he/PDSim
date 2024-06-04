@@ -848,8 +848,6 @@ feedback and suggestions, which helped us to improve the PDSim's code.
 
 **Version 1.0**: basic functions and UI
 
-## Acknowledgments 
-
 ## References
 
 Ames, M., Bagnarosa, G., Matsui, T., Peters, G. W., & Shevchenko, P. V. (2020).
