@@ -890,6 +890,10 @@ Crude Oil Futures
 (https://github.com/peilun-he/Crude-Oil-Futures).
 *GitHub*. Retrieved May 28, 2024.
 
+He, P., Kordzakhia, N., Peters, G. W., & Shevchenko, P. V. (2024).
+Multi-Factor Polynomial Diffusion Models and Inter-Temporal Futures Dynamics.
+*2021-2022 MATRIX Annals*, 363-382.
+
 Julier, S. J., & Uhlmann, J. K. (1997).
 New extension of the kalman filter to nonlinear systems.
 *Signal Processing, Sensor Fusion, and Target Recognition VI*, 3068, 182–193.
