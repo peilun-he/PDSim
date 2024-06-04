@@ -561,13 +561,7 @@ parameters, our results match those of Schwartz and Smith. As time
 approaches infinity, the short-term factor tends towards 0, leading the
 long-term factor to converge towards the spot price.
 
-If I wanted to refer to the plot I could do so in PDF - test \autoref{fig:SS_Figure1}.
-
 ![](figures/SS_Figure1.png)
-
-![The explanatory note, what and why \label{fig:SS_Figure1}](figures/SS_Figure1.png){ width=100% }
-
-
 
 Below is a plot depicting the polynomial diffusion model. In this model,
 the spot price is represented as $S_t = \alpha_1 + \alpha_2 \chi_t +
