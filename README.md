@@ -575,13 +575,46 @@ $\alpha_1 + \alpha_3 \xi_t + \alpha_6 \xi_t^2$.
 
 
 In the graph below, we replicate Figure 4 from Schwartz
-and Smith (2000) and the model parameters estimates from Schwartz and Smith (2000). 
-These estimates were verified using the futures prices data and Matlab code from  Ncube (2010).
-The red and blue time series plots represent the estimated equilibrium price ($e^{\xi_t}$)
-and spot price ( $S_t = e^{\chi_t + \xi_t}$), respectively, were produced using PDSIM.
-The black and green time series plots for the equilibrium and spot prices, respectively, were produced using Ncube's parameter estimates.
+and Smith (2000) and the model parameters estimates from
+Schwartz and Smith (2000). These estimates were verified
+using the futures prices data and Matlab code from  Ncube
+(2010). The red and blue time series plots represent the
+estimated equilibrium price ($e^{\xi_t}$) and spot price
+($S_t = e^{\chi_t + \xi_t}$), respectively, were produced
+using PDSim. The black and green time series plots for the
+equilibrium and spot prices, respectively, were produced
+using Ncube's parameter estimates.
 
 ![](figures/Figure4_Ncube.png)
+
+And the code to produce this figure is given below.
+
+```r
+library(PDSim)
+dat <- read.delim("crudeoil.txt", header = FALSE) 
+n_obs <- dim(dat)[1]
+n_contract <- dim(dat)[2]
+
+par <- c(1.49, 0, -0.0125, 0.286, 0.145, 0.3, 0.157, -0.024,
+         0.042, 0.006, 0.003, 0.000, 0.004) # set of parameters
+x0 <- c(0.119, 2.857) # initial values of state variables
+dt <- 1/365
+
+mats_vec <- c(1/12, 5/12, 9/12, 13/12, 17/12)
+mats <- matrix(rep(mats_vec, n_obs), nrow = n_obs, byrow = TRUE)
+
+# state equation
+func_f_SS <- function(xt, par) state_linear(xt, par, dt)
+
+# measurement equation
+func_g_SS <- function(xt, par, mats) measurement_linear(xt, par, mats)
+
+est <- KF(c(par, x0), as.matrix(dat), mats, 0, dt, FALSE, "None")
+chi_est <- est$xt_filter[, 1]
+xi_est <- est$xt_filter[, 2]
+# red line = exp(xi_est)
+# blue line = exp(chi_est+xi_est)
+```
 
 ### Tests for Schwartz and Smith Model
 
