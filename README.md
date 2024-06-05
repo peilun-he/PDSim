@@ -25,7 +25,7 @@ PDSim can be accessed in two ways:
    ```
 
 A tutorial on how to use this app is available by running the following code
-and select "PDSim app tutorial":
+and selecting "PDSim app tutorial":
 
 ```r
 browseVignettes("PDSim")
@@ -66,13 +66,13 @@ installation. Please follow these steps:
 
 ## How to Use PDSim (GUI)
 
-The graphical user interface (GUI) is a easy way for everyone to use PDSim package,
-even though you have no knowledge of programming. Just enter all necessary parameters,
-it will simulate data, and provide well-designed interactive visualisations. Currently,
-PDSim can simulate data from two models, Schwartz and Smith two-factor model (Schwartz
-& Smith, 2000), and polynomial diffusion model (Filipovic & Larsson, 2016). In this
-section, we will explain how to use GUI to simulate data.
-A detailed description of the two models is available in
+The graphical user interface (GUI) is an easy way for everyone to use the PDSim
+package, even though you have no knowledge of programming. Just enter all necessary
+parameters, it will simulate data, and provide well-designed interactive
+visualisations. Currently, PDSim can simulate data from two models, the Schwartz
+and Smith two-factor model (Schwartz & Smith, 2000), and the polynomial diffusion
+model (Filipovic & Larsson, 2016). In this section, we will explain how to use
+GUI to simulate data. A detailed description of the two models is available in
 [Model Description](#model-description).
 
 ### PDSim (GUI) for Schwartz-Smith Model
@@ -105,8 +105,9 @@ fluctuation factor converges faster than the long-term factor. $\mu_{\xi} \in \m
 is the mean level of the long-term factor $\xi_t$. Here we assume that the short-term
 factor converges to 0. $\sigma_{\chi}, \sigma_{\xi} \in \mathbb{R}^+$ are volatilities,
 which represent the degree of variation of a price series over time. $\lambda_{\chi},
-\lambda_{\xi} \in \mathbb{R}$ are risk premiums. We price commodity under arbitrage-free
-assumption: "the price of the derivative is set at the same level as
+\lambda_{\xi} \in \mathbb{R}$ are risk premiums. We price commodities under the
+arbitrage-free
+assumption: "The price of the derivative is set at the same level as
 the value of the replicating portfolio, so that no trader can make
 a risk-free profit by buying one and selling the other.
 If any arbitrage opportunities do arise, they quickly disappear as
@@ -122,7 +123,8 @@ $\sigma_i, i = 1, \dots, m$ for futures contracts are evenly spaced,
 i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 = \dots = \sigma_{m-1} - \sigma_m$.
 If users don't know the value of a parameter, we recommend using the default value.
 
-If users have special requirements for the structure of the standard errors, please use R script.
+If users have special requirements for the structure of the standard errors,
+please use R script.
 
 ![](figures/SS2.png)
 
@@ -134,7 +136,7 @@ The other button `Generate new data` is designed for users who want to simulate
 multiple realisations from the same set of parameters. Once clicking it,
 PDSim will get another set of random noises, so the futures price
 will change as well. This button is not compulsory if users only
-need one realisations. The data will updated automatically when
+need one realisation. The data will updated automatically when
 you change any parameters.
 
 ![](figures/SS3.png)
@@ -142,7 +144,7 @@ you change any parameters.
 ### PDSim (GUI) for Polynomial Diffusion Model
 
 The procedure for simulating data from the polynomial diffusion model
-(Filipovic & Larsson, 2016) closely resembles that of Schwartz and
+(Filipovic & Larsson, 2016) closely resembles that of the Schwartz and
 Smith model (Schwartz & Smith, 2000). Nevertheless, it involves the
 specification of additional parameters.
 
@@ -175,7 +177,7 @@ All other procedures are the same as the Schwartz and Smith model
   realisations under the same set of parameters, please click the
   'Generate new data' button.
 - The seed to generate random numbers is fixed, i.e., for the same set of parameters,
-  users will get exactly the same data every time they use PDSim.
+  users will get the same data every time they use PDSim.
 - Futures prices in all tables/plots are REAL prices (NOT the logarithm),
   no matter which model is used.
 - The 95% confidence interval is shown as a grey ribbon on each plot.
@@ -220,7 +222,7 @@ x0 <- c(0, 1/0.3) # initial values of state variables
 n_coe <- 0 # number of model coefficient
 ```
 
-The set of parameters are in the order of: $\kappa, \gamma, \mu_{\xi},
+The set of parameters is in the order of: $\kappa, \gamma, \mu_{\xi},
 \sigma_{\chi}, \sigma_{\xi}, \rho, \lambda_{\chi}, \lambda_{\xi}$,
 and the sequence from 0.1 to 0.01 represents the standard errors of
 measurement equation. We assume all futures curves are uncorrelated
@@ -422,7 +424,7 @@ spaced, i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 =
 ### Polynomial Diffusion Model
 
 In this section, we present a general framework of the polynomial diffusion model.
-The mathematical foundations and applications of polynomial diffusion model in
+The mathematical foundations and applications of the polynomial diffusion model in
 finance are provided in Filipovic and Larsson (2016) and a simulation study is given
 in He et al. (2024).
 
@@ -526,7 +528,7 @@ data applications to demonstrate the accuracy of PDSim.
 
 ### Unit tests
 
-Users can undergo a unit test under the "Unit Tests" navigaion bar of PDSim
+Users can undergo a unit test under the "Unit Tests" navigation bar of PDSim
 to ensure that all functionalities of PDSim are operating correctly. This
 test sequence entails several key steps: initially, users define the desired
 number of trajectories and relevant parameters. Subsequently, PDSim executes
@@ -535,7 +537,7 @@ Upon simulation completion, we employ KF/EKF/UKF methodologies to estimate
 trajectories alongside their 95% confidence intervals. The coverage rate,
 indicating the proportion of trajectories where over 95% of points fall
 within the confidence interval, is then computed. We expect the coverage rate
-is above 95%, but it is affected by the measurement noise $\sigma_1$. For a
+to be above 95%, but it is affected by the measurement noise $\sigma_1$. For a
 large value of $\sigma_1$, the coverage rate could be lower than 95%.
 
 Users receive detailed feedback under the 'Results' tab panel. Moreover,
@@ -789,13 +791,13 @@ using real data. Unfortunately, this parameter estimation falls outside the
 scope of PDSim. Therefore, we will not delve into the details here. However,
 if you are interested, you can refer to the works of Ames et al. (2020),
 Cortazar et al. (2019), Cortazar and Naranjo (2016), Kleisinger-Yu et al. (2020),
-and Sørensen (2002) for further insights. The estimated futures by the Schwartz
-Smith model and the polynomial diffusion model are represented by the solid and
+and Sørensen (2002) for further insights. The estimated futures by the
+Schwartz-Smith model and the polynomial diffusion model are represented by the solid and
 dashed red lines, respectively. Subsequently, we utilised the estimated parameters
 to simulate 1000 sample paths. In the generated plot, blue curves depict the
-Schwartz Smith model, while green curves represent the polynomial diffusion model.
+Schwartz-Smith model, while green curves represent the polynomial diffusion model.
 We utilized the following parameter values to simulate data from the
-Schwartz Smith model: $\kappa = 0.8235$, $\gamma = 0.1040$, $\mu_{\xi} =
+Schwartz-Smith model: $\kappa = 0.8235$, $\gamma = 0.1040$, $\mu_{\xi} =
 0.3635$, $\sigma_{\chi} = 0.9284$, $\sigma_{\xi} = 0.3103$, $\rho = 0.4114$,
 $\lambda_{\chi} = 0.6553$, $\lambda_{\xi} = -0.1274$, $\sigma_1 = 0.0199$,
 $\chi_0 = -0.5046$ and $\xi_0 = 4.4163$. For the polynomial diffusion model,
