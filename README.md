@@ -426,7 +426,6 @@ The mathematical foundations and applications of polynomial diffusion model in
 finance are provided in Filipovic and Larsson (2016) and a simulation study is given
 in He et al. (2024).
 
-
 Under the polynomial diffusion framework, the spot price $S_t$ is expressed as
 a polynomial function of the hidden state vector $x_t$ (with components $\chi_t$
 and $\xi_t$):
