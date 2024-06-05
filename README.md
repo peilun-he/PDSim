@@ -131,7 +131,8 @@ please use R script.
 Finally, all the simulated data are downloadable. Please click `Download prices`
 and `Download maturities` buttons to download futures prices and maturities data.
 Please note, even though in Schwartz and Smith's (2000) model the logarithm of spot
-price is specified, **all data downloaded or plotted are real prices, they have been exponentiated**.
+price is specified, **all data downloaded or plotted are real prices,
+they have been exponentiated**.
 The other button `Generate new data` is designed for users who want to simulate
 multiple realisations from the same set of parameters. Once clicking it,
 PDSim will get another set of random noises, so the futures price
@@ -560,7 +561,8 @@ Smith's paper using PDSIM.
 The figure below represents the replication of Figure 1 from Schwartz and
 Smith's paper. This figure illustrates the mean simulated spot price
 ($\exp{(\chi_t+\xi_t)}$) and the mean long-term component ($\exp{(\xi)}$),
-alongside their respective 10th and 90th percentiles. We used the model parameters estimates
+alongside their respective 10th and 90th percentiles. We used the model
+parameters estimates
 from Schwartz and Smith (2000). As the time
 approaches infinity, the short-term factor tends to 0, whereas the
 long-term factor converges to the spot price.
@@ -781,7 +783,8 @@ futures price. The grey ribbon visually encapsulated the 95% confidence interval
 
 ### Simulation Accuracy
 
-In the figure below, we illustrate the alignment between the data simulated using PDSIM and the real data.
+In the figure below, we illustrate the alignment between the data simulated using
+PDSim and the real data.
 
 ![](figures/real_data.png)
 
