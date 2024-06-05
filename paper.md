@@ -36,7 +36,7 @@ bibliography: paper.bib
 
 # Summary
 
-The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of commodity futures in the last two decades. In 2016, [@filipovic:2016] introduced a polynomial diffusion framework which allows a more complex structure of spot price. This framework has been applied to electricity forwards [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. PDSim aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. This application is available at [https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation](https://github.com/peilun-he/polynomial-diffusion-model-simulation-and-estimation). 
+The Schwartz-Smith two-factor model [@schwartz:2000] was commonly used in the pricing of commodity futures in the last two decades. In 2016, [@filipovic:2016] introduced a polynomial diffusion framework which allows a more complex structure of spot price. This framework has been applied to electricity forwards [@kleisinger:2020], in which the spot price is modelled in a quadratic form of two factors. PDSim aims to estimate futures prices as well as the latent state variables, and provides well-designed visualisations. This application is available at [https://github.com/peilun-he/PDSim](https://github.com/peilun-he/PDSim). 
 
 ## Schwartz-Smith two-factor model
 
@@ -82,7 +82,7 @@ Under this framework, $c, E, \Sigma_w$ and $\Sigma_v$ are deterministic but $d_t
 
 ## Polynomial diffusion model
 
-In this section, we present a general framework of the polynomial diffusion model first, and then we give the application in the two-factor model. The mathematical foundations and applications of polynomial diffusion model in finance are provided in [@filipovic:2016].
+In this section, we present a general framework of the polynomial diffusion model first, and then we give the application in the two-factor model. The mathematical foundations and applications of the polynomial diffusion model in finance are provided in [@filipovic:2016].
 
 Consider the stochastic differential equation
 \begin{equation}
@@ -165,7 +165,7 @@ a_t &:= \mathbb{E}(x_t | \mathcal{F}_t),& P_t &:= Cov(x_t | \mathcal{F}_t). \non
 The Kalman Filter (KF) [@harvey:1990] is a commonly used filtering method in estimating hidden state variables. However, KF can only deal with the linear Gaussian state model. To capture the non-linear dynamics in the PD model, we use Extended Kalman Filter (EKF) [@julier:1997] and Unscented Kalman Filter (UKF) [@julier:2004; @wan:2000]. Suppose we have a non-linear state-space model 
 $$x_t = f(x_{t-1}) + w_t, w_t \sim N(\textbf{0}, \Sigma_w), $$
 $$y_t = h(x_t) + v_t, v_t \sim N(\textbf{0}, \Sigma_v). $$
-The EKF linearises the state and measurement equations through the first-order Taylor series. To run KF, we replace $J_f$ and $J_h$ with $E$ and $F_t$ respectively, where $J_f$ and $J_h$ are the Jacobians of $f(\cdot)$ and $h(\cdot)$. In contrast, the UKF uses a set of carefully chosen points, called sigma points, to represent the true distributions of state variables. Then, these sigma points are propagated through the state equation. The flowchats of EKF and UKF are given in \autoref{fig:EKF} and \autoref{fig:UKF}. In this application, we use KF for the Schwartz-Smith model, and EKF/UKF for the polynomial diffusion model. 
+The EKF linearises the state and measurement equations through the first-order Taylor series. To run KF, we replace $J_f$ and $J_h$ with $E$ and $F_t$ respectively, where $J_f$ and $J_h$ are the Jacobians of $f(\cdot)$ and $h(\cdot)$. In contrast, the UKF uses a set of carefully chosen points, called sigma points, to represent the true distributions of state variables. Then, these sigma points are propagated through the state equation. The flowcharts of EKF and UKF are given in \autoref{fig:EKF} and \autoref{fig:UKF}. In this application, we use KF for the Schwartz-Smith model, and EKF/UKF for the polynomial diffusion model. 
 
 # Statement of need
 
@@ -174,7 +174,7 @@ This application is aimed at researchers who are pricing commodity futures by Sc
 \begin{itemize}
 \item[1. ] To provide a simulation tool for the polynomial diffusion model. Users can declare all model specifications and parameters. The generated data is downloadable. 
 \item[2. ] To provide two filtering methods, EKF and UKF, to estimate the futures prices and hidden state variables. Currently, there is no filtering toolbox for the polynomial diffusion model. 
-\item[3. ] To provide well-designed visualisations. That includes the futures prices, the state variables, the estimates of futures prices and state variables, and some downloadable tables. Moreover, all these plots are interactive. Users can zoom in/out, highlight a specific curve, download these plots, and so on. 
+\item[3. ] To provide well-designed visualisations. That includes the futures prices, the state variables, the estimates of futures prices and state variables, and some downloadable tables. Moreover, all these plots are interactive. Users can zoom in/out, highlight a specific curve, download these plots, etc. 
 \item[4. ] To provide the estimation errors including root mean squared error (RMSE), mean absolute error (MSE) and mean relative error (MRE). These measures are presented in tables and plots. 
 \item[5. ] To provide all functions listed above for the Schwartz-Smith model as a comparison. 
 \end{itemize}
