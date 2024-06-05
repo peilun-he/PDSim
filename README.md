@@ -221,15 +221,13 @@ n_coe <- 0 # number of model coefficient
 ```
 
 The set of parameters are in the order of: $\kappa, \gamma, \mu_{\xi},
-\sigma_{\chi}, \sigma_{\xi}, \rho, \lambda_{\chi}, \lambda_{\xi}$.
-The long sequence is the standard errors of measurement equation.
-We assume all futures curves are uncorrelated and standard errors
-are evenly decreasing. You can have your own assumptions on standard
-errors, but the independence of curves must be held.
+\sigma_{\chi}, \sigma_{\xi}, \rho, \lambda_{\chi}, \lambda_{\xi}$,
+and the sequence from 0.1 to 0.01 represents the standard errors of
+measurement equation. We assume all futures curves are uncorrelated
+and standard errors are evenly decreasing.
 
-Then, we specify the measurement and state equations. You can use the
-exported functions `measurement_linear` and `state_linear` directly,
-or write your own functions.
+Then, we specify the measurement and state equationsthrough the exported
+functions `measurement_linear` and `state_linear`.
 
 ```r
 # state equation
@@ -422,6 +420,12 @@ spaced, i.e., $\sigma_1 - \sigma_2 = \sigma_2 - \sigma_3 =
 \dots = \sigma_{m-1} - \sigma_m$.
 
 ### Polynomial Diffusion Model
+
+In this section, we present a general framework of the polynomial diffusion model.
+The mathematical foundations and applications of polynomial diffusion model in
+finance are provided in Filipovic and Larsson (2016) and a simulation study is given
+in He et al. (2024).
+
 
 Under the polynomial diffusion framework, the spot price $S_t$ is expressed as
 a polynomial function of the hidden state vector $x_t$ (with components $\chi_t$
