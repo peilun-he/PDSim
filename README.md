@@ -527,7 +527,7 @@ replications of Schwartz and Smith's results, followed by individual tests
 for each model utilizing an R script. Finally, we offer real-world
 data applications to demonstrate the accuracy of PDSim.
 
-### Unit tests
+### Unit Tests
 
 Users can undergo a unit test under the "Unit Tests" navigation bar of PDSim
 to ensure that all functionalities of PDSim are operating correctly. This
@@ -557,7 +557,7 @@ typically requires around 15 seconds on a standard laptop.
 ### Replicating Schwartz and Smith's Results
 
 In this section, we replicate the Figures 1 and 4 from Schwartz and
-Smith's paper using PDSIM.
+Smith's paper using PDSim.
 The figure below represents the replication of Figure 1 from Schwartz and
 Smith's paper. This figure illustrates the mean simulated spot price
 ($\exp{(\chi_t+\xi_t)}$) and the mean long-term component ($\exp{(\xi)}$),
