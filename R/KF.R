@@ -177,8 +177,8 @@ KF <- function(par, yt, mats, delivery_time, dt, smoothing, seasonality) {
     }
     
     # Update likelihood 
-    nll <- nll + 0.5*length(yt[i, ])*log(2*pi) + 0.5*log(det(L)) + 0.5*et %*% solve(L) %*% t(et)
-    ll_table[i] <- -(0.5*length(yt[i, ])*log(2*pi) + 0.5*log(det(L)) + 0.5*et %*% solve(L) %*% t(et))
+    nll <- nll + 0.5*length(yt[i, ])*log(2*pi) + 0.5*log(det(L)) + 0.5*et %*% invL %*% t(et)
+    ll_table[i] <- -(0.5*length(yt[i, ])*log(2*pi) + 0.5*log(det(L)) + 0.5*et %*% invL %*% t(et))
   }
   
   # Kalman Smoother
