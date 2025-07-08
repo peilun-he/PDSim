@@ -835,14 +835,11 @@ I will get back to you as soon as possible.
 
 ## Acknowledgements
 
-We are indebted to Mark Van de Vyver for his constructive suggestions and
-ongoing support in improving the paper since its submission. Thanks to Mark's
-suggestions, which included helpful references to the previous work, we were
-able to achieve code containerisation, and develop and provide the results of
-the two unit tests.
-
-We would also like to thank Sam Forbes, and Blake Rayfield for their valuable
-feedback and suggestions, which helped us to improve the PDSim's code.
+This study was presented at the 17th International Conference on Computational
+and Financial Econometrics, Mathematics of Risk 2022, 4th Australasian Commodity
+Markets Conference, and 24th International Congress on Insurance: Mathematics
+and Economics. We would like to thank the audiences and organisers for their
+valuable feedback and suggestions. 
 
 ## Version History
 
