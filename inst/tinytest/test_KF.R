@@ -1,5 +1,5 @@
-n_obs <- 100 # number of observations
-n_contract <- 10 # number of contracts
+n_obs <- 10 # number of observations
+n_contract <- 2 # number of contracts
 dt <- 1/360 
 
 par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3,
@@ -22,7 +22,21 @@ est <- KF(par = c(par, x0), yt = log_price, mats = mats,
           delivery_time = 0, dt = dt, smoothing = FALSE,
           seasonality = "None")
 
-nll <- as.numeric(round(est$nll, 4))
+results <- list(nll = as.numeric(round(est$nll, 4)), 
+               xt_filter = round(est$xt_filter, 4))
 
-expect_equal(nll, -1459.0542)
+exp_results <- list(nll = -19.6466, 
+                   xt_filter = matrix(c(0.0214, 3.3697, 
+                                        0.1832, 3.3044, 
+                                        0.2870, 3.2443, 
+                                        0.1984, 3.3786,
+                                        0.2675, 3.2363,
+                                        0.5356, 2.9677, 
+                                        0.3988, 3.1637,
+                                        0.6151, 3.0347, 
+                                        0.6439, 3.0774, 
+                                        0.6983, 2.8524), 
+                                      nrow = 10, byrow = TRUE)) # expected results 
+
+expect_equal(results, exp_results)
 

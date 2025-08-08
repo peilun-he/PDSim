@@ -1,5 +1,5 @@
-n_obs <- 100 # number of observations
-n_contract <- 10 # number of contracts
+n_obs <- 10 # number of observations
+n_contract <- 2 # number of contracts
 dt <- 1/360  # interval between two consecutive time points,
 
 par <- c(0.5, 0.3, 1, 1.5, 1.3, -0.3, 0.5, 0.3,
@@ -21,6 +21,20 @@ xt <- dat$xt # state variables
 
 est_UKF <- UKF(c(par, par_coe, x0), price, mats, func_f, func_g, dt, n_coe, "Gaussian")
 
-nll <- as.numeric(round(est_UKF$nll, 4))
+results <- list(nll = as.numeric(round(est_UKF$nll, 4)), 
+                xt_filter = round(est_UKF$xt_filter, 4))
 
-expect_equal(nll, -1112.3881)
+exp_results <- list(nll = 16.8462, 
+                    xt_filter = matrix(c(-0.6301, 3.1493, 
+                                         -1.7531, 4.0916, 
+                                         -1.8459, 4.1428, 
+                                         -1.8514, 4.1444,
+                                         -1.8576, 4.0808,
+                                         -1.8903, 4.0938, 
+                                         -1.9062, 4.1325,
+                                         -1.9540, 4.2030, 
+                                         -2.0007, 4.2702, 
+                                         -2.0106, 4.1014), 
+                                       nrow = 10, byrow = TRUE)) # expected results 
+
+expect_equal(results, exp_results)
