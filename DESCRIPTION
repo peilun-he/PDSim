@@ -16,8 +16,7 @@ Description: Web application for the polynomial diffusion model.
               Also, it gives state variables and contracts estimations through 
               Extended Kalman Filter (EKF) or Unscented Kalman Filter (UKF). 
               The Schwartz and Smith's two-factor model is also provided for comparison. 
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
